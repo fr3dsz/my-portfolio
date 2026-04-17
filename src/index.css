@@ -1,19 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap");
 @import "tailwindcss";
 @theme {
-  --color-primary: #030412;
-  --color-midnight: #06091f;
-  --color-navy: #161a31;
-  --color-indigo: #1f1e39;
-  --color-storm: #282b4b;
-  --color-aqua: #33c2cc;
-  --color-mint: #57db96;
-  --color-royal: #5c33cc;
-  --color-lavender: #7a57db;
-  --color-fuchsia: #ca2f8c;
-  --color-orange: #cc6033;
-  --color-sand: #d6995c;
-  --color-coral: #ea4884;
+  /* ── Backgrounds: shifted from blue-navy → deep purple-black ── */
+  --color-primary: #080512; /* deep space black */
+  --color-midnight: #0c081e; /* dark nebula */
+  --color-navy: #14103a; /* deep violet */
+  --color-indigo: #1c1642; /* dark purple */
+  --color-storm: #261e52; /* storm purple */
+
+  /* ── Nebula accents: replaces teal/green with violet-purple ── */
+  --color-aqua: #9d55e8; /* nebula violet */
+  --color-mint: #c87fff; /* soft lavender glow */
+  --color-royal: #6b2fcc; /* deep royal purple */
+  --color-lavender: #9b5fdb; /* mid nebula purple */
+
+  /* ── Warm accents: from the planet & asteroids ── */
+  --color-fuchsia: #c42e8c; /* kept — works as sharp accent */
+  --color-orange: #cc5e2e; /* planet copper (barely changed) */
+  --color-sand: #d4915a; /* asteroid amber (barely changed) */
+  --color-coral: #e84880; /* soft pink accent */
   --animate-orbit: orbit 50s linear infinite;
   @keyframes orbit {
     0% {
@@ -45,7 +50,7 @@
   }
 }
 body {
-  background: #030412;
+  background: #080512;
   font-family: "Funnel Display", sans-serif;
   color: white;
   scroll-behavior: smooth;
