@@ -23,7 +23,7 @@ const Hero = () => {
             <ambientLight intensity={0.4} />
             <directionalLight position={[3, 6, 3]} intensity={1} />
             <Ghost isMobile={isMobile} /> {/* ✅ clean — no conflicting props */}
-            <OrbitControls />
+            <OrbitControls enableZoom={false} />
             <Rig />
           </Suspense>
         </Canvas>
