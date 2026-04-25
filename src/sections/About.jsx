@@ -1,13 +1,13 @@
 import { useRef } from "react";
 import Card from "../components/Card";
-import { Globe } from "../components/globe";
 import CopyEmailButton from "../components/CopyEmailButton";
 import { Frameworks } from "../components/Frameworks";
+import Timezone from "../components/Timezone";
 
 const About = () => {
   const grid2Container = useRef();
   return (
-    <section className="c-space section-spacing">
+    <section className="c-space section-spacing" id="about">
       <h2 className="text-heading">About Me</h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-6 md:auto-rows-[18rem] mt-12">
         {/* Grid 1 */}
@@ -15,7 +15,7 @@ const About = () => {
           <img src="assets/coding-pov.png" className="absolute scale-[1.75] -right-[5rem] -top-[1rem] md:scale-[3] md:left-50 md:inset-y-10 lg:scale-[2.5]" />
           <div className="z-10">
             <p className="headtext">Hi, I'm Luis Conda</p>
-            <p className="subtext">Throughout my Academic Journey I build practical software and take initiative in leading projects from idea to execution. I focus on delivering clean, functional solutions while continuously improving my skills.</p>
+            <p className="subtext">I enjoy building software that solves real problems through full-stack projects and hands-on development. I’ve worked with different technologies in academic projects and focus more on understanding how systems work.</p>
           </div>
           <div className="absolute inset-x-0 pointer-events-none -bottom-4 h-1/2 sm:h-1/3 bg-gradient-to-t from-indigo" />
         </div>
@@ -34,14 +34,12 @@ const About = () => {
           </div>
         </div>
         {/* Grid 3 */}
-        <div className="grid-black-color grid-3">
+        <div className="grid-black-color grid-3 flex flex-col justify-between">
           <div className="z-10 w-[50%]">
             <p className="headtext">Time Zone</p>
             <p className="subtext">I'm based in Philippines, and open to remote work worldwide</p>
           </div>
-          <figure className="absolute w-[70%] h-[160%] top-[10%] right-[-10%]">
-            <Globe />
-          </figure>
+          <Timezone />
         </div>
         {/* Grid 4 */}
         <div className="grid-special-color grid-4">
@@ -54,7 +52,7 @@ const About = () => {
         <div className="grid-default-color grid-5">
           <div className="z-10 w-[50%]">
             <p className="headText">Teck Stack</p>
-            <p className="subtext">I specialize in a variety of languages, frameworks, and tools taht allow me to build robust and scalable applications</p>
+            <p className="subtext">I’ve worked with several programming languages and frameworks through school and projects, and I’m continuously improving my understanding of them.</p>
           </div>
           <div className="absolute inset-y-0 md:inset-y-9 w-full h-full start-[50%] md:scale-125">
             <Frameworks />
