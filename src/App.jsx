@@ -13,9 +13,8 @@ const App = () => {
       <Navbar />
       <Hero />
       <About />
-      <Projects />
       <Experiences />
-      <section className="min-h-screen" />
+      <Projects />
       {/* <Testimonial /> */}
       <Footer />
     </div>
