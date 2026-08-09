@@ -22,19 +22,15 @@ export function Ghost({ isMobile }) {
     }
   }, [actions, animations]);
 
-  const yPosition = useMotionValue(12); // ✅ starts way above screen
+  const yPosition = useMotionValue(12); // starts way above screen
   const ySpring = useSpring(yPosition, {
-    damping: 8, // ✅ low damping = bouncy/overshoots — feels alive
+    damping: 8, // low damping = bouncy/overshoots — feels alive
     stiffness: 60, // lower = slower dramatic drop
     mass: 1.2, // slight weight to the fall
   });
 
-  useFrame(() => {
-    group.current.position.y = ySpring.get();
-  });
-
   useEffect(() => {
-    // ✅ Small delay so it doesn't fire before scene loads
+    // Small delay so it doesn't fire before scene loads
     const timeout = setTimeout(() => {
       yPosition.set(-1); // final resting position
     }, 300);
@@ -42,29 +38,32 @@ export function Ghost({ isMobile }) {
     return () => clearTimeout(timeout);
   }, [yPosition]);
 
+  // Single useFrame owns the whole transform — avoids two hooks fighting
+  // over the same property (previous bug: a second hook was overwriting
+  // position.y toward a hardcoded 20 every frame, right after this spring
+  // set it, pushing the model outside the camera's visible range).
   useFrame(({ clock }) => {
     if (!group.current) return;
     const t = clock.getElapsedTime();
 
     // Target per viewport
     const targetX = isMobile ? 0 : 2.5; // center on mobile, right on desktop
-    const targetY = isMobile ? 20 : 20; // vertically centered both
-    const targetZ = isMobile ? 0 : 0;
+    const targetZ = 0;
     const targetScale = isMobile ? 0.7 : 1;
-    const targetRotZ = isMobile ? 0 : -0.6; // 0.6 = faces lower-left on desktop
+    const targetRotZ = isMobile ? 0 : -0.6; // faces lower-left on desktop
 
     const lerp = (a, b, s) => a + (b - a) * s;
     const s = 0.04;
 
-    // Smooth transition between viewports
+    // Y is owned entirely by the entrance spring + a gentle idle wobble
+    group.current.position.y = ySpring.get() + Math.sin(t * 0.8) * 0.15;
+
     group.current.position.x = lerp(group.current.position.x, targetX + Math.sin(t * 0.4) * 0.05, s);
-    group.current.position.y = lerp(group.current.position.y, targetY + Math.sin(t * 0.8) * 0.15, s);
     group.current.position.z = lerp(group.current.position.z, targetZ, s);
 
     const sc = lerp(group.current.scale.x, targetScale, s);
     group.current.scale.set(sc, sc, sc);
 
-    // Facing direction + gentle wobble
     group.current.rotation.z = lerp(group.current.rotation.z, targetRotZ + Math.sin(t * 0.5) * 0.06, s);
   });
 
@@ -80,6 +79,10 @@ export function Ghost({ isMobile }) {
         <mesh castShadow receiveShadow geometry={nodes.Object_9.geometry} material={materials.Big_Bioo_Body_1} />
         <mesh castShadow receiveShadow geometry={nodes.Object_10.geometry} material={materials.Big_Bioo_Body_0} />
         <mesh castShadow receiveShadow geometry={nodes.Object_11.geometry} material={materials.Big_Bioo_Body} />
+        <mesh>
+          <boxGeometry args={[1, 1, 1]} />
+          <meshStandardMaterial color="red" />
+        </mesh>
       </group>
     </group>
   );

@@ -30,6 +30,19 @@
   }
   --animate-marquee: marquee 50s linear infinite;
   --animate-marquee-vertical: marquee-vertical 50s linear infinite;
+  --animate-drift: drift 14s ease-in-out infinite alternate;
+
+  @keyframes drift {
+    0% {
+      transform: translate(-8%, -6%) scale(1) rotate(0deg);
+    }
+    50% {
+      transform: translate(6%, 4%) scale(1.15) rotate(12deg);
+    }
+    100% {
+      transform: translate(10%, 8%) scale(1.25) rotate(-10deg);
+    }
+  }
 
   @keyframes marquee {
     from {
@@ -54,6 +67,15 @@ body {
   font-family: "Funnel Display", sans-serif;
   color: white;
   scroll-behavior: smooth;
+}
+
+/* overflow-x lives here instead of on body — setting only one overflow
+   axis on body forces the browser to compute the other as `auto`,
+   silently turning body into its own scroll container. That breaks
+   position:sticky for descendants (they stick relative to their nearest
+   scrolling ancestor, which was quietly becoming body instead of the
+   true viewport). #root doesn't have this side effect. */
+#root {
   overflow-x: hidden;
 }
 
@@ -66,7 +88,7 @@ body {
 }
 
 .section-spacing {
-  @apply min-h-screen mt-20 md:mt-30;
+  @apply mt-20 md:mt-30;
 }
 
 .text-heading {
@@ -100,19 +122,16 @@ body {
 
 /* About Section */
 .grid-1 {
-  @apply row-span-2 md:col-span-3 h-[15rem] md:h-full relative overflow-hidden hover:-translate-y-1 duration-200;
-}
-.grid-2 {
-  @apply row-span-1 md:col-span-3 h-[15rem] md:h-full relative overflow-hidden hover:-translate-y-1 duration-200;
+  @apply row-span-1 md:col-span-6 h-[15rem] md:h-full relative overflow-hidden hover:-translate-y-1 duration-200;
 }
 .grid-3 {
   @apply row-span-1 md:col-span-3 h-[15rem] md:h-full relative overflow-hidden hover:-translate-y-1 duration-200;
 }
 .grid-4 {
-  @apply row-span-1 md:col-span-2 h-[15rem] md:h-full relative overflow-hidden hover:-translate-y-1 duration-200;
+  @apply row-span-1 md:col-span-3 h-[15rem] md:h-full relative overflow-hidden hover:-translate-y-1 duration-200;
 }
 .grid-5 {
-  @apply row-span-1 md:col-span-4 h-[15rem] md:h-full relative overflow-hidden hover:-translate-y-1 duration-200;
+  @apply row-span-1 md:col-span-6 h-[15rem] md:h-full relative overflow-hidden hover:-translate-y-1 duration-200;
 }
 
 .grid-default-color {

@@ -195,12 +195,12 @@ export const mySocials = [
   },
   {
     name: "Linkedin",
-    href: "https://www.linkedin.com/in/ali-sanati/",
+    href: "https://www.linkedin.com/in/luis-frederick-conda-33a836336",
     icon: "/assets/socials/linkedIn.svg",
   },
   {
     name: "Instagram",
-    href: "https://www.instagram.com/ali.sanatidev/reels/",
+    href: "https://www.instagram.com/fr3dsz/",
     icon: "/assets/socials/instagram.svg",
   },
 ];
