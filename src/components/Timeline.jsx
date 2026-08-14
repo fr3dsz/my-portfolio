@@ -1,57 +1,74 @@
-import { useScroll, useTransform, useInView, motion } from "motion/react";
+import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
-const TimelineItem = ({ item, index }) => {
+const listVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { type: "tween", duration: 0.5, ease: "easeOut" } },
+};
+
+const TimelineItem = ({ item }) => {
   const cardRef = useRef(null);
   const isActive = useInView(cardRef, { margin: "-45% 0px -45% 0px" });
   const isCurrent = item.date?.toLowerCase().includes("present");
 
   return (
-    <motion.div className="relative pl-10 mb-8" initial={{ opacity: 0, y: 40, scale: 0.96 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: "-80px" }} transition={{ type: "spring", stiffness: 120, damping: 16, delay: index * 0.08 }}>
-      <motion.div
-        className="absolute top-2 h-2.5 w-2.5 -translate-x-1/2 rounded-full"
+    <motion.li className="relative pl-12 pb-8 last:pb-0" variants={itemVariants}>
+      <motion.span
+        className="absolute top-6 h-2.5 w-2.5 -translate-x-1/2 rounded-full"
         style={{ left: "var(--timeline-x)" }}
         animate={{
-          backgroundColor: isActive ? "var(--color-lavender)" : "rgba(255,255,255,0.3)",
-          scale: isActive ? 1.3 : 1,
+          backgroundColor: isActive ? "var(--color-lavender)" : "rgba(255,255,255,0.25)",
+          boxShadow: isActive
+            ? "0 0 0 4px rgba(155,95,219,0.18), 0 0 18px rgba(155,95,219,0.55)"
+            : "0 0 0 0px rgba(0,0,0,0)",
+          scale: isActive ? 1.25 : 1,
         }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        transition={{ type: "spring", stiffness: 280, damping: 20 }}
       />
 
       <motion.div
         ref={cardRef}
         whileHover={{ y: -4 }}
         animate={{
-          borderColor: isActive ? "var(--color-lavender)" : "rgba(255,255,255,0.1)",
-          boxShadow: isActive ? "0 0 24px -4px rgba(155,95,219,0.45)" : "0 0 0px rgba(0,0,0,0)",
+          borderColor: isActive ? "rgba(155,95,219,0.5)" : "rgba(255,255,255,0.08)",
+          boxShadow: isActive ? "0 10px 40px -10px rgba(155,95,219,0.35)" : "0 0 0px rgba(0,0,0,0)",
         }}
-        transition={{ type: "spring", stiffness: 200, damping: 22 }}
-        className="rounded-2xl border-l-2 bg-gradient-to-b from-storm/60 to-indigo/60 p-5"
+        transition={{ type: "spring", stiffness: 220, damping: 24 }}
+        className="rounded-2xl border bg-gradient-to-b from-storm/50 to-indigo/50 p-6"
       >
-        {isCurrent && (
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-royal/20 px-3 py-1 text-xs font-semibold text-mint mb-3">
-            <span className="h-1.5 w-1.5 rounded-full bg-mint" />
-            Current
+        <div className="mb-3 flex flex-wrap items-center gap-2">
+          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-neutral-400">
+            {item.date}
           </span>
-        )}
-        <p className="mb-2 text-sm font-medium text-neutral-500">{item.date}</p>
-        <h3 className="text-xl font-medium text-neutral-200">{item.title}</h3>
-        <p className="mb-3 text-base text-neutral-500">{item.job}</p>
-        <ul className="space-y-1.5">
-          {item.contents.map((content, contentIndex) => (
-            <li key={contentIndex} className="text-base leading-relaxed text-neutral-400 list-disc list-inside">
+          {isCurrent && (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-royal/20 px-3 py-1 text-xs font-semibold text-mint">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-mint" />
+              Current
+            </span>
+          )}
+        </div>
+        <h3 className="text-lg font-semibold text-neutral-100 md:text-xl">{item.title}</h3>
+        <p className="mt-0.5 mb-4 text-sm font-medium text-lavender/90">{item.job}</p>
+        <ul className="space-y-2.5">
+          {(item.contents || []).map((content, contentIndex) => (
+            <li key={contentIndex} className="flex gap-2.5 text-[15px] leading-relaxed text-neutral-300">
+              <span className="mt-[9px] size-1.5 shrink-0 rounded-full bg-lavender/60" />
               {content}
             </li>
           ))}
         </ul>
       </motion.div>
-    </motion.div>
+    </motion.li>
   );
 };
 
 export const Timeline = ({ data }) => {
   const listRef = useRef(null);
-  const containerRef = useRef(null);
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
@@ -65,24 +82,31 @@ export const Timeline = ({ data }) => {
   }, []);
 
   const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 20%", "end 70%"],
+    target: listRef,
+    offset: ["start 25%", "end 60%"],
   });
 
   const fillHeight = useTransform(scrollYProgress, [0, 1], [0, height]);
   const fillOpacity = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
 
   return (
-    <div className="c-space section-spacing" ref={containerRef}>
-      <h2 className="mb-10 text-heading">My Work Experience</h2>
-      <div ref={listRef} className="relative [--timeline-x:14px]">
-        <div style={{ left: "var(--timeline-x)", height: height + "px" }} className="absolute top-0 w-px bg-white/10" />
-        <motion.div style={{ left: "var(--timeline-x)", height: fillHeight, opacity: fillOpacity }} className="absolute top-0 w-px bg-gradient-to-b from-lavender via-lavender/60 to-transparent" />
+    <motion.ul
+      ref={listRef}
+      variants={listVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-60px" }}
+      className="relative mt-10 [--timeline-x:14px]"
+    >
+      <div style={{ left: "var(--timeline-x)", height: height + "px" }} className="absolute top-0 w-px bg-white/10" />
+      <motion.div
+        style={{ left: "var(--timeline-x)", height: fillHeight, opacity: fillOpacity }}
+        className="absolute top-0 w-px bg-gradient-to-b from-lavender via-lavender/60 to-transparent"
+      />
 
-        {data.map((item, index) => (
-          <TimelineItem key={index} item={item} index={index} />
-        ))}
-      </div>
-    </div>
+      {data.map((item, index) => (
+        <TimelineItem key={item._id ?? index} item={item} />
+      ))}
+    </motion.ul>
   );
 };
