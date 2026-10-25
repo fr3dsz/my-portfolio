@@ -4,8 +4,14 @@ History derived from the git log (newest first). Future entries should be append
 
 ## Unreleased / next steps
 
+- Phase 1 polish (branch `development`): visitor-relative time zone in About, new Contact section (05) with `mailto:`, copy button and optional résumé link; nav adds Experience and Contact (desktop from `md`); GitHub added to socials, empty WhatsApp entry removed; readable tech-stack labels; meta description + Open Graph tags; copyright year computed.
+
 - No tests exist yet; nothing automated in CI.
-- Dead code cleanup candidates: `src/components/Card.jsx`, `cobe` dependency, `src/App.css`, unused `myProjects`/`experiences` exports in `src/constants/index.js`.
+
+## `31f3288` — redesign: editorial-technical layout, drop 3D hero and parallax
+
+- New token system and typography in `index.css`; removed Ghost/GLB hero, parallax layers, orbiting circles, dead code and unused assets.
+- Added `SectionHeading`, favicon, and project docs.
 
 ## 2026-08-06 — `de9933d` feat: added backend using sanity, and improved to be more scalable
 

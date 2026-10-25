@@ -5,6 +5,8 @@ const LINKS = [
   { href: "#home", label: "Home", code: "01" },
   { href: "#about", label: "About", code: "02" },
   { href: "#work", label: "Work", code: "03" },
+  { href: "#experience", label: "Experience", code: "04" },
+  { href: "#contact", label: "Contact", code: "05" },
 ];
 
 const SECTION_IDS = LINKS.map((link) => link.href.slice(1));
@@ -49,7 +51,7 @@ const Navbar = () => {
             <a href="#home" className="font-display text-lg text-ink transition-colors hover:text-accent">
               fr3dsz
             </a>
-            <nav className="hidden items-center gap-8 sm:flex" aria-label="Primary">
+            <nav className="hidden items-center gap-6 md:flex lg:gap-8" aria-label="Primary">
               {LINKS.map((link) => {
                 const isActive = active === link.href.slice(1);
                 return (
@@ -65,7 +67,7 @@ const Navbar = () => {
               onClick={() => setIsOpen(!isOpen)}
               aria-expanded={isOpen}
               aria-controls="mobile-nav"
-              className="font-mono text-xs uppercase tracking-[0.15em] text-stone transition-colors hover:text-ink sm:hidden"
+              className="font-mono text-xs uppercase tracking-[0.15em] text-stone transition-colors hover:text-ink md:hidden"
             >
               {isOpen ? "Close" : "Menu"}
             </button>
@@ -80,7 +82,7 @@ const Navbar = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-10 bg-canvas pt-24 sm:hidden"
+            className="fixed inset-0 z-10 bg-canvas pt-24 md:hidden"
           >
             <nav className="c-space" aria-label="Mobile">
               {LINKS.map((link) => (

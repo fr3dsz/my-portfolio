@@ -4,16 +4,16 @@ Status of the portfolio project as of the last repository inspection. Everything
 
 ## What this is
 
-A single-page personal portfolio for **Luis Frederick Conda ("fr3dsz")**, a full-stack developer based in the Philippines. Sections: Navbar, Hero (3D ghost), About, Experiences (timeline), Projects, and Footer. A Testimonial section exists but is currently disabled.
+A single-page personal portfolio for **Luis Frederick Conda ("fr3dsz")**, a full-stack developer based in Manila, Philippines. Sections, in order: Navbar, Hero, About (02), Selected Work (03), Experience (04), Contact (05), Footer. A Testimonial section exists but is disabled.
+
+Visual system: editorial-technical redesign (see `DESIGN-SPEC.md`) — no 3D, no parallax.
 
 ## Tech snapshot
 
 - React 19 + Vite 8 (JavaScript/JSX; no TS in the frontend)
-- Tailwind CSS v4 (via `@tailwindcss/vite`), custom theme in `src/index.css`
-- 3D: Three.js, `@react-three/fiber`, `@react-three/drei`, `maath`
-- Animation: `motion` (Framer Motion)
+- Tailwind CSS v4 (via `@tailwindcss/vite`), tokens in `src/index.css` `@theme`
+- Animation: `motion`
 - Content: Sanity CMS v6 (backend studio) + `@sanity/client`
-- Package name `portfolio`, version `0.0.0`, private
 
 ## Commands
 
@@ -30,22 +30,13 @@ Backend studio (`backend/my-portfolio/`): `npm run dev` (sanity dev), `npm run b
 
 - **Sanity client**: project `cnu9hemn`, dataset `production`, `apiVersion 2024-01-01`, `useCdn: true` (`src/lib/sanity.js`).
 - **Live (Sanity-driven)**: Projects section, Experiences section.
-- **Hardcoded**: About section (skills, timezone, contact), Footer socials (`src/constants/index.js`), Hero text.
+- **Hardcoded** in `src/constants/index.js`: `profile` (name, email, location, IANA time zone, résumé URL) and `mySocials` (GitHub, LinkedIn, Instagram). Also hardcoded: About copy, tech-stack groups (`Frameworks.jsx`), Hero facts and copy.
 
 ## Known issues / notable gaps
 
-- **No tests** — no test framework, no `*.test`/`*.spec` files. Only `dev`, `build`, `lint`, `preview` scripts exist.
-- **Dead code**:
-  - `src/components/Card.jsx` — never imported.
-  - `src/constants/index.js` — `myProjects` and `experiences` exports are no longer used (superseded by Sanity); only `mySocials` (Footer) and `reviews` (Testimonial) are referenced.
-  - `cobe` — declared in `package.json` but never imported.
-  - `src/App.css` — legacy Vite starter styles, never imported.
-- **Disabled section**: `Testimonial` is commented out in `src/App.jsx`.
-- **Dormant data**: hardcoded `reviews` in `src/constants/index.js` only feed the disabled Testimonial.
-- `README.md` live link (`fr3dsz.dev` placeholder) is not yet populated.
-
-## Environment notes
-
-- The hero uses a GLB model at `public/models/big_boo_super_mario_world_custom.glb` (Sketchfab, "Big Boo Super Mario World (Custom)" by StinkySkunk12).
-- Background uses 8 layered pixel-art PNGs in `public/assets/Starry_night_Layer_*.png`.
-- `dist/` and `node_modules/` are gitignored; `backend/my-portfolio/` has its own `node_modules`.
+- **No tests** — no test framework; only `dev`, `build`, `lint`, `preview`.
+- **No résumé yet** — the Contact résumé button renders only when `profile.resumeUrl` is set.
+- **No `og:image` / canonical URL** — `index.html` has description and Open Graph text tags, but no image or live URL exists yet.
+- **Section order is hardcoded** in `App.jsx`; nav links and `NN /` codes in `Navbar.jsx` and each `SectionHeading` must be kept in sync by hand. (Planned: Sanity page builder.)
+- **Disabled section**: `Testimonial` is commented out in `App.jsx`; its `reviews` data is placeholder.
+- `README.md` still describes the old 3D/parallax hero and has a placeholder live link.

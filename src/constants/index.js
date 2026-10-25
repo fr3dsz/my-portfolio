@@ -1,18 +1,25 @@
+// Single source for personal details until they move to Sanity Site Settings.
+export const profile = {
+  name: "Luis Conda",
+  email: "luisfrederickconda@gmail.com",
+  location: "Manila, PH",
+  timeZone: "Asia/Manila",
+  // Drop a PDF in public/ and set e.g. "/resume.pdf" to show the résumé link.
+  resumeUrl: "",
+};
+
 export const mySocials = [
   {
-    name: "WhatsApp",
-    href: "",
-    icon: "/assets/socials/whatsApp.svg",
+    name: "GitHub",
+    href: "https://github.com/fr3dsz",
   },
   {
-    name: "Linkedin",
+    name: "LinkedIn",
     href: "https://www.linkedin.com/in/luis-frederick-conda-33a836336",
-    icon: "/assets/socials/linkedIn.svg",
   },
   {
     name: "Instagram",
     href: "https://www.instagram.com/fr3dsz/",
-    icon: "/assets/socials/instagram.svg",
   },
 ];
 

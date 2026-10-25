@@ -11,15 +11,13 @@ repo root
 ├── package.json          # frontend deps/scripts
 ├── eslint.config.js      # flat config
 ├── public/               # static assets served at /
-│   ├── assets/           # PNG layers, SVG logos/socials, project images
-│   └── models/           # hero GLB model
+│   ├── assets/           # SVG logos, copy icons, project images
 ├── src/
 │   ├── main.jsx          # createRoot -> <App/>
 │   ├── App.jsx           # section composition
 │   ├── index.css         # Tailwind v4 @theme + custom utilities/animations
-│   ├── App.css           # legacy Vite starter CSS (unused)
-│   ├── sections/         # Navbar, Hero, About, Experiences, Projects, Testimonial, Footer
-│   ├── components/       # reusable pieces (Ghost, Timeline, Project, etc.)
+│   ├── sections/         # Navbar, Hero, About, Projects, Experiences, Contact, Testimonial, Footer
+│   ├── components/       # reusable pieces (SectionHeading, Timeline, Project, Timezone, etc.)
 │   ├── lib/              # sanity client + GROQ queries
 │   └── constants/        # hardcoded socials/reviews/project data
 └── backend/my-portfolio/ # Sanity Studio (TypeScript)
@@ -30,11 +28,11 @@ repo root
 
 ## Composition
 
-`App.jsx` renders sections in order inside a `max-w-7xl` container:
+`App.jsx` renders sections in order inside a `max-w-[1200px]` container:
 
-`Navbar → Hero → About → Experiences → Projects → (Testimonial disabled) → Footer`
+`Navbar → Hero → About (02) → Projects (03, #work) → Experiences (04) → (Testimonial disabled) → Contact (05) → Footer`
 
-Sections are full-page blocks; `Navbar` is fixed with a mobile menu.
+`Navbar` is fixed; desktop links show from `md` up, a full-screen menu below. Its `LINKS` codes and each section's `SectionHeading code` are hardcoded and must match the `App.jsx` order.
 
 ## Data layer
 
@@ -44,9 +42,9 @@ Two sources of truth:
    - `src/sections/Projects.jsx` — fetches and transforms project documents, renders a row per project + preview modal.
    - `src/sections/Experiences.jsx` — fetches experience documents into `Timeline`.
 2. **Hardcoded constants** — `src/constants/index.js`:
+   - `profile` (name, email, location, IANA `timeZone`, `resumeUrl`) → `About.jsx`, `Contact.jsx`
    - `mySocials` → `Footer.jsx`
    - `reviews` → `Testimonial.jsx` (section disabled)
-   - `myProjects`, `experiences` → unused (legacy)
 
 Sanity schema types (`backend/my-portfolio/schemaTypes/`):
 - `project` — title (required), description, subDescription[], href (url), image (hotspot), tags[] (refs to techStack), order.
@@ -55,14 +53,15 @@ Sanity schema types (`backend/my-portfolio/schemaTypes/`):
 
 ## Rendering / visual systems
 
-- **Hero 3D**: `Hero.jsx` mounts a React Three Fiber `Canvas`; `Ghost.jsx` loads the GLB, plays its animation, and animates position/scale/rotation every frame. `ParallaxBackground.jsx` renders 8 scroll-parallax PNG layers. `HeroText.jsx` overlays animated copy.
-- **About grid**: CSS grid of cards styled via Tailwind utilities and custom classes in `index.css` (`.grid-*`, `.headtext`, `.subtext`). Includes `Timezone` (live clocks), `CopyEmailButton`, and `Frameworks` (orbiting skill icons via `OrbitingCircles`).
+- **Hero**: static typographic nameplate (`HeroText.jsx`) plus a mono facts list (role, base, stack, status).
+- **About**: 12-col grid — intro copy and grouped tech stack (`Frameworks.jsx`) on the left; a sidebar with `Timezone` and availability. `Timezone` shows the local time at `profile.timeZone`, its UTC offset, and the gap to the visitor's own time zone, all computed with `Intl` so DST is handled.
+- **Contact**: `mailto:` link, `CopyEmailButton` (handles clipboard failure), optional résumé link.
 - **Experiences**: `Timeline.jsx` draws a scroll-driven progress line (motion `useScroll`/`useTransform` + `ResizeObserver`).
 - **Projects**: row list with hover image preview (motion springs) and a `ProjectDetails` modal.
 
 ## Styling
 
-Tailwind v4 theme defined in `src/index.css` under `@theme`: custom colors (deep purple/black palette: `primary`, `midnight`, `navy`, `indigo`, `storm`, plus accents `aqua`, `mint`, `royal`, `lavender`, `fuchsia`, `orange`, `sand`, `coral`) and animations (`orbit`, `marquee`, `marquee-vertical`, `drift`). Font: "Funnel Display" via Google Fonts. `#root` sets `overflow-x: hidden` (deliberately not on `body` — see `DECISIONS.md`).
+Tailwind v4 theme defined in `src/index.css` under `@theme`: warm-charcoal editorial tokens (`canvas`, `surface`, `elevated`, `line`, `ink`, `stone`, `accent`, `aubergine`, `status`) and three type roles (Fraunces display, Instrument Sans body, JetBrains Mono metadata). See `DESIGN-SPEC.md`. `#root` sets `overflow-x: hidden` (deliberately not on `body` — see `DECISIONS.md`).
 
 ## Configuration highlights
 

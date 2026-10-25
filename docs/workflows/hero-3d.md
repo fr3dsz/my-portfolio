@@ -1,5 +1,7 @@
 # Workflow: Hero / 3D Ghost
 
+> **Obsolete:** the 3D ghost and parallax hero were removed in `31f3288` (editorial redesign). Kept for history only.
+
 How the hero section renders the 3D ghost model, the parallax starry background, and the animated copy.
 
 ## Files involved

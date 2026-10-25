@@ -2,7 +2,7 @@ const HeroText = () => {
   return (
     <div>
       <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
-        01 / Index — Manila, PH · full-stack · open to remote
+        01 / Index
       </p>
       <h1 className="mt-6 font-display font-normal text-ink" style={{ fontSize: "clamp(2.5rem, 8vw, 4.5rem)", lineHeight: 1.05, letterSpacing: "-0.01em" }}>
         Luis Conda

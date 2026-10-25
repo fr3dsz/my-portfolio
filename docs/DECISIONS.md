@@ -16,7 +16,9 @@ The client reads from the Sanity CDN for public, read-only data (`src/lib/sanity
 
 Queries sort by a numeric `order` field in the CMS (`| order(order asc)` in `src/lib/queries.js`). Editors control display order by editing that field in the Studio rather than code.
 
-## Single `useFrame` owns the Ghost transform
+## Single `useFrame` owns the Ghost transform (superseded)
+
+The 3D hero was removed in the editorial redesign (`31f3288`); kept for history.
 
 `Ghost.jsx` was changed so that exactly one `useFrame` hook drives the model's position/scale/rotation. The inline comments document a previous bug: a second hook was overwriting `position.y` back to a hardcoded value every frame, pushing the model out of the camera's visible range.
 
@@ -45,3 +47,11 @@ Fully built (`src/sections/Testimonial.jsx`, `Marquee`, `reviews` in constants) 
 ## Dead code acknowledged
 
 `Card.jsx`, the `cobe` dependency, and `src/App.css` (Vite starter leftovers) are unused but not removed. These are cleanup candidates, not intentional features.
+
+## Time zone shown relative to the visitor
+
+The About sidebar used to list five hardcoded world clocks with static `UTC±N` labels, which were wrong during DST and didn't answer what visitors care about. `Timezone.jsx` now shows only the home time zone and the gap to the visitor's own time zone, computed with `Intl.DateTimeFormat` so offsets stay correct year-round.
+
+## Personal details centralized in `profile`
+
+Name, email, location, time zone and résumé URL live in one `profile` object in `src/constants/index.js` so the planned Sanity Site Settings migration replaces a single source.
