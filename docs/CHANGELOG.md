@@ -4,6 +4,8 @@ History derived from the git log (newest first). Future entries should be append
 
 ## Unreleased / next steps
 
+- Frontend live on Vercel at https://fr3dsz-portfolio.vercel.app; origin added to Sanity CORS; dashboard `SITE_URL`, canonical and `og:url` point at it.
+
 - Add `vercel.json` (Vite preset; `/admin` → hosted Studio redirect) and deploy notes in `docs/workflows/dev-build.md`.
 
 - Studio upgraded to Sanity 6.20 (react/react-dom 19.3.1) to fix schema extraction on deploy; first deploy to https://fr3dsz-portfolio.sanity.studio (`studioHost`, `appId` in `sanity.cli.ts`). Singletons seeded and order ranks backfilled in `production`.

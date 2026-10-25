@@ -8,8 +8,8 @@ import {CaseIcon, CodeBlockIcon, DocumentsIcon} from './icons'
 import {schemaTypes, singletons, singletonTypes} from './schemaTypes'
 import {siteOverviewWidget} from './dashboard/SiteOverviewWidget'
 
-// Frontend the "Open site" button points to — replace with the live domain once deployed.
-const SITE_URL = 'http://localhost:5173'
+// Frontend the dashboard's "Open site" button points to.
+const SITE_URL = 'https://fr3dsz-portfolio.vercel.app'
 
 // Singletons can be edited and published, but not created, duplicated or deleted.
 const singletonActions = new Set(['publish', 'discardChanges', 'restore'])

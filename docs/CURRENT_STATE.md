@@ -37,11 +37,10 @@ Backend studio (`backend/my-portfolio/`, Sanity 6.20, opens on the Dashboard; ho
 
 - **No tests** — no test framework; only `dev`, `build`, `lint`, `preview`.
 - **No résumé yet** — upload one in Site Settings → Contact & Social; the Contact button renders only when it exists.
-- **Frontend not deployed yet** — Vercel is the chosen host (`vercel.json`); after the first deploy, add the CORS origin and set `SITE_URL` (see `workflows/dev-build.md`).
-- **No `og:image` / canonical URL** — `index.html` has description and Open Graph text tags, but no image or live URL exists yet.
+- **Frontend live** at https://fr3dsz-portfolio.vercel.app (Vercel, deploys `main`); the origin is in Sanity CORS (no credentials) and `/admin` redirects to the Studio.
+- **No `og:image`** — `index.html` has description, canonical and Open Graph text/url tags, but no share image yet. Update canonical and `og:url` if a custom domain is added.
 - **Blank first paint** — the page waits for the layout query before rendering (see `DECISIONS.md`).
 - **No live preview in the Studio** — edits show on the site after publishing (CDN may lag briefly).
 - **Dormant section**: `Testimonial.jsx` and its placeholder `reviews` data are not registered in the builder.
 - `README.md` still describes the old 3D/parallax hero and has a placeholder live link.
 - **Studio dependencies** — `npm audit` in `backend/my-portfolio/` reports 17 advisories (1 critical), all transitive.
-- **Dashboard "Open site"** points at `http://localhost:5173` until `SITE_URL` in `sanity.config.ts` is set to the live domain.
