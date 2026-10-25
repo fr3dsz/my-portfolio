@@ -37,6 +37,7 @@ Backend studio (`backend/my-portfolio/`, Sanity 6.20, opens on the Dashboard; ho
 
 - **No tests** — no test framework; only `dev`, `build`, `lint`, `preview`.
 - **No résumé yet** — upload one in Site Settings → Contact & Social; the Contact button renders only when it exists.
+- **Frontend not deployed yet** — Vercel is the chosen host (`vercel.json`); after the first deploy, add the CORS origin and set `SITE_URL` (see `workflows/dev-build.md`).
 - **No `og:image` / canonical URL** — `index.html` has description and Open Graph text tags, but no image or live URL exists yet.
 - **Blank first paint** — the page waits for the layout query before rendering (see `DECISIONS.md`).
 - **No live preview in the Studio** — edits show on the site after publishing (CDN may lag briefly).

@@ -82,5 +82,6 @@ Tailwind v4 theme defined in `src/index.css` under `@theme`: warm-charcoal edito
 ## Configuration highlights
 
 - `vite.config.js`: `@vitejs/plugin-react` + `@tailwindcss/vite`.
+- `vercel.json`: Vite framework preset; `/admin` and `/admin/*` temporarily redirect (307) to the hosted Studio at `fr3dsz-portfolio.sanity.studio`, preserving the sub-path.
 - `eslint.config.js`: `@eslint/js` recommended + `react-hooks` + `react-refresh`, browser globals, ignores `dist`, allows unused vars matching `^[A-Z_]` or `motion`.
-- Sanity studio uses `structureTool` + `visionTool`; CLI enables auto-updates.
+- Sanity studio uses `dashboardTool` + `structureTool` + `visionTool`; CLI sets `studioHost`/`appId` and enables auto-updates.

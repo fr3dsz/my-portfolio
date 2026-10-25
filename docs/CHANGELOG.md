@@ -4,6 +4,8 @@ History derived from the git log (newest first). Future entries should be append
 
 ## Unreleased / next steps
 
+- Add `vercel.json` (Vite preset; `/admin` → hosted Studio redirect) and deploy notes in `docs/workflows/dev-build.md`.
+
 - Studio upgraded to Sanity 6.20 (react/react-dom 19.3.1) to fix schema extraction on deploy; first deploy to https://fr3dsz-portfolio.sanity.studio (`studioHost`, `appId` in `sanity.cli.ts`). Singletons seeded and order ranks backfilled in `production`.
 
 - Phase 4 (branch `development`): Studio dashboard with a content-checklist overview widget, recently-edited list and project widgets; drag-and-drop ordering for projects and experience (`orderRank`) with a backfill script; frontend queries sort by `orderRank`; Studio gets its own `@types/react-dom` and an `icons.tsx` wrapper for `@sanity/icons` v5.

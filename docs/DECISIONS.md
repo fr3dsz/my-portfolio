@@ -73,3 +73,7 @@ The dashboard's custom widget answers "what's still missing on my site?" (résum
 ## Studio pinned to Sanity ≥ 6.20 (with matching react / react-dom)
 
 On 6.15, `sanity deploy` failed during schema extraction ("exports is not defined") once `@sanity/orderable-document-list` was added — it imports the CommonJS-only `lexorank`. 6.20 extracts it correctly. 6.20 also requires `react` and `react-dom` at the exact same version (both 19.3.1), so bump them together.
+
+## `/admin` redirects to the hosted Studio instead of embedding it
+
+Embedding the Studio in the Vite app would merge two separately-versioned packages (risking duplicate React copies), add several MB of Studio JS that must be lazy-loaded, and require a router plus SPA rewrites — for a mostly cosmetic same-domain URL. A temporary (307) redirect in `vercel.json` gives the `/admin` habit with no coupling; being non-permanent, it can later be replaced by an embedded Studio without browsers having cached the redirect.
