@@ -4,7 +4,7 @@ import SectionHeading from "../components/SectionHeading";
 import { client } from "../lib/sanity";
 import { EXPERIENCES_QUERY } from "../lib/queries";
 
-const Experiences = () => {
+const Experiences = ({ section }) => {
   const [experiences, setExperiences] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,8 +21,8 @@ const Experiences = () => {
   }, []);
 
   return (
-    <section id="experience" className="c-space pb-16 pt-24 md:pb-24 md:pt-32">
-      <SectionHeading code="04">Experience</SectionHeading>
+    <section id={section.anchor} className="c-space pb-16 pt-24 md:pb-24 md:pt-32">
+      <SectionHeading code={section.code}>{section.title}</SectionHeading>
 
       {isLoading && <p className="mt-10 font-mono text-sm text-stone">Loading experience...</p>}
       {error && <p className="mt-10 font-mono text-sm text-stone">Couldn&apos;t load experiences. Please try again later.</p>}

@@ -38,3 +38,5 @@ export const ABOUT_QUERY = `*[_id == "about"][0] {
   education[] { school, credential, period },
   techGroups[] { label, items[]->{ name, "iconUrl": icon.asset->url } }
 }`;
+
+export const HOME_PAGE_QUERY = `*[_id == "homePage"][0] { sections[] }`;

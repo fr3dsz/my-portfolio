@@ -56,6 +56,31 @@ export const defaultAbout = {
   ],
 };
 
+// Page layout used when the Sanity "homePage" singleton is missing or empty.
+// Also supplies per-type defaults (title, anchor, …) for blank CMS fields.
+export const defaultSections = [
+  {
+    _key: "hero",
+    _type: "heroSection",
+    navLabel: "Home",
+    anchor: "home",
+    standfirst:
+      "I'm a full-stack developer growing into an *AI engineer* — using AI to build faster and ship better, and turning every hurdle into the next thing I learn.",
+    stackLine: "React · Node · C# · Tailwind",
+  },
+  { _key: "about", _type: "aboutSection", title: "About Me", navLabel: "About", anchor: "about" },
+  { _key: "projects", _type: "projectsSection", title: "Selected Work", navLabel: "Work", anchor: "work" },
+  { _key: "experience", _type: "experienceSection", title: "Experience", navLabel: "Experience", anchor: "experience" },
+  {
+    _key: "contact",
+    _type: "contactSection",
+    title: "Contact",
+    navLabel: "Contact",
+    anchor: "contact",
+    intro: "Have a role, a project, or just a question? My inbox is open.",
+  },
+];
+
 export const reviews = [
   {
     name: "Jack",

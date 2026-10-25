@@ -5,7 +5,7 @@ import SectionHeading from "../components/SectionHeading";
 import { client } from "../lib/sanity";
 import { PROJECTS_QUERY } from "../lib/queries";
 
-const Projects = () => {
+const Projects = ({ section }) => {
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -39,8 +39,8 @@ const Projects = () => {
   const openProject = projects.find((project) => project.id === openId) || null;
 
   return (
-    <section id="work" className="c-space pb-16 pt-24 md:pb-24 md:pt-32">
-      <SectionHeading code="03">Selected Work</SectionHeading>
+    <section id={section.anchor} className="c-space pb-16 pt-24 md:pb-24 md:pt-32">
+      <SectionHeading code={section.code}>{section.title}</SectionHeading>
 
       {isLoading && <p className="mt-12 font-mono text-sm text-stone">Loading projects…</p>}
       {error && <p className="mt-12 font-mono text-sm text-stone">Couldn&apos;t load projects. Please try again later.</p>}

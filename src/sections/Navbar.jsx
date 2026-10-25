@@ -1,15 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
-
-const LINKS = [
-  { href: "#home", label: "Home", code: "01" },
-  { href: "#about", label: "About", code: "02" },
-  { href: "#work", label: "Work", code: "03" },
-  { href: "#experience", label: "Experience", code: "04" },
-  { href: "#contact", label: "Contact", code: "05" },
-];
-
-const SECTION_IDS = LINKS.map((link) => link.href.slice(1));
 
 function useActiveSection(ids) {
   const [active, setActive] = useState(ids[0]);
@@ -35,9 +25,11 @@ function useActiveSection(ids) {
   return active;
 }
 
-const Navbar = () => {
+// links: [{ href: "#anchor", label, code }] in page order
+const Navbar = ({ links, homeHref }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const active = useActiveSection(SECTION_IDS);
+  const sectionIds = useMemo(() => links.map((link) => link.href.slice(1)), [links]);
+  const active = useActiveSection(sectionIds);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.4 });
@@ -48,11 +40,11 @@ const Navbar = () => {
       <header className="fixed inset-x-0 z-20 border-b border-line bg-canvas">
         <div className="mx-auto max-w-[1200px] c-space">
           <div className="flex items-center justify-between py-4">
-            <a href="#home" className="font-display text-lg text-ink transition-colors hover:text-accent">
+            <a href={homeHref} className="font-display text-lg text-ink transition-colors hover:text-accent">
               fr3dsz
             </a>
             <nav className="hidden items-center gap-6 md:flex lg:gap-8" aria-label="Primary">
-              {LINKS.map((link) => {
+              {links.map((link) => {
                 const isActive = active === link.href.slice(1);
                 return (
                   <a key={link.href} href={link.href} className="group font-mono text-xs uppercase tracking-[0.15em]">
@@ -85,7 +77,7 @@ const Navbar = () => {
             className="fixed inset-0 z-10 bg-canvas pt-24 md:hidden"
           >
             <nav className="c-space" aria-label="Mobile">
-              {LINKS.map((link) => (
+              {links.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}

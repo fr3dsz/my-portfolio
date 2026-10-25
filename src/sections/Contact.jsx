@@ -2,16 +2,16 @@ import CopyEmailButton from "../components/CopyEmailButton";
 import SectionHeading from "../components/SectionHeading";
 import { useSiteSettings } from "../lib/siteSettings";
 
-const Contact = () => {
+const Contact = ({ section }) => {
   const { email, resumeUrl } = useSiteSettings();
 
   return (
-    <section id="contact" className="c-space pb-8 pt-24 md:pt-32">
-      <SectionHeading code="05">Contact</SectionHeading>
+    <section id={section.anchor} className="c-space pb-8 pt-24 md:pt-32">
+      <SectionHeading code={section.code}>{section.title}</SectionHeading>
 
       <div className="mt-12 md:mt-16">
         <p className="max-w-[40ch] font-display text-2xl font-normal leading-snug text-stone md:text-3xl">
-          Have a role, a project, or just a question? My inbox is open.
+          {section.intro}
         </p>
 
         <a

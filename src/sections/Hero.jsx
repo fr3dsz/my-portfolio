@@ -2,21 +2,21 @@ import AvailabilityStatus from "../components/AvailabilityStatus";
 import HeroText from "../components/HeroText";
 import { useSiteSettings } from "../lib/siteSettings";
 
-const Hero = () => {
+const Hero = ({ section }) => {
   const { role, location } = useSiteSettings();
   const facts = [
     { label: "Role", value: role },
     { label: "Base", value: location },
-    { label: "Stack", value: "React · Node · C# · Tailwind" },
-  ];
+    { label: "Stack", value: section.stackLine },
+  ].filter((fact) => fact.value);
 
   return (
-    <section id="home" className="relative left-1/2 w-screen -translate-x-1/2 flex min-h-screen overflow-hidden">
+    <section id={section.anchor} className="relative left-1/2 w-screen -translate-x-1/2 flex min-h-screen overflow-hidden">
       <span aria-hidden="true" className="hidden lg:block absolute left-6 top-24 h-4 w-4 border-l-2 border-t-2 border-line" />
       <span aria-hidden="true" className="hidden lg:block absolute right-6 top-24 h-4 w-4 border-r-2 border-t-2 border-accent" />
 
       <div className="c-space relative z-10 mx-auto flex w-full max-w-[1200px] flex-col justify-center pb-24 pt-36 md:pt-44">
-        <HeroText />
+        <HeroText code={section.code} standfirst={section.standfirst} />
 
         <dl className="mt-14 max-w-2xl border-t border-line pt-6 md:mt-20">
           {facts.map((fact) => (

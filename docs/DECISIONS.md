@@ -56,4 +56,12 @@ The About sidebar used to list five hardcoded world clocks with static `UTC±N` 
 
 Identity, availability, contact and About content live in two singleton documents (`siteSettings`, `about`) with fixed ids, so GROQ fetches them by `_id` and the Studio can't create duplicates. The frontend renders bundled fallbacks (`defaultSettings`, `defaultAbout`) immediately and merges CMS values field by field (`src/lib/content.js`). Tradeoffs: no loading state or blank page, at the cost of a possible brief content swap when CMS values differ from the fallbacks — keep the two roughly in sync.
 
-Layout/order of sections is deliberately not part of these documents; it belongs to the planned page builder.
+Layout/order of sections is deliberately not part of these documents; it lives in `homePage`.
+
+## Page builder: sections place content, documents hold it
+
+`homePage.sections[]` only decides which sections appear, in what order, and how they are framed (title, nav label, anchor, plus small per-section copy like the hero standfirst). Collection content stays in its own documents (projects, experience, about, settings), so reordering or hiding a section never touches content. Section numbers and nav links are derived from the order instead of being stored, so they can't drift.
+
+## Layout waits for the CMS; content doesn't
+
+Unlike settings/about (which render fallbacks immediately), `App.jsx` renders nothing until the layout query resolves. Rendering the default order first would visibly reorder the page whenever the CMS layout differs. The cost is a short blank first paint (one CDN request). Fetch failure, a missing `homePage`, or no visible sections all fall back to `defaultSections` so the page is never empty.

@@ -1,7 +1,7 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
-import {schemaTypes, singletonTypes} from './schemaTypes'
+import {schemaTypes, singletons, singletonTypes} from './schemaTypes'
 
 // Singletons can be edited and published, but not created, duplicated or deleted.
 const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
@@ -19,9 +19,9 @@ export default defineConfig({
         S.list()
           .title('Content')
           .items([
-            ...[...singletonTypes].map((type) =>
+            ...Object.entries(singletons).map(([type, title]) =>
               S.listItem()
-                .title(type === 'siteSettings' ? 'Site Settings' : 'About')
+                .title(title)
                 .id(type)
                 .child(S.document().schemaType(type).documentId(type)),
             ),

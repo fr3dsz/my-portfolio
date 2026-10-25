@@ -1,4 +1,4 @@
-// Creates the siteSettings and about singletons with the site's current content.
+// Creates the homePage, siteSettings and about singletons with the site's current content.
 // Safe to re-run: createIfNotExists never overwrites a document you've edited.
 //
 //   npx sanity exec scripts/seed-singletons.ts --with-user-token
@@ -37,8 +37,40 @@ const about = {
   ],
 }
 
+// Mirrors defaultSections in the frontend's src/constants/index.js.
+const section = (type: string, fields: Record<string, unknown>) => ({
+  _key: type.replace('Section', ''),
+  _type: type,
+  enabled: true,
+  ...fields,
+})
+
+const homePage = {
+  _id: 'homePage',
+  _type: 'homePage',
+  sections: [
+    section('heroSection', {
+      navLabel: 'Home',
+      anchor: 'home',
+      standfirst:
+        "I'm a full-stack developer growing into an *AI engineer* — using AI to build faster and ship better, and turning every hurdle into the next thing I learn.",
+      stackLine: 'React · Node · C# · Tailwind',
+    }),
+    section('aboutSection', {title: 'About Me', navLabel: 'About', anchor: 'about'}),
+    section('projectsSection', {title: 'Selected Work', navLabel: 'Work', anchor: 'work'}),
+    section('experienceSection', {title: 'Experience', navLabel: 'Experience', anchor: 'experience'}),
+    section('contactSection', {
+      title: 'Contact',
+      navLabel: 'Contact',
+      anchor: 'contact',
+      intro: 'Have a role, a project, or just a question? My inbox is open.',
+    }),
+  ],
+}
+
 const result = await client
   .transaction()
+  .createIfNotExists(homePage)
   .createIfNotExists(siteSettings)
   .createIfNotExists(about)
   .commit()

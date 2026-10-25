@@ -9,7 +9,7 @@ import { useSiteSettings } from "../lib/siteSettings";
 
 const Label = ({ children }) => <p className="font-mono text-xs uppercase tracking-[0.2em] text-stone/70">{children}</p>;
 
-const About = () => {
+const About = ({ section }) => {
   const settings = useSiteSettings();
   // fallback content renders at once; CMS content replaces it when it arrives
   const [about, setAbout] = useState(defaultAbout);
@@ -23,8 +23,8 @@ const About = () => {
   const { heading, bio, photo, currently, education, techGroups } = about;
 
   return (
-    <section id="about" className="c-space pb-16 pt-24 md:pb-24 md:pt-32">
-      <SectionHeading code="02">About Me</SectionHeading>
+    <section id={section.anchor} className="c-space pb-16 pt-24 md:pb-24 md:pt-32">
+      <SectionHeading code={section.code}>{section.title}</SectionHeading>
 
       <div className="mt-12 grid gap-y-12 md:mt-16 md:grid-cols-12 md:gap-x-12">
         <div className="md:col-span-7">
