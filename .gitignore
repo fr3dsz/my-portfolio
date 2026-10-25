@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# GitNexus local index (generated, per-machine)
+.gitnexus/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Timeline } from "../components/Timeline";
+import SectionHeading from "../components/SectionHeading";
 import { client } from "../lib/sanity";
 import { EXPERIENCES_QUERY } from "../lib/queries";
 
@@ -20,13 +21,12 @@ const Experiences = () => {
   }, []);
 
   return (
-    <section className="c-space section-spacing" id="experience">
-      <h2 className="text-heading">My Work Experience</h2>
-      <div className="mt-12 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-700 to-transparent" />
+    <section id="experience" className="c-space pb-16 pt-24 md:pb-24 md:pt-32">
+      <SectionHeading code="04">Experience</SectionHeading>
 
-      {isLoading && <p className="mt-10 text-neutral-400">Loading experience...</p>}
-      {error && <p className="mt-10 text-red-400">Couldn't load experiences. Please try again later.</p>}
-      {!isLoading && !error && experiences.length === 0 && <p className="mt-10 text-neutral-400">No experiences yet.</p>}
+      {isLoading && <p className="mt-10 font-mono text-sm text-stone">Loading experience...</p>}
+      {error && <p className="mt-10 font-mono text-sm text-stone">Couldn&apos;t load experiences. Please try again later.</p>}
+      {!isLoading && !error && experiences.length === 0 && <p className="mt-10 font-mono text-sm text-stone">No experiences yet.</p>}
 
       {!isLoading && !error && experiences.length > 0 && <Timeline data={experiences} />}
     </section>

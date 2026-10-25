@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+
 const CopyEmailButton = () => {
   const [copied, setCopied] = useState(false);
   const email = "luisfrederickconda@gmail.com";
@@ -12,19 +13,25 @@ const CopyEmailButton = () => {
       setCopied(false);
     }, 2000);
   };
+
   return (
-    <motion.button onClick={copyToClipboard} whileHover={{ y: -5 }} whileTap={{ scale: 1.05 }} className="relative px-1 py-4 text-sm text-center rounded-full font-extralight bg-primary w-[12rem] cursor-pointer overflow-hidden">
-      <AnimatePresence mode="wait">
+    <motion.button
+      onClick={copyToClipboard}
+      whileTap={{ scale: 0.98 }}
+      className="group inline-flex cursor-pointer items-center gap-3 border border-line px-5 py-3 font-mono text-sm text-ink transition-colors duration-200 hover:border-accent"
+      aria-live="polite"
+    >
+      <AnimatePresence mode="wait" initial={false}>
         {copied ? (
-          <motion.p className="flex items-center justify-center gap-2" key="copied" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.1, ease: "easeInOut" }}>
-            <img src="assets/copy-done.svg" className="w-5" alt="copy Icon" />
+          <motion.span key="copied" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15 }} className="flex items-center gap-3">
+            <img src="assets/copy-done.svg" className="size-4" alt="" />
             Email has Copied
-          </motion.p>
+          </motion.span>
         ) : (
-          <motion.p className="flex items-center justify-center gap-2" key="copy" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.1 }}>
-            <img src="assets/copy.svg" className="w-5" alt="copy icon" />
+          <motion.span key="copy" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="flex items-center gap-3">
+            <img src="assets/copy.svg" className="size-4 opacity-60" alt="" />
             Copy Email Address
-          </motion.p>
+          </motion.span>
         )}
       </AnimatePresence>
     </motion.button>

@@ -1,36 +1,109 @@
-import { motion } from "motion/react";
+import { useEffect, useRef } from "react";
+import { AnimatePresence, motion } from "motion/react";
 
-const ProjectDetails = ({ title, description, subDescription, image, tags, href, closeModal }) => {
+const ProjectDetails = ({ project, closeModal }) => {
+  const dialogRef = useRef(null);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") closeModal();
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [closeModal]);
+
+  useEffect(() => {
+    dialogRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    const handleFocus = (event) => {
+      if (dialogRef.current && !dialogRef.current.contains(event.target)) {
+        dialogRef.current.focus();
+      }
+    };
+    document.addEventListener("focusin", handleFocus);
+    return () => document.removeEventListener("focusin", handleFocus);
+  }, []);
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center w-full h-full overflow-hidden backdrop-blur-sm">
-      <motion.div className="relative max-w-2xl border shadow-sm rounded-2xl bg-gradient-to-l from-midnight to-navy border-white/10" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }}>
-        <button onClick={closeModal} className="absolute p-2 rounded-sm top-5 right-5 bg-midnight hover:bg-gray-500">
-          <img src="assets/close.svg" className="w-6 h-6" />
-        </button>
-        <img src={image} alt={title} className="w-full rounded-t-2xl" />
-        <div className="p-5">
-          <h5 className="mb-2 text-2xl font-bold text-white">{title}</h5>
-          <p className="mb-3 font-normal text-neutral-400">{description}</p>
-          {subDescription.map((subDesc, index) => (
-            <p className="mb-3 font-normal text-neutral-400" key={index}>
-              {subDesc}
-            </p>
-          ))}
-          <div className="flex items-center justify-between mt-4">
-            <div className="flex gap-3">
-              {tags.map((tag) => (
-                <img key={tag.id} src={tag.path} alt={tag.name} className="rounded-lg size-10 hover-animation" />
-              ))}
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+        onClick={closeModal}
+        className="fixed inset-0 z-50 bg-canvas/90 backdrop-blur-[2px]"
+        aria-hidden="true"
+      />
+      <motion.div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label={project.title}
+        tabIndex={-1}
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 16 }}
+        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+        onClick={(e) => e.stopPropagation()}
+        className="fixed inset-0 z-[60] overflow-y-auto bg-canvas"
+      >
+        <article className="mx-auto min-h-full max-w-[860px] px-5 py-16 sm:px-10 md:py-20">
+          <header className="flex items-start justify-between gap-6">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-stone/70">Case study</p>
+            <button onClick={closeModal} className="border border-line px-4 py-2 font-mono text-xs uppercase tracking-[0.15em] text-stone transition-colors hover:border-accent hover:text-ink">
+              Close
+            </button>
+          </header>
+
+          <h2 className="mt-8 font-display text-3xl font-normal text-ink md:text-5xl">{project.title}</h2>
+
+          {project.image && (
+            <div className="mt-8 overflow-hidden border border-line">
+              <img src={project.image} alt={`${project.title} interface`} className="w-full object-cover" />
             </div>
-            {href && (
-              <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-medium cursor-pointer hover-animation">
-                View Project <img src="assets/arrow-up.svg" className="size-4" />
-              </a>
-            )}
+          )}
+
+          <p className="mt-8 max-w-[65ch] text-base leading-relaxed text-stone">{project.description}</p>
+
+          <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 border-t border-line pt-6">
+            {project.tags.map((tag) => (
+              <span key={tag.id} className="font-mono text-xs uppercase tracking-[0.12em] text-stone">
+                {tag.name}
+              </span>
+            ))}
           </div>
-        </div>
+
+          {project.subDescription?.length > 0 && (
+            <div className="mt-10 space-y-5">
+              {project.subDescription.map((block, blockIndex) => {
+                const text = Array.isArray(block?.children) ? block.children.map((child) => child?.text || "").join("") : "";
+                return text.trim() ? (
+                  <p key={block._key || blockIndex} className="max-w-[65ch] text-base leading-relaxed text-stone">
+                    {text}
+                  </p>
+                ) : null;
+              })}
+            </div>
+          )}
+
+          {project.href && (
+            <a href={project.href} target="_blank" rel="noopener noreferrer" className="mt-12 inline-flex items-center gap-3 border border-line px-5 py-3 font-mono text-sm text-ink transition-colors hover:border-accent">
+              View Live Project
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="size-4" aria-hidden="true">
+                <path d="M7 17 17 7m0 0H8m9 0v9" />
+              </svg>
+            </a>
+          )}
+        </article>
       </motion.div>
-    </div>
+    </AnimatePresence>
   );
 };
 

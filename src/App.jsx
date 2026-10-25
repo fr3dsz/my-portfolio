@@ -9,12 +9,12 @@ import Footer from "./sections/Footer";
 
 const App = () => {
   return (
-    <div className="container mx-auto max-w-7xl">
+    <div className="mx-auto max-w-[1200px]">
       <Navbar />
       <Hero />
       <About />
-      <Experiences />
       <Projects />
+      <Experiences />
       {/* <Testimonial /> */}
       <Footer />
     </div>

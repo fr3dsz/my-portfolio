@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const CITIES = [
   { name: "New York", tz: "America/New_York", offset: "UTC-5" },
@@ -31,28 +31,18 @@ const Timezone = () => {
     });
 
   return (
-    <div className="flex items-center justify-around w-full h-full px-2">
+    <div>
       {CITIES.map(({ name, tz, offset, highlight }) => (
-        <div key={name} className={`flex flex-col items-center gap-1 px-2 py-1 rounded-xl transition-all ${highlight ? "bg-[#1C1642] border border-[#6B2FCC]" : "opacity-60"}`}>
-          {/* Day/Night icon */}
-          <span className="text-xs">{isDay(tz) ? "☀️" : "🌙"}</span>
-
-          {/* Time */}
-          <p className={`font-mono font-bold tabular-nums ${highlight ? "text-[#C87FFF] text-base" : "text-neutral-400 text-sm"}`}>{fmt(tz)}</p>
-
-          {/* City */}
-          <p className={`text-xs font-medium ${highlight ? "text-white" : "text-neutral-500"}`}>{name}</p>
-
-          {/* Offset */}
-          <p className="text-[10px] text-neutral-600">{offset}</p>
-
-          {/* Manila live ping dot */}
-          {highlight && (
-            <span className="relative flex h-1.5 w-1.5 mt-0.5">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-[#9B5FDB] opacity-75 animate-ping" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#9B5FDB]" />
-            </span>
-          )}
+        <div key={name} className={`flex items-baseline justify-between gap-4 border-b border-line py-2.5 last:border-0 ${highlight ? "text-ink" : "text-stone"}`}>
+          <span className="flex items-baseline gap-2.5 font-mono text-sm">
+            {highlight && <span aria-hidden="true" className="size-1.5 translate-y-[-2px] self-center rounded-full bg-status" />}
+            {name}
+            <span className="text-[11px] normal-case tracking-normal text-stone/60">{offset}</span>
+          </span>
+          <span className="whitespace-nowrap font-mono text-sm tabular-nums">
+            {fmt(tz)}
+            <span className="ml-2 text-[11px] uppercase tracking-wider text-stone/60">{isDay(tz) ? "day" : "night"}</span>
+          </span>
         </div>
       ))}
     </div>
