@@ -4,6 +4,8 @@ History derived from the git log (newest first). Future entries should be append
 
 ## Unreleased / next steps
 
+- Phase 2 (branch `development`): `siteSettings` and `about` Sanity singletons with custom Studio structure and locked actions; frontend `SiteSettingsProvider` + `useSiteSettings`, `src/lib/content.js` fetch-and-merge with fallbacks; About gains photo, Currently, Education and CMS-driven tech groups; shared `AvailabilityStatus`; seed script for the singletons.
+
 - Phase 1 polish (branch `development`): visitor-relative time zone in About, new Contact section (05) with `mailto:`, copy button and optional résumé link; nav adds Experience and Contact (desktop from `md`); GitHub added to socials, empty WhatsApp entry removed; readable tech-stack labels; meta description + Open Graph tags; copyright year computed.
 
 - No tests exist yet; nothing automated in CI.

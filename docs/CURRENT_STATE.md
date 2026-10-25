@@ -29,13 +29,15 @@ Backend studio (`backend/my-portfolio/`): `npm run dev` (sanity dev), `npm run b
 ## Content / data
 
 - **Sanity client**: project `cnu9hemn`, dataset `production`, `apiVersion 2024-01-01`, `useCdn: true` (`src/lib/sanity.js`).
-- **Live (Sanity-driven)**: Projects section, Experiences section.
-- **Hardcoded** in `src/constants/index.js`: `profile` (name, email, location, IANA time zone, résumé URL) and `mySocials` (GitHub, LinkedIn, Instagram). Also hardcoded: About copy, tech-stack groups (`Frameworks.jsx`), Hero facts and copy.
+- **Live (Sanity-driven)**: Projects, Experiences, Site Settings (identity, availability, email, résumé, socials), About (bio, photo, currently, education, tech groups).
+- **Fallbacks** in `src/constants/index.js` (`defaultSettings`, `defaultAbout`) render until the singletons are filled in.
+- **Still hardcoded**: Hero standfirst and stack line, section order, Contact copy.
+- **Singletons not created yet** in the dataset — run `npx sanity exec scripts/seed-singletons.ts --with-user-token` in `backend/my-portfolio/`, or open them in the Studio and publish.
 
 ## Known issues / notable gaps
 
 - **No tests** — no test framework; only `dev`, `build`, `lint`, `preview`.
-- **No résumé yet** — the Contact résumé button renders only when `profile.resumeUrl` is set.
+- **No résumé yet** — upload one in Site Settings → Contact & Social; the Contact button renders only when it exists.
 - **No `og:image` / canonical URL** — `index.html` has description and Open Graph text tags, but no image or live URL exists yet.
 - **Section order is hardcoded** in `App.jsx`; nav links and `NN /` codes in `Navbar.jsx` and each `SectionHeading` must be kept in sync by hand. (Planned: Sanity page builder.)
 - **Disabled section**: `Testimonial` is commented out in `App.jsx`; its `reviews` data is placeholder.

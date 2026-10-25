@@ -1,27 +1,60 @@
-// Single source for personal details until they move to Sanity Site Settings.
-export const profile = {
+// Fallback content, shown until (or if) the Sanity "siteSettings" / "about"
+// singletons are filled in. Shapes match the normalized output of src/lib/content.js.
+export const defaultSettings = {
   name: "Luis Conda",
-  email: "luisfrederickconda@gmail.com",
+  role: "Full-stack developer",
   location: "Manila, PH",
   timeZone: "Asia/Manila",
-  // Drop a PDF in public/ and set e.g. "/resume.pdf" to show the résumé link.
+  availableForWork: true,
+  availabilityLabel: "Open to work · remote worldwide",
+  email: "luisfrederickconda@gmail.com",
   resumeUrl: "",
+  socials: [
+    { name: "GitHub", url: "https://github.com/fr3dsz" },
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/luis-frederick-conda-33a836336" },
+    { name: "Instagram", url: "https://www.instagram.com/fr3dsz/" },
+  ],
 };
 
-export const mySocials = [
-  {
-    name: "GitHub",
-    href: "https://github.com/fr3dsz",
-  },
-  {
-    name: "LinkedIn",
-    href: "https://www.linkedin.com/in/luis-frederick-conda-33a836336",
-  },
-  {
-    name: "Instagram",
-    href: "https://www.instagram.com/fr3dsz/",
-  },
-];
+const localIcon = (file) => `assets/logos/${file}.svg`;
+
+export const defaultAbout = {
+  heading: "",
+  bio: [
+    "I enjoy building software that solves real problems through full-stack projects and hands-on development. I've worked with different technologies in academic projects and focus more on understanding how systems work.",
+  ],
+  photo: null,
+  currently: [],
+  education: [],
+  techGroups: [
+    {
+      label: "Languages",
+      items: [
+        { name: "C++", iconUrl: localIcon("cplusplus") },
+        { name: "C#", iconUrl: localIcon("csharp") },
+        { name: "JavaScript", iconUrl: localIcon("javascript") },
+      ],
+    },
+    {
+      label: "Frontend",
+      items: [
+        { name: "React", iconUrl: localIcon("react") },
+        { name: "HTML", iconUrl: localIcon("html5") },
+        { name: "CSS", iconUrl: localIcon("css3") },
+        { name: "Tailwind CSS", iconUrl: localIcon("tailwindcss") },
+      ],
+    },
+    {
+      label: "Tooling",
+      items: [
+        { name: "Git", iconUrl: localIcon("git") },
+        { name: "GitHub", iconUrl: localIcon("github") },
+        { name: "Vite", iconUrl: localIcon("vitejs") },
+        { name: "Microsoft", iconUrl: localIcon("microsoft") },
+      ],
+    },
+  ],
+};
 
 export const reviews = [
   {

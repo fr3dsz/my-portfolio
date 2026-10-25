@@ -52,6 +52,8 @@ Fully built (`src/sections/Testimonial.jsx`, `Marquee`, `reviews` in constants) 
 
 The About sidebar used to list five hardcoded world clocks with static `UTC±N` labels, which were wrong during DST and didn't answer what visitors care about. `Timezone.jsx` now shows only the home time zone and the gap to the visitor's own time zone, computed with `Intl.DateTimeFormat` so offsets stay correct year-round.
 
-## Personal details centralized in `profile`
+## Site-wide content as Sanity singletons with field-level fallbacks
 
-Name, email, location, time zone and résumé URL live in one `profile` object in `src/constants/index.js` so the planned Sanity Site Settings migration replaces a single source.
+Identity, availability, contact and About content live in two singleton documents (`siteSettings`, `about`) with fixed ids, so GROQ fetches them by `_id` and the Studio can't create duplicates. The frontend renders bundled fallbacks (`defaultSettings`, `defaultAbout`) immediately and merges CMS values field by field (`src/lib/content.js`). Tradeoffs: no loading state or blank page, at the cost of a possible brief content swap when CMS values differ from the fallbacks — keep the two roughly in sync.
+
+Layout/order of sections is deliberately not part of these documents; it belongs to the planned page builder.

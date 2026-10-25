@@ -1,8 +1,10 @@
 import CopyEmailButton from "../components/CopyEmailButton";
 import SectionHeading from "../components/SectionHeading";
-import { profile } from "../constants";
+import { useSiteSettings } from "../lib/siteSettings";
 
 const Contact = () => {
+  const { email, resumeUrl } = useSiteSettings();
+
   return (
     <section id="contact" className="c-space pb-8 pt-24 md:pt-32">
       <SectionHeading code="05">Contact</SectionHeading>
@@ -13,17 +15,17 @@ const Contact = () => {
         </p>
 
         <a
-          href={`mailto:${profile.email}`}
+          href={`mailto:${email}`}
           className="mt-8 inline-block break-all font-display text-xl text-ink underline decoration-line underline-offset-8 transition-colors hover:text-accent hover:decoration-accent md:text-3xl"
         >
-          {profile.email}
+          {email}
         </a>
 
         <div className="mt-8 flex flex-wrap items-center gap-4">
-          <CopyEmailButton email={profile.email} />
-          {profile.resumeUrl && (
+          <CopyEmailButton email={email} />
+          {resumeUrl && (
             <a
-              href={profile.resumeUrl}
+              href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 border border-line px-5 py-3 font-mono text-sm text-ink transition-colors duration-200 hover:border-accent"
