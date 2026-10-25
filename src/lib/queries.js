@@ -1,4 +1,4 @@
-export const PROJECTS_QUERY = `*[_type == "project"] | order(order asc) {
+export const PROJECTS_QUERY = `*[_type == "project"] | order(orderRank asc, order asc) {
   _id,
   title,
   description,
@@ -8,7 +8,7 @@ export const PROJECTS_QUERY = `*[_type == "project"] | order(order asc) {
   tags[]->{ _id, name, icon { asset->{url} } }
 }`;
 
-export const EXPERIENCES_QUERY = `*[_type == "experience"] | order(order asc) {
+export const EXPERIENCES_QUERY = `*[_type == "experience"] | order(orderRank asc, order asc) {
   _id,
   title,
   job,

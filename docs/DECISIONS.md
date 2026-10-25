@@ -14,7 +14,7 @@ The client reads from the Sanity CDN for public, read-only data (`src/lib/sanity
 
 ## Ordering handled by GROQ, not the frontend
 
-Queries sort by a numeric `order` field in the CMS (`| order(order asc)` in `src/lib/queries.js`). Editors control display order by editing that field in the Studio rather than code.
+Queries sort by `orderRank` (a LexoRank string written by the drag-and-drop lists from `@sanity/orderable-document-list`), then the legacy numeric `order` as a tie-breaker: `| order(orderRank asc, order asc)` in `src/lib/queries.js`. Typing numbers was replaced by dragging; the backfill script converts existing `order` values so nothing reshuffles. Until it runs, every document lacks `orderRank` and the tie-breaker alone decides; avoid creating new projects/experiences before backfilling, or the mix may sort unexpectedly.
 
 ## Single `useFrame` owns the Ghost transform (superseded)
 
@@ -65,3 +65,7 @@ Layout/order of sections is deliberately not part of these documents; it lives i
 ## Layout waits for the CMS; content doesn't
 
 Unlike settings/about (which render fallbacks immediately), `App.jsx` renders nothing until the layout query resolves. Rendering the default order first would visibly reorder the page whenever the CMS layout differs. The cost is a short blank first paint (one CDN request). Fetch failure, a missing `homePage`, or no visible sections all fall back to `defaultSections` so the page is never empty.
+
+## Studio dashboard: a checklist, not analytics
+
+The dashboard's custom widget answers "what's still missing on my site?" (résumé, photo, bio, tech groups, layout, project images, unranked documents) and links straight to the document to fix it. No deploy widget: the frontend host isn't chosen yet. Add one (e.g. a Vercel/Netlify deploy widget) once it is.

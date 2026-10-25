@@ -52,14 +52,20 @@ Two sources of truth:
 2. **Hardcoded constants** — `src/constants/index.js`: the fallbacks above, plus `reviews` → `Testimonial.jsx` (section disabled).
 
 Sanity schema types (`backend/my-portfolio/schemaTypes/`):
-- `project` — title (required), description, subDescription[], href (url), image (hotspot), tags[] (refs to techStack), order.
-- `experience` — title, job, date (free-form string), contents[], order.
+- `project` — title (required), description, subDescription[], href (url), image (hotspot), tags[] (refs to techStack), orderRank (drag-and-drop), order (hidden, legacy).
+- `experience` — title, job, date (free-form string), contents[], orderRank (drag-and-drop), order (hidden, legacy).
 - `techStack` — name (required), icon (image, svg/png).
 - `homePage` (singleton) — `sections[]` of the section object types in `schemaTypes/sections.ts`. Every section shares `enabled`, `title`, `navLabel`, `anchor` (regex-validated); hero adds `standfirst` (`*word*` → emphasis) and `stackLine`, contact adds `intro`, text adds `body[]`.
 - `siteSettings` (singleton) — name, role, location, IANA timeZone (validated), availableForWork, availabilityLabel, email, resume (PDF file), socials[] {name, url}.
 - `about` (singleton) — heading, bio[] (paragraphs), photo (+alt), currently[] {label, value}, education[] {school, credential, period}, techGroups[] {label, items[] → techStack}.
 
 Studio (`sanity.config.ts`): a custom structure lists the singletons (`singletons` map in `schemaTypes/index.ts`: Home Page Layout, Site Settings, About) first as fixed documents, then the other types. Singletons are removed from "new document" templates and limited to publish / discard / restore actions. `scripts/seed-singletons.ts` creates all three with the current content and default layout (`createIfNotExists`).
+
+Studio admin (phase 4):
+- **Dashboard** (`dashboardTool`, first tool in the Studio): custom `dashboard/SiteOverviewWidget.tsx` (content counts, a checklist of missing content with "Fix" links into the document, hidden-section count, "Open site" button pointing at `SITE_URL` in `sanity.config.ts`), a "Recently edited" document list, and Sanity's project info/users widgets.
+- **Drag-and-drop lists** for Projects and Experience (`@sanity/orderable-document-list`, `orderRank` field). `scripts/backfill-order-rank.ts` gives existing documents ranks matching their old `order`.
+- **Icons**: `@sanity/icons` v5 has no named icon exports; `icons.tsx` wraps `<Icon symbol="…" />` for the few the Studio uses.
+- The Studio declares its own `@types/react-dom`; without it TypeScript borrows the frontend's copy, which pulls in a second `@types/react` and breaks `@sanity/ui` component types.
 
 ## Rendering / visual systems
 

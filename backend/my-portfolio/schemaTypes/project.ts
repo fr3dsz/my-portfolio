@@ -1,9 +1,11 @@
 import {defineField, defineType} from 'sanity'
+import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
 
 export default defineType({
   name: 'project',
   title: 'Project',
   type: 'document',
+  orderings: [orderRankOrdering],
   fields: [
     defineField({name: 'title', type: 'string', validation: (r) => r.required()}),
     defineField({name: 'description', type: 'text'}),
@@ -21,6 +23,8 @@ export default defineType({
       type: 'array',
       of: [{type: 'reference', to: [{type: 'techStack'}]}],
     }),
-    defineField({name: 'order', type: 'number'}),
+    orderRankField({type: 'project'}),
+    // superseded by orderRank (drag-and-drop); kept so the backfill script can read it
+    defineField({name: 'order', type: 'number', hidden: true}),
   ],
 })

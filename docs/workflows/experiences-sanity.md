@@ -12,9 +12,9 @@ From editing experience entries in the CMS to the animated timeline on the page.
 
 ## Data flow
 
-1. **Content editing (CMS)** — An editor creates/edits an `experience` document: `title`, `job`, `date` (free-form string, e.g. `"2023-2024"` or `"2025-Present"`), `contents[]` (array of strings), `order` (number). The `date` convention matters for rendering — see Gotchas.
+1. **Content editing (CMS)** — An editor creates/edits an `experience` document: `title`, `job`, `date` (free-form string, e.g. `"2023-2024"` or `"2025-Present"`), `contents[]` (array of strings), `orderRank` (hidden, set by drag-and-drop in the Studio list; the old numeric `order` is hidden and only used as a tie-breaker). The `date` convention matters for rendering — see Gotchas.
 
-2. **Querying** — `Experiences.jsx` runs `client.fetch(EXPERIENCES_QUERY)` on mount (`src/sections/Experiences.jsx:12`). The GROQ (`src/lib/queries.js:11`) selects `*[_type == "experience"]` sorted by `order asc` with the fields `_id`, `title`, `job`, `date`, `contents`. No references or projections beyond the scalar fields, so the raw result is used directly.
+2. **Querying** — `Experiences.jsx` runs `client.fetch(EXPERIENCES_QUERY)` on mount (`src/sections/Experiences.jsx:12`). The GROQ (`src/lib/queries.js:11`) selects `*[_type == "experience"]` sorted by `orderRank asc, order asc` with the fields `_id`, `title`, `job`, `date`, `contents`. No references or projections beyond the scalar fields, so the raw result is used directly.
 
 3. **Render** — Results are passed straight to `Timeline` (`Experiences.jsx`); no transformation step. `Timeline.jsx` renders one `TimelineItem` per entry with:
    - A "Current" badge when `date` contains "present" (case-insensitive).
@@ -26,5 +26,5 @@ From editing experience entries in the CMS to the animated timeline on the page.
 
 - **Content convention coupling**: the "Current" badge depends on the `date` string containing "present". Changing that convention silently disables the badge.
 - `isLoading` returns a placeholder message; a visible error state is rendered on fetch failure, and an empty state when no experiences exist.
-- Display order is controlled by the `order` field in the CMS.
+- Display order: drag entries in Studio → Experience (see the backfill note in `projects-sanity.md`).
 - List keys fall back to the map index only when `_id` is missing.
