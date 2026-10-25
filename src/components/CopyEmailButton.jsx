@@ -1,31 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-const CopyEmailButton = () => {
-  const [copied, setCopied] = useState(false);
-  const email = "luisfrederickconda@gmail.com";
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(email);
-    setCopied(true);
+const CopyEmailButton = ({ email }) => {
+  // idle | copied | failed
+  const [status, setStatus] = useState("idle");
 
-    setTimeout(() => {
-      setCopied(false);
-    }, 2000);
+  useEffect(() => {
+    if (status === "idle") return;
+    const reset = setTimeout(() => setStatus("idle"), 2000);
+    return () => clearTimeout(reset);
+  }, [status]);
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      setStatus("copied");
+    } catch {
+      setStatus("failed");
+    }
   };
+
+  const label = { idle: "Copy email", copied: "Email copied", failed: "Couldn't copy — select it instead" }[status];
+
   return (
-    <motion.button onClick={copyToClipboard} whileHover={{ y: -5 }} whileTap={{ scale: 1.05 }} className="relative px-1 py-4 text-sm text-center rounded-full font-extralight bg-primary w-[12rem] cursor-pointer overflow-hidden">
-      <AnimatePresence mode="wait">
-        {copied ? (
-          <motion.p className="flex items-center justify-center gap-2" key="copied" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.1, ease: "easeInOut" }}>
-            <img src="assets/copy-done.svg" className="w-5" alt="copy Icon" />
-            Email has Copied
-          </motion.p>
-        ) : (
-          <motion.p className="flex items-center justify-center gap-2" key="copy" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.1 }}>
-            <img src="assets/copy.svg" className="w-5" alt="copy icon" />
-            Copy Email Address
-          </motion.p>
-        )}
+    <motion.button
+      type="button"
+      onClick={copyToClipboard}
+      whileTap={{ scale: 0.98 }}
+      className="group inline-flex cursor-pointer items-center gap-3 border border-line px-5 py-3 font-mono text-sm text-ink transition-colors duration-200 hover:border-accent"
+      aria-live="polite"
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span key={status} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15 }} className="flex items-center gap-3">
+          <img src={status === "copied" ? "assets/copy-done.svg" : "assets/copy.svg"} className={`size-4 ${status === "copied" ? "" : "opacity-60"}`} alt="" />
+          {label}
+        </motion.span>
       </AnimatePresence>
     </motion.button>
   );

@@ -1,48 +1,26 @@
-@import url("https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..560;1,9..144,300..560&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&display=swap");
 @import "tailwindcss";
+
 @theme {
-  /* ── Backgrounds: shifted from blue-navy → deep purple-black ── */
-  --color-primary: #080512; /* deep space black */
-  --color-midnight: #0c081e; /* dark nebula */
-  --color-navy: #14103a; /* deep violet */
-  --color-indigo: #1c1642; /* dark purple */
-  --color-storm: #261e52; /* storm purple */
+  /* ── Earthy Aubergine — editorial-technical system ── */
+  --color-canvas: #171614;
+  --color-surface: #24211e;
+  --color-elevated: #302c27;
+  --color-line: #3b3732;
+  --color-ink: #e8e2d8;
+  --color-stone: #aaa298;
+  --color-accent: #8b7aa8;
+  --color-aubergine: #69577f;
+  --color-status: #7c8065;
 
-  /* ── Nebula accents: replaces teal/green with violet-purple ── */
-  --color-aqua: #9d55e8; /* nebula violet */
-  --color-mint: #c87fff; /* soft lavender glow */
-  --color-royal: #6b2fcc; /* deep royal purple */
-  --color-lavender: #9b5fdb; /* mid nebula purple */
+  /* ── Type roles: serif display · humanist sans · mono metadata ── */
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "Instrument Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* ── Warm accents: from the planet & asteroids ── */
-  --color-fuchsia: #c42e8c; /* kept — works as sharp accent */
-  --color-orange: #cc5e2e; /* planet copper (barely changed) */
-  --color-sand: #d4915a; /* asteroid amber (barely changed) */
-  --color-coral: #e84880; /* soft pink accent */
-  --animate-orbit: orbit 50s linear infinite;
-  @keyframes orbit {
-    0% {
-      transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(var(--radius) * 1px)) rotate(calc(var(--angle) * -1deg));
-    }
-    100% {
-      transform: rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px)) rotate(calc((var(--angle) * -1deg) - 360deg));
-    }
-  }
+  /* kept for the dormant Testimonial/Marquee components — no visual impact now */
   --animate-marquee: marquee 50s linear infinite;
   --animate-marquee-vertical: marquee-vertical 50s linear infinite;
-  --animate-drift: drift 14s ease-in-out infinite alternate;
-
-  @keyframes drift {
-    0% {
-      transform: translate(-8%, -6%) scale(1) rotate(0deg);
-    }
-    50% {
-      transform: translate(6%, 4%) scale(1.15) rotate(12deg);
-    }
-    100% {
-      transform: translate(10%, 8%) scale(1.25) rotate(-10deg);
-    }
-  }
 
   @keyframes marquee {
     from {
@@ -62,90 +40,65 @@
     }
   }
 }
-body {
-  background: #080512;
-  font-family: "Funnel Display", sans-serif;
-  color: white;
+
+html {
   scroll-behavior: smooth;
 }
 
-/* overflow-x lives here instead of on body — setting only one overflow
-   axis on body forces the browser to compute the other as `auto`,
-   silently turning body into its own scroll container. That breaks
-   position:sticky for descendants (they stick relative to their nearest
-   scrolling ancestor, which was quietly becoming body instead of the
-   true viewport). #root doesn't have this side effect. */
+body {
+  background: var(--color-canvas);
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+}
+
+/* overflow-x lives here — a single overflow axis on body makes body its own
+   scroll container and breaks position:sticky descendants. #root avoids that. */
 #root {
   overflow-x: hidden;
 }
 
-.c-space {
-  @apply sm:px-10 px-5 lg:px-15;
+/* anchored sections clear the fixed header */
+section[id] {
+  scroll-margin-top: 5rem;
 }
 
+::selection {
+  background: var(--color-accent);
+  color: var(--color-canvas);
+}
+
+/* themed browser surface */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-canvas);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border: 2px solid var(--color-canvas);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-stone);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* container gutters */
+.c-space {
+  @apply px-5 sm:px-10 lg:px-16;
+}
+
+/* quiet hover lift retained for the dormant Testimonial cards */
 .hover-animation {
   @apply hover:-translate-y-1 duration-200;
 }
 
-.section-spacing {
-  @apply mt-20 md:mt-30;
-}
-
-.text-heading {
-  @apply font-bold text-3xl md:text-4xl;
-}
-
-.headtext {
-  @apply mt-2 mb-2 text-xl;
-}
-
-.subtext {
-  @apply text-neutral-400 text-sm md:text-base text-pretty;
-}
-
-/* Navigation */
-.nav-ul {
-  @apply flex flex-col items-center gap-4 sm:flex-row md:gap-6 relative z-20;
-}
-
-.nav-li {
-  @apply text-neutral-400 hover:text-white max-sm:w-full max-sm:rounded-md py-2 max-sm:px-5;
-}
-
-.nav-link {
-  @apply text-lg md:text-base hover:text-white transition-colors;
-}
-/* Button Components */
-.btn {
-  @apply relative px-1 py-4 text-sm text-center rounded-full font-extralight bg-primary w-[12rem] cursor-pointer overflow-hidden;
-}
-
-/* About Section */
-.grid-1 {
-  @apply row-span-1 md:col-span-6 h-[15rem] md:h-full relative overflow-hidden hover:-translate-y-1 duration-200;
-}
-.grid-3 {
-  @apply row-span-1 md:col-span-3 h-[15rem] md:h-full relative overflow-hidden hover:-translate-y-1 duration-200;
-}
-.grid-4 {
-  @apply row-span-1 md:col-span-3 h-[15rem] md:h-full relative overflow-hidden hover:-translate-y-1 duration-200;
-}
-.grid-5 {
-  @apply row-span-1 md:col-span-6 h-[15rem] md:h-full relative overflow-hidden hover:-translate-y-1 duration-200;
-}
-
-.grid-default-color {
-  @apply p-6 bg-gradient-to-b from-storm to-indigo rounded-2xl;
-}
-
-.grid-special-color {
-  @apply p-6 bg-gradient-to-b from-royal to-lavender rounded-2xl;
-}
-.grid-black-color {
-  @apply p-6 bg-gradient-to-tl from-[#3A3A3A] via-[#242424] to-[#3A3A3A] rounded-2xl;
-}
-
-/* Contact Section*/
+/* field styles retained for the future contact form */
 .field-label {
   @apply text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
 }
@@ -156,4 +109,15 @@ body {
 
 .field-input-focus {
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

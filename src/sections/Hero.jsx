@@ -1,41 +1,45 @@
-import { Canvas, useFrame } from "@react-three/fiber";
+import AvailabilityStatus from "../components/AvailabilityStatus";
 import HeroText from "../components/HeroText";
-import ParallaxBackground from "../components/ParallaxBackground";
-import { Ghost } from "../components/Ghost";
-import { OrbitControls } from "@react-three/drei";
-import { useMediaQuery } from "react-responsive";
-import { easing } from "maath";
-import { Suspense } from "react";
-import Loader from "../components/Loader";
+import { useSiteSettings } from "../lib/siteSettings";
 
-const Hero = () => {
-  const isMobile = useMediaQuery({ maxWidth: 853 });
+const Hero = ({ section }) => {
+  const { role, location } = useSiteSettings();
+  const facts = [
+    { label: "Role", value: role },
+    { label: "Base", value: location },
+    { label: "Stack", value: section.stackLine },
+  ].filter((fact) => fact.value);
 
   return (
-    <section id="home" className="relative left-1/2 w-screen -translate-x-1/2 flex items-start justify-center md:items-start md:justify-start min-h-screen overflow-hidden">
-      <HeroText />
-      <ParallaxBackground />
-      <figure className="absolute inset-0" style={{ width: "100vw", height: "100vh" }}>
-        <Canvas camera={{ position: [0, 0, 5] }} gl={{ alpha: true }}>
-          {" "}
-          {/* centered camera */}
-          <Suspense fallback={<Loader />}>
-            <ambientLight intensity={0.4} />
-            <directionalLight position={[3, 6, 3]} intensity={1} />
-            <Ghost isMobile={isMobile} />
-            <OrbitControls enableZoom={false} />
-            <Rig />
-          </Suspense>
-        </Canvas>
-      </figure>
+    <section id={section.anchor} className="relative left-1/2 w-screen -translate-x-1/2 flex min-h-screen overflow-hidden">
+      <span aria-hidden="true" className="hidden lg:block absolute left-6 top-24 h-4 w-4 border-l-2 border-t-2 border-line" />
+      <span aria-hidden="true" className="hidden lg:block absolute right-6 top-24 h-4 w-4 border-r-2 border-t-2 border-accent" />
+
+      <div className="c-space relative z-10 mx-auto flex w-full max-w-[1200px] flex-col justify-center pb-24 pt-36 md:pt-44">
+        <HeroText code={section.code} standfirst={section.standfirst} />
+
+        <dl className="mt-14 max-w-2xl border-t border-line pt-6 md:mt-20">
+          {facts.map((fact) => (
+            <div key={fact.label} className="flex flex-wrap items-baseline gap-x-8 gap-y-1 border-b border-line py-2.5 last:border-0">
+              <dt className="w-24 shrink-0 font-mono text-xs uppercase tracking-[0.2em] text-stone/70">{fact.label}</dt>
+              <dd className="font-mono text-sm text-ink">{fact.value}</dd>
+            </div>
+          ))}
+          <div className="flex flex-wrap items-baseline gap-x-8 gap-y-1 py-2.5">
+            <dt className="w-24 shrink-0 font-mono text-xs uppercase tracking-[0.2em] text-stone/70">Status</dt>
+            <dd>
+              <AvailabilityStatus />
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <div className="absolute bottom-10 right-10 z-10 hidden items-center gap-3 lg:flex" aria-hidden="true">
+        <span className="h-16 w-px bg-line" />
+        <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-stone/70">scroll</span>
+      </div>
     </section>
   );
 };
-
-function Rig() {
-  return useFrame((state, delta) => {
-    easing.damp3(state.camera.position, [state.mouse.x / 10, state.mouse.y / 10, 5], 0.5, delta);
-  });
-}
 
 export default Hero;

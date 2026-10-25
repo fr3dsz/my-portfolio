@@ -1,21 +1,19 @@
-import { OrbitingCircles } from "./OrbitingCircles";
-
-export function Frameworks() {
-  const skills = ["cplusplus", "csharp", "css3", "github", "git", "html5", "javascript", "microsoft", "react", "tailwindcss", "vitejs"];
+export function Frameworks({ groups }) {
   return (
-    <div className="relative flex h-[15rem] w-full flex-col items-center justify-center">
-      <OrbitingCircles iconSize={40}>
-        {skills.map((skill, index) => (
-          <Icon key={index} src={`assets/logos/${skill}.svg`} />
-        ))}
-      </OrbitingCircles>
-      <OrbitingCircles iconSize={25} radius={100} reverse speed={2}>
-        {skills.reverse().map((skill, index) => (
-          <Icon key={index} src={`assets/logos/${skill}.svg`} />
-        ))}
-      </OrbitingCircles>
+    <div className="border-y border-line">
+      {groups.map((group) => (
+        <div key={group.label} className="border-b border-line py-4 last:border-b-0">
+          <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-stone/70">{group.label}</p>
+          <ul className="flex flex-wrap gap-x-6 gap-y-2.5">
+            {group.items.map(({ name, iconUrl }) => (
+              <li key={name} className="group flex items-center gap-2">
+                {iconUrl && <img src={iconUrl} alt="" className="size-4 opacity-50 saturate-0 transition duration-200 group-hover:opacity-100 group-hover:saturate-100" />}
+                <span className="font-mono text-sm text-stone transition-colors group-hover:text-ink">{name}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
 }
-
-const Icon = ({ src }) => <img src={src} className="duration-200 rounded-sm hover:scale-110" />;

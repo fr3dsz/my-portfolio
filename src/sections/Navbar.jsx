@@ -1,54 +1,98 @@
-import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
 
-function Navigation({ onLinkClick }) {
-  const links = [
-    { href: "#home", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#work", label: "Work" },
-  ];
+function useActiveSection(ids) {
+  const [active, setActive] = useState(ids[0]);
 
-  return (
-    <ul className="nav-ul">
-      {links.map((link) => (
-        <li className="nav-li" key={link.href}>
-          <a className="nav-link" href={link.href} onClick={onLinkClick}>
-            {link.label}
-          </a>
-        </li>
-      ))}
-    </ul>
-  );
+  useEffect(() => {
+    const targets = ids.map((id) => document.getElementById(id)).filter(Boolean);
+    if (targets.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]) setActive(visible[0].target.id);
+      },
+      { rootMargin: "-45% 0px -45% 0px" }
+    );
+
+    targets.forEach((target) => observer.observe(target));
+    return () => observer.disconnect();
+  }, [ids]);
+
+  return active;
 }
 
-const Navbar = () => {
+// links: [{ href: "#anchor", label, code }] in page order
+const Navbar = ({ links, homeHref }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const sectionIds = useMemo(() => links.map((link) => link.href.slice(1)), [links]);
+  const active = useActiveSection(sectionIds);
+
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.4 });
 
   return (
-    <div className="fixed inset-x-0 z-20 w-full backdrop-blur-lg bg-primary/40">
-      <div className="mx-auto c-space max-w-7xl">
-        <div className="flex items-center justify-between py-2 sm:py-0">
-          <a href="/" className="text-xl font-bold transition-colors text-neutral-400 hover:text-white">
-            fr3dsz
-          </a>
-          <button onClick={() => setIsOpen(!isOpen)} className="flex cursor-pointer text-neutral-400 hover:text-white focus:outline-none sm:hidden">
-            <img src={isOpen ? "assets/close.svg" : "assets/menu.svg"} className="w-6 h-6" alt="toggle" />
-          </button>
-          <nav className="hidden sm:flex">
-            <Navigation />
-          </nav>
+    <>
+      <motion.div style={{ scaleX }} className="fixed inset-x-0 top-0 z-30 h-0.5 origin-left bg-accent" aria-hidden="true" />
+      <header className="fixed inset-x-0 z-20 border-b border-line bg-canvas">
+        <div className="mx-auto max-w-[1200px] c-space">
+          <div className="flex items-center justify-between py-4">
+            <a href={homeHref} className="font-display text-lg text-ink transition-colors hover:text-accent">
+              fr3dsz
+            </a>
+            <nav className="hidden items-center gap-6 md:flex lg:gap-8" aria-label="Primary">
+              {links.map((link) => {
+                const isActive = active === link.href.slice(1);
+                return (
+                  <a key={link.href} href={link.href} className="group font-mono text-xs uppercase tracking-[0.15em]">
+                    <span className={isActive ? "text-accent" : "text-stone/70"}>{link.code} /</span>{" "}
+                    <span className={isActive ? "text-ink" : "text-stone group-hover:text-ink"}>{link.label}</span>
+                    <span className={`mt-1 block h-px bg-accent transition-transform duration-200 origin-left ${isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`} />
+                  </a>
+                );
+              })}
+            </nav>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              aria-expanded={isOpen}
+              aria-controls="mobile-nav"
+              className="font-mono text-xs uppercase tracking-[0.15em] text-stone transition-colors hover:text-ink md:hidden"
+            >
+              {isOpen ? "Close" : "Menu"}
+            </button>
+          </div>
         </div>
-      </div>
+      </header>
       <AnimatePresence>
         {isOpen && (
-          <motion.div className="block overflow-hidden text-center sm:hidden" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }} style={{ maxHeight: "100vh" }} transition={{ duration: 1 }}>
-            <nav className="pb-5">
-              <Navigation onLinkClick={() => setIsOpen(false)} />
+          <motion.div
+            id="mobile-nav"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-10 bg-canvas pt-24 md:hidden"
+          >
+            <nav className="c-space" aria-label="Mobile">
+              {links.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-baseline gap-4 border-b border-line py-6 font-mono text-2xl text-stone transition-colors hover:text-ink"
+                >
+                  <span className="text-sm text-stone/60">{link.code} /</span>
+                  {link.label}
+                </a>
+              ))}
             </nav>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 };
 

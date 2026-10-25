@@ -1,51 +1,104 @@
-import CopyEmailButton from "../components/CopyEmailButton";
+import { useEffect, useState } from "react";
+import AvailabilityStatus from "../components/AvailabilityStatus";
 import { Frameworks } from "../components/Frameworks";
+import SectionHeading from "../components/SectionHeading";
 import Timezone from "../components/Timezone";
+import { defaultAbout } from "../constants";
+import { fetchAbout } from "../lib/content";
+import { useSiteSettings } from "../lib/siteSettings";
 
-const About = () => {
+const Label = ({ children }) => <p className="font-mono text-xs uppercase tracking-[0.2em] text-stone/70">{children}</p>;
+
+const About = ({ section }) => {
+  const settings = useSiteSettings();
+  // fallback content renders at once; CMS content replaces it when it arrives
+  const [about, setAbout] = useState(defaultAbout);
+
+  useEffect(() => {
+    fetchAbout()
+      .then(setAbout)
+      .catch((err) => console.error("Failed to fetch about:", err));
+  }, []);
+
+  const { heading, bio, photo, currently, education, techGroups } = about;
+
   return (
-    <section className="c-space section-spacing" id="about">
-      <h2 className="text-heading">About Me</h2>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-6 md:auto-rows-[18rem] mt-12">
-        {/* Grid 1 — Intro, full width */}
-        <div className="flex items-end grid-default-color grid-1">
-          <div className="absolute inset-0 z-0 overflow-hidden rounded-2xl">
-            <div className="absolute w-80 h-80 rounded-full bg-royal/80 blur-2xl mix-blend-screen animate-drift -top-14 -left-14" />
-            <div className="absolute rounded-full bg-lavender/70 blur-2xl mix-blend-screen w-96 h-96 top-1/4 -right-10 animate-drift" style={{ animationDelay: "-5s", animationDuration: "18s" }} />
-            <div className="absolute rounded-full bg-fuchsia/60 blur-2xl mix-blend-screen w-72 h-72 top-1/3 left-1/3 animate-drift" style={{ animationDelay: "-9s", animationDuration: "11s" }} />
-            <div className="absolute rounded-full bg-aqua/60 blur-2xl mix-blend-screen w-64 h-64 -bottom-10 left-1/4 animate-drift" style={{ animationDelay: "-13s", animationDuration: "16s" }} />
+    <section id={section.anchor} className="c-space pb-16 pt-24 md:pb-24 md:pt-32">
+      <SectionHeading code={section.code}>{section.title}</SectionHeading>
+
+      <div className="mt-12 grid gap-y-12 md:mt-16 md:grid-cols-12 md:gap-x-12">
+        <div className="md:col-span-7">
+          <h3 className="font-display text-xl font-normal text-ink md:text-2xl">{heading || `Hi, I'm ${settings.name}`}</h3>
+          <div className="mt-4 max-w-[65ch] space-y-4 text-base leading-relaxed text-stone">
+            {bio.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
           </div>
-          <div className="z-10">
-            <p className="headtext">Hi, I'm Luis Conda</p>
-            <p className="subtext">I enjoy building software that solves real problems through full-stack projects and hands-on development. I’ve worked with different technologies in academic projects and focus more on understanding how systems work.</p>
-          </div>
-          <div className="absolute inset-x-0 pointer-events-none -bottom-4 h-1/2 sm:h-1/3 bg-gradient-to-t from-indigo" />
-        </div>
-        {/* Grid 3 — Timezone, half width */}
-        <div className="grid-black-color grid-3 flex flex-col justify-between">
-          <div className="z-10 w-[50%]">
-            <p className="headtext">Time Zone</p>
-            <p className="subtext">I'm based in Philippines, and open to remote work worldwide</p>
-          </div>
-          <Timezone />
-        </div>
-        {/* Grid 4 — Contact CTA, half width */}
-        <div className="grid-special-color grid-4">
-          <div className="flex flex-col items-center justify-center gap-4 size-full">
-            <p className="text-center headtext">Do you want to start a project together?</p>
-            <CopyEmailButton />
-          </div>
-        </div>
-        {/* Grid 5 — Tech Stack, full width */}
-        <div className="grid-default-color grid-5">
-          <div className="z-10 w-[50%]">
-            <p className="headtext">Tech Stack</p>
-            <p className="subtext">I’ve worked with several programming languages and frameworks through school and projects, and I’m continuously improving my understanding of them.</p>
-          </div>
-          <div className="absolute inset-y-0 md:inset-y-9 w-full h-full start-[50%] md:scale-125">
-            <Frameworks />
+
+          {education.length > 0 && (
+            <div className="mt-12">
+              <Label>Education</Label>
+              <ul className="mt-5 border-t border-line">
+                {education.map((item, index) => (
+                  <li key={index} className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-line py-3">
+                    <span>
+                      <span className="text-ink">{item.school}</span>
+                      {item.credential && <span className="block text-sm text-stone">{item.credential}</span>}
+                    </span>
+                    {item.period && <span className="font-mono text-xs text-stone/70">{item.period}</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div className="mt-12">
+            <div className="mb-5">
+              <Label>Tech Stack</Label>
+            </div>
+            <Frameworks groups={techGroups} />
           </div>
         </div>
+
+        <aside className="md:col-span-5 md:border-l md:border-line md:pl-10 lg:pl-14">
+          {photo && (
+            <img
+              src={`${photo.url}?w=640&h=800&fit=crop&auto=format`}
+              alt={photo.alt}
+              width="320"
+              height="400"
+              loading="lazy"
+              className="mb-10 aspect-[4/5] w-full max-w-xs border border-line object-cover"
+            />
+          )}
+
+          <Label>Based in</Label>
+          <div className="mt-5">
+            <Timezone location={settings.location} timeZone={settings.timeZone} />
+          </div>
+
+          <div className="mt-10 border-t border-line pt-6">
+            <Label>Availability</Label>
+            <AvailabilityStatus className="mt-4" />
+            <a href="#contact" className="mt-6 inline-block font-mono text-sm text-stone underline decoration-line underline-offset-4 transition-colors hover:text-ink hover:decoration-accent">
+              Get in touch →
+            </a>
+          </div>
+
+          {currently.length > 0 && (
+            <div className="mt-10 border-t border-line pt-6">
+              <Label>Currently</Label>
+              <dl className="mt-4">
+                {currently.map((item, index) => (
+                  <div key={index} className="flex flex-wrap items-baseline gap-x-6 gap-y-1 border-b border-line py-2.5 last:border-0">
+                    <dt className="w-20 shrink-0 font-mono text-xs uppercase tracking-[0.2em] text-stone/70">{item.label}</dt>
+                    <dd className="text-sm text-ink">{item.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )}
+        </aside>
       </div>
     </section>
   );
