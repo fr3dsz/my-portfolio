@@ -79,9 +79,22 @@ Studio admin (phase 4):
 
 Tailwind v4 theme defined in `src/index.css` under `@theme`: warm-charcoal editorial tokens (`canvas`, `surface`, `elevated`, `line`, `ink`, `stone`, `accent`, `aubergine`, `status`) and three type roles (Fraunces display, Instrument Sans body, JetBrains Mono metadata). See `DESIGN-SPEC.md`. `#root` sets `overflow-x: hidden` (deliberately not on `body` — see `DECISIONS.md`).
 
+## Admin (`/admin`)
+
+A custom admin panel modelled on the Bedazzled project, built on the Sanity App SDK (`@sanity/sdk-react`) inside the same Vite app. The Studio stays available for anything it doesn't cover.
+
+- **Entry split**: `src/Root.jsx` renders the public site, or for `/admin*` lazy-loads `src/admin/AdminApp.jsx`, so the SDK, `lucide-react` and `lexorank` live in their own chunk that visitors never download.
+- **Auth**: `<SanityApp config={[{ projectId, dataset }]}>` signs in with the Sanity account (project members only; roles decide what can be edited). Requires the site origin in Sanity CORS **with credentials**.
+- **Routing**: `src/admin/router.js`, a ~40-line History-API router (`usePath`, `navigate`, `matchPath`); routes are listed in `AdminApp.jsx`.
+- **Editing model**: each field binds one document path, reading with `useDocument` and writing the draft with `useEditDocument` (`components/fields.jsx`). `PublishBar` shows draft state and publishes, discards or deletes through `useApplyDocumentActions`. The public site reads only published data.
+- **Lists**: `components/CollectionList.jsx` + GROQ via `useQuery` (`perspective: "drafts"`; `_originalId` tells drafts apart). Projects and experience are ordered by `orderRank`; `useCollection.js` creates new documents at the end and reorders by patching LexoRank values onto the published document and its draft directly, matching the Studio's orderable-list plugin, so order changes need no publish.
+- **Uploads**: `client.assets.upload` from `useClient`; image previews are built from asset refs (`imageUrl`/`fileUrl` in `src/admin/lib.js`).
+- **Pages**: Dashboard (counts, content checklist, recent edits), Page layout (`homePage.sections`: reorder, show/hide, nav label, anchor, per-type copy, add sections), Projects, Experience, Tech stack (list + editor each), About, Site settings.
+- **Styling**: the site's own tokens (`src/index.css`); one admin-only semantic token, `--color-danger`. Shared class strings in `src/admin/styles.js`.
+
 ## Configuration highlights
 
 - `vite.config.js`: `@vitejs/plugin-react` + `@tailwindcss/vite`.
-- `vercel.json`: Vite framework preset; `/admin` and `/admin/*` temporarily redirect (307) to the hosted Studio at `fr3dsz-portfolio.sanity.studio`, preserving the sub-path.
+- `vercel.json`: Vite framework preset; rewrites `/admin` and `/admin/*` to `index.html` so the custom admin's client-side routes load.
 - `eslint.config.js`: `@eslint/js` recommended + `react-hooks` + `react-refresh`, browser globals, ignores `dist`, allows unused vars matching `^[A-Z_]` or `motion`.
 - Sanity studio uses `dashboardTool` + `structureTool` + `visionTool`; CLI sets `studioHost`/`appId` and enables auto-updates.

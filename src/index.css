@@ -12,6 +12,8 @@
   --color-accent: #8b7aa8;
   --color-aubergine: #69577f;
   --color-status: #7c8065;
+  /* admin-only semantic: destructive actions and errors */
+  --color-danger: #c9846c;
 
   /* ── Type roles: serif display · humanist sans · mono metadata ── */
   --font-display: "Fraunces", Georgia, "Times New Roman", serif;

@@ -4,6 +4,8 @@ History derived from the git log (newest first). Future entries should be append
 
 ## Unreleased / next steps
 
+- Custom admin panel at `/admin` (Sanity App SDK): dashboard, page layout builder, projects/experience/tech stack lists and editors with drag-and-drop order, About and Site settings editors, drafts with publish/discard/delete, image and résumé uploads. `vercel.json` now rewrites `/admin*` to the app instead of redirecting to the Studio.
+
 - Frontend live on Vercel at https://fr3dsz-portfolio.vercel.app; origin added to Sanity CORS; dashboard `SITE_URL`, canonical and `og:url` point at it.
 
 - Add `vercel.json` (Vite preset; `/admin` → hosted Studio redirect) and deploy notes in `docs/workflows/dev-build.md`.

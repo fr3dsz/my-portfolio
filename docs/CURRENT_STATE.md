@@ -36,8 +36,9 @@ Backend studio (`backend/my-portfolio/`, Sanity 6.20, opens on the Dashboard; ho
 ## Known issues / notable gaps
 
 - **No tests** — no test framework; only `dev`, `build`, `lint`, `preview`.
+- **Admin not yet exercised while signed in** — it builds, lints and every module compiles, but the editing flows haven't been clicked through against the live dataset.
 - **No résumé yet** — upload one in Site Settings → Contact & Social; the Contact button renders only when it exists.
-- **Frontend live** at https://fr3dsz-portfolio.vercel.app (Vercel, deploys `main`); the origin is in Sanity CORS (no credentials) and `/admin` redirects to the Studio.
+- **Frontend live** at https://fr3dsz-portfolio.vercel.app (Vercel, deploys `main`). The custom admin is at `/admin`; it needs the origin in Sanity CORS **with credentials** (see `workflows/admin.md`).
 - **No `og:image`** — `index.html` has description, canonical and Open Graph text/url tags, but no share image yet. Update canonical and `og:url` if a custom domain is added.
 - **Blank first paint** — the page waits for the layout query before rendering (see `DECISIONS.md`).
 - **No live preview in the Studio** — edits show on the site after publishing (CDN may lag briefly).

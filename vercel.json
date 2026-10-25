@@ -1,16 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
-  "redirects": [
-    {
-      "source": "/admin",
-      "destination": "https://fr3dsz-portfolio.sanity.studio/",
-      "permanent": false
-    },
-    {
-      "source": "/admin/:path*",
-      "destination": "https://fr3dsz-portfolio.sanity.studio/:path*",
-      "permanent": false
-    }
+  "rewrites": [
+    { "source": "/admin", "destination": "/index.html" },
+    { "source": "/admin/:path*", "destination": "/index.html" }
   ]
 }
