@@ -69,3 +69,7 @@ Unlike settings/about (which render fallbacks immediately), `App.jsx` renders no
 ## Studio dashboard: a checklist, not analytics
 
 The dashboard's custom widget answers "what's still missing on my site?" (résumé, photo, bio, tech groups, layout, project images, unranked documents) and links straight to the document to fix it. No deploy widget: the frontend host isn't chosen yet. Add one (e.g. a Vercel/Netlify deploy widget) once it is.
+
+## Studio pinned to Sanity ≥ 6.20 (with matching react / react-dom)
+
+On 6.15, `sanity deploy` failed during schema extraction ("exports is not defined") once `@sanity/orderable-document-list` was added — it imports the CommonJS-only `lexorank`. 6.20 extracts it correctly. 6.20 also requires `react` and `react-dom` at the exact same version (both 19.3.1), so bump them together.
