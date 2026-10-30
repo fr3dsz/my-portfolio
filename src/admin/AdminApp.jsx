@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { SanityApp } from "@sanity/sdk-react";
+import { SDKProvider } from "@sanity/sdk-react";
 import { dataset, projectId } from "../lib/sanity";
 import { AdminLayout } from "./components/AdminLayout";
 import { EmptyState, ErrorBoundary, Link, Skeleton } from "./components/ui";
@@ -12,7 +12,7 @@ import Settings from "./pages/Settings";
 import { TechEditor, TechList } from "./pages/TechStack";
 import { matchPath, usePath } from "./router";
 
-// Custom admin on the Sanity App SDK: <SanityApp> handles sign-in with the
+// Custom admin on the Sanity App SDK: <SDKProvider> handles sign-in with the
 // Sanity account (project members only) and live document sync. The Studio
 // stays available for anything not covered here.
 
@@ -71,8 +71,9 @@ function Routes() {
 }
 
 export default function AdminApp() {
+  // Not SanityApp: outside localhost it redirects to sanity.io/welcome unless framed by Sanity's dashboard.
   return (
-    <SanityApp
+    <SDKProvider
       config={[{ projectId, dataset }]}
       fallback={
         <div className="flex min-h-screen items-center justify-center bg-canvas">
@@ -81,6 +82,6 @@ export default function AdminApp() {
       }
     >
       <Routes />
-    </SanityApp>
+    </SDKProvider>
   );
 }

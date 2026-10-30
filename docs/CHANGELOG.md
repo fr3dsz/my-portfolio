@@ -12,6 +12,8 @@ History derived from the git log (newest first). Future entries should be append
 
 - Hardening from the admin review: social and project links only render as `http(s):` or `mailto:`; `/admin` can't be framed, and all paths send `nosniff` and a referrer policy.
 
+- `/admin` uses `SDKProvider` instead of `SanityApp`, which redirects to sanity.io/welcome on any non-local host unless framed by the Sanity dashboard.
+
 - Frontend live on Vercel at https://fr3dsz-portfolio.vercel.app; origin added to Sanity CORS; dashboard `SITE_URL`, canonical and `og:url` point at it.
 
 - Add `vercel.json` (Vite preset; `/admin` → hosted Studio redirect) and deploy notes in `docs/workflows/dev-build.md`.
