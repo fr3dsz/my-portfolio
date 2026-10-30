@@ -190,16 +190,23 @@ Section header `02 / About` (mono code + serif heading + hairline rail).
 
 No cards, no blob gradients, no orbiting logos, no `animate-drift`.
 
-- **Lead**: an open paragraph (intro card text, content preserved), body measure ≤65ch, "Hi, I'm Luis
-  Conda" as a serif heading-sm above it.
-- **Facts register** (two-column asymmetric, mono metadata):
+- **Reading order**: lead, then facts, then supporting detail (Education, Tech stack). Below `md` this is
+  a single column in that order; from `md` the facts column sits beside the lead and supporting detail.
+- **Lead**: "Hi, I'm Luis Conda" as a serif heading-sm, the role as a mono line, then the bio (content
+  from the CMS), body measure ≤65ch.
+- **Facts register** (two-column asymmetric, mono metadata), in this order; blocks without content render
+  nothing, including their rule:
+  - Availability — `AvailabilityStatus` from Site Settings. Available: olive ring with a solid centre,
+    ink medium-weight label. Unavailable: stone ring with a dash, stone label. A blank label drops the
+    label and marker. No looping motion (section 15). Below it, always, the `Get in touch →` link to
+    `#contact` as an editorial action: bordered 1px `line`, mono label, ink → accent border on hover,
+    **not** a rounded-full glass pill. The copy-email action lives in Contact.
   - Location / Time zone — `Timezone` logic restyled as a ruled mono mini-table (cities + offsets, no
     emoji, Manila gets the olive live dot + `status` label instead of the purple neon card).
-  - Availability — `Open to remote` with lone olive status dot; email CTA below (CopyEmailButton
-    restyled as an editorial action: bordered 1px `line`, mono label, ink → accent border on hover,
-    **not** a rounded-full glass pill; copy-to-clipboard logic preserved, "Email has Copied" state kept).
     Hard-coded accent tokens inside `Timezone` (`#1C1642`, `#6B2FCC`, `#C87FFF`, `#9B5FDB`) are removed
     in favor of the token system.
+  - Currently — label/value rows, when filled in.
+  - Photo — framed 4:5 plate, last in the column so it never pushes availability down, when filled in.
 - **Tech stack**: replace the orbit animation with a **ruled mono text index** grouped by discipline
   (`Languages · Frontend · Backend`), the 11 names from the current `Frameworks` list. Optionally the
   existing neutral SVG logos render statically at reduced opacity beside names (default: text-first). No

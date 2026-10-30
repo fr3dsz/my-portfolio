@@ -4,6 +4,8 @@ History derived from the git log (newest first). Future entries should be append
 
 ## Unreleased / next steps
 
+- Availability marker redrawn (olive ring with centre when available, stone ring with dash when not); a blank label hides the Hero status row and About availability block. About reads lead, then facts (availability and `Get in touch` first), then education and tech stack; the role now shows under the heading and the photo moves to the end of the facts column.
+
 - Frontend live on Vercel at https://fr3dsz-portfolio.vercel.app; origin added to Sanity CORS; dashboard `SITE_URL`, canonical and `og:url` point at it.
 
 - Add `vercel.json` (Vite preset; `/admin` → hosted Studio redirect) and deploy notes in `docs/workflows/dev-build.md`.
