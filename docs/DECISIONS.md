@@ -74,6 +74,13 @@ The dashboard's custom widget answers "what's still missing on my site?" (résum
 
 On 6.15, `sanity deploy` failed during schema extraction ("exports is not defined") once `@sanity/orderable-document-list` was added — it imports the CommonJS-only `lexorank`. 6.20 extracts it correctly. 6.20 also requires `react` and `react-dom` at the exact same version (both 19.3.1), so bump them together.
 
-## `/admin` redirects to the hosted Studio instead of embedding it
+## `/admin` redirects to the hosted Studio instead of embedding it (superseded)
+
+Replaced by the custom App SDK admin below; kept for history.
+
 
 Embedding the Studio in the Vite app would merge two separately-versioned packages (risking duplicate React copies), add several MB of Studio JS that must be lazy-loaded, and require a router plus SPA rewrites — for a mostly cosmetic same-domain URL. A temporary (307) redirect in `vercel.json` gives the `/admin` habit with no coupling; being non-permanent, it can later be replaced by an embedded Studio without browsers having cached the redirect.
+
+## Custom admin on the App SDK, not an embedded Studio
+
+`/admin` is a purpose-built panel (like Bedazzled's) rather than the Studio, because the Studio is a generic schema editor while the portfolio needs a handful of task pages. The App SDK is a small dependency of the frontend only — none of the coupling problems of embedding the Studio — and is lazy-loaded so it doesn't touch the public bundle. Trade-offs: every editable field is hand-built here (new schema fields need admin UI too, or are edited in the Studio), and a tiny in-house router is used instead of a routing library. Order changes patch `orderRank` directly (no draft/publish), matching the Studio plugin; content edits go through drafts and an explicit Publish.

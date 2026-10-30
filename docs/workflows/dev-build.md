@@ -58,9 +58,9 @@ Backend studio (`backend/my-portfolio/`):
 
 - **Frontend → Vercel.** Import the GitHub repo in Vercel with the repo root as the project root; `vercel.json` selects the Vite preset (`npm run build` → `dist/`). No environment variables are needed — the Sanity project id and dataset are public and live in `src/lib/sanity.js`.
 - **Studio → Sanity hosting.** `npm run deploy` in `backend/my-portfolio/` publishes to https://fr3dsz-portfolio.sanity.studio. It deploys independently of the frontend.
-- **`/admin`** on the site redirects to the hosted Studio (`vercel.json`). It is a convenience URL, not access control — the Sanity login and project member roles protect content.
+- **`/admin`** on the site is the custom admin (see `admin.md`). It is not access control by itself — the Sanity login and project member roles protect content.
 
 After the first Vercel deploy:
 
-1. Add the site origin (e.g. `https://<project>.vercel.app` and any custom domain) under Sanity → project `cnu9hemn` → API → CORS origins. Credentials are not needed; the site only reads public data.
+1. Add the site origin (e.g. `https://<project>.vercel.app` and any custom domain) under Sanity → project `cnu9hemn` → API → CORS origins **with credentials allowed** — the public site only needs read access, but `/admin` signs in from that origin.
 2. Set `SITE_URL` in `backend/my-portfolio/sanity.config.ts` to the live URL and redeploy the Studio, so the dashboard's "Open site" button points at it.

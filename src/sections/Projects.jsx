@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Project from "../components/Project";
 import ProjectDetails from "../components/ProjectDetails";
 import SectionHeading from "../components/SectionHeading";
+import { isSafeUrl } from "../lib/content";
 import { client } from "../lib/sanity";
 import { PROJECTS_QUERY } from "../lib/queries";
 
@@ -20,7 +21,7 @@ const Projects = ({ section }) => {
           title: project.title,
           description: project.description,
           subDescription: project.subDescription || [],
-          href: project.href || "",
+          href: isSafeUrl(project.href) ? project.href : "",
           image: project.image?.asset?.url || "",
           tags: (project.tags || []).map((tag) => ({
             id: tag._id,

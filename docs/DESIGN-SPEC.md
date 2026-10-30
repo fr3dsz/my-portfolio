@@ -84,7 +84,7 @@ Three roles, replacement for the current single `Funnel Display` face.
 
 | Role | Face | Why this face | Weights | Used for |
 |---|---|---|---|---|
-| Display / serif | **Fraunces** (opsz) | Editorial workhorse with warm, technical-friendly character; optical sizing keeps large names authoritative and small text legible | 300–560 (Light–Medium), use of `SOFT` axis at 60–100 for warmth | Nameplate, standfirst, section headings ("Selected Work"), project titles, experience roles, modal title |
+| Display / serif | **Fraunces** (opsz) | Editorial workhorse with warm, technical-friendly character; optical sizing keeps large names authoritative and small text legible | 300–560 (Light–Medium), use of `SOFT` axis at 60–100 for warmth | Nameplate, standfirst, section headings ("Personal Projects"), project titles, experience roles, modal title |
 | Body / sans | **Instrument Sans** | Warm humanist grotesk; calm at body sizes, signs cleanly alongside a serif | 400 / 500 / 600, italic 400 | Long-form copy (about, descriptions, subDescription, experience bullets), buttons/links |
 | Mono | **JetBrains Mono** | Dense, legible metadata face with neutral editor character | 400 / 500 | ALL metadata: section codes, numbers, dates, locations, stack lists, status labels, nav, facts, footer, progress |
 
@@ -108,7 +108,7 @@ Notes:
 | body | 16px / 1.65 | sans | about copy, modal body, experience bullets |
 | lead | 18px / 1.55 | serif | project descriptions (one line), modal lede |
 | heading-sm | 20px / 1.25 | serif | experience role; modal subheads |
-| heading | 30px / 1.15 | serif | project titles (record), "Selected Work" |
+| heading | 30px / 1.15 | serif | project titles (record), "Personal Projects" |
 | section | 36px / 1.1 | serif | numbered section headings |
 | nameplate | `clamp(2.5rem, 8vw, 4.5rem)` / 1.05 | serif | hero name |
 | standfirst | `clamp(1.25rem, 2.2vw, 1.75rem)` / 1.4 | serif (may italicize one clause) | hero statement |
@@ -173,7 +173,7 @@ Composition (editorial masthead + corner-tick frame), content preserved from cur
   and ships — web platforms, e-commerce sites, mobile apps — from scratch."` (preserves the current
   "A Developer Who Builds and Ships / … From Scratch" and the three domain words.)
 - **Facts column** (mono, small, label–value pairs): `Role Full-stack developer · Base Manila, PH ·
-  Stack React · Node · C# · Tailwind · Status Open to work` (olive dot on Status).
+  Stack React · Node · C# · Tailwind · Status Open to work` (status ring marker on Status, see section 9).
 - **Corner-tick device**: 2px `#3B3732` ticks at the hero field corners (one accent tick top-right).
   Pure CSS/SVG; present only ≥md.
 - **Scroll cue**: right-aligned vertical hairline with mono `scroll ↓`; static.
@@ -190,16 +190,24 @@ Section header `02 / About` (mono code + serif heading + hairline rail).
 
 No cards, no blob gradients, no orbiting logos, no `animate-drift`.
 
-- **Lead**: an open paragraph (intro card text, content preserved), body measure ≤65ch, "Hi, I'm Luis
-  Conda" as a serif heading-sm above it.
-- **Facts register** (two-column asymmetric, mono metadata):
+- **Reading order**: lead, then facts, then supporting detail (Education, Tech stack). Below `md` this is
+  a single column in that order; from `md` the facts column sits beside the lead and supporting detail.
+- **Lead**: "Hi, I'm Luis Conda" as a serif heading-sm, the role as a mono line, then the bio (content
+  from the CMS), body measure ≤65ch.
+- **Facts register** (two-column asymmetric, mono metadata), in this order; blocks without content render
+  nothing, including their rule:
+  - Availability — `AvailabilityStatus` from Site Settings. Available: olive ring with a solid centre,
+    ink medium-weight label. Unavailable: stone ring with a dash, stone label. A blank label while
+    unavailable hides this block and the Hero Status row; a blank label while available falls back to
+    the default label. No looping motion (section 15). Below it, always, the `Get in touch →` link to
+    `#contact` as an editorial action: bordered 1px `line`, mono label, ink → accent border on hover,
+    **not** a rounded-full glass pill. The copy-email action lives in Contact.
   - Location / Time zone — `Timezone` logic restyled as a ruled mono mini-table (cities + offsets, no
     emoji, Manila gets the olive live dot + `status` label instead of the purple neon card).
-  - Availability — `Open to remote` with lone olive status dot; email CTA below (CopyEmailButton
-    restyled as an editorial action: bordered 1px `line`, mono label, ink → accent border on hover,
-    **not** a rounded-full glass pill; copy-to-clipboard logic preserved, "Email has Copied" state kept).
     Hard-coded accent tokens inside `Timezone` (`#1C1642`, `#6B2FCC`, `#C87FFF`, `#9B5FDB`) are removed
     in favor of the token system.
+  - Currently — label/value rows, when filled in.
+  - Photo — framed 4:5 plate, last in the column so it never pushes availability down, when filled in.
 - **Tech stack**: replace the orbit animation with a **ruled mono text index** grouped by discipline
   (`Languages · Frontend · Backend`), the 11 names from the current `Frameworks` list. Optionally the
   existing neutral SVG logos render statically at reduced opacity beside names (default: text-first). No

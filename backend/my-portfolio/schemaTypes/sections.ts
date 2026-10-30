@@ -80,7 +80,7 @@ export const projectsSection = defineType({
   title: 'Projects',
   type: 'object',
   description: 'Lists every Project document.',
-  fields: sectionFields({title: 'Selected Work', navLabel: 'Work', anchor: 'work'}),
+  fields: sectionFields({title: 'Personal Projects', navLabel: 'Work', anchor: 'work'}),
   preview: sectionPreview('Projects'),
 })
 

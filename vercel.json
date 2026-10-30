@@ -1,16 +1,25 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
-  "redirects": [
+  "rewrites": [
+    { "source": "/admin", "destination": "/index.html" },
+    { "source": "/admin/:path*", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    },
     {
       "source": "/admin",
-      "destination": "https://fr3dsz-portfolio.sanity.studio/",
-      "permanent": false
+      "headers": [{ "key": "X-Frame-Options", "value": "DENY" }]
     },
     {
       "source": "/admin/:path*",
-      "destination": "https://fr3dsz-portfolio.sanity.studio/:path*",
-      "permanent": false
+      "headers": [{ "key": "X-Frame-Options", "value": "DENY" }]
     }
   ]
 }

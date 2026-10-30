@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "preset": "solo",
+  "profile": "fullstack",
+  "mode": "personal",
+  "host": "GitHub",
+  "base_branch": "development",
+  "tracker": "none",
+  "plan_challenge": false,
+  "spec_approval": false,
+  "ux_review": "auto",
+  "preview_check": "off",
+  "collect": false,
+  "end": "merge-dev",
+  "retro": true,
+  "fast_lane": {
+    "small_max_lines": 50,
+    "small_max_files": 3
+  },
+  "verify_commands": [
+    "npm run lint",
+    "npm run build"
+  ],
+  "has_real_tests": false,
+  "sensitive_paths": [
+    "**/auth/**",
+    "**/payments/**",
+    "**/billing/**",
+    "**/migrations/**",
+    "**/middleware.*",
+    ".github/workflows/**",
+    "src/admin/**",
+    "backend/my-portfolio/schemaTypes/**",
+    "backend/my-portfolio/scripts/**",
+    "backend/my-portfolio/sanity.config.ts",
+    "backend/my-portfolio/sanity.cli.ts",
+    "vercel.json"
+  ],
+  "protected_branches": [
+    "main",
+    "master",
+    "production"
+  ]
+}
