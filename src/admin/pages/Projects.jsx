@@ -15,7 +15,7 @@ export function ProjectList() {
   return (
     <CollectionList
       title="Projects"
-      description="Shown in the Selected Work section, in this order."
+      description="Shown in the Personal Projects section, in this order."
       documentType="project"
       basePath="/admin/projects"
       itemLabel="project"

@@ -4,7 +4,7 @@ Status of the portfolio project as of the last repository inspection. Everything
 
 ## What this is
 
-A single-page personal portfolio for **Luis Frederick Conda ("fr3dsz")**, a full-stack developer based in Manila, Philippines. Default section order: Hero (01), About (02), Selected Work (03), Experience (04), Contact (05), then Footer. The order, visibility, titles, nav labels and anchors are editable in Sanity (Home Page Layout). A Testimonial component exists but is not available in the builder.
+A single-page personal portfolio for **Luis Frederick Conda ("fr3dsz")**, a full-stack developer based in Manila, Philippines. Default section order: Hero (01), About (02), Personal Projects (03), Experience (04), Contact (05), then Footer. The order, visibility, titles, nav labels and anchors are editable in Sanity (Home Page Layout). A Testimonial component exists but is not available in the builder.
 
 Visual system: editorial-technical redesign (see `DESIGN-SPEC.md`) — no 3D, no parallax.
 
