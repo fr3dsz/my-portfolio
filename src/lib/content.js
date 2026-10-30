@@ -14,10 +14,19 @@ const isFilled = (value) => {
 const withDefaults = (data, defaults) =>
   Object.fromEntries(Object.entries(defaults).map(([key, fallback]) => [key, isFilled(data?.[key]) ? data[key] : fallback]));
 
+// The admin's link validation only warns, so a stored link is rechecked before it becomes an href.
+export const isSafeUrl = (value) => {
+  try {
+    return ["http:", "https:", "mailto:"].includes(new URL(value).protocol);
+  } catch {
+    return false;
+  }
+};
+
 export const fetchSiteSettings = async () => {
   const data = await client.fetch(SITE_SETTINGS_QUERY);
   const settings = withDefaults(
-    { ...data, socials: data?.socials?.filter((social) => social?.name && social?.url) },
+    { ...data, socials: data?.socials?.filter((social) => social?.name && isSafeUrl(social?.url)) },
     defaultSettings
   );
   // The default label claims availability, so it must not stand in when the owner is unavailable.
