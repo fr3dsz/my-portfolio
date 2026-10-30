@@ -70,7 +70,7 @@ Studio admin (phase 4):
 ## Rendering / visual systems
 
 - **Hero**: typographic nameplate (`HeroText.jsx`) plus a mono facts list; name, role, base and status come from site settings, standfirst and stack line come from the `heroSection`.
-- **About**: 12-col grid — heading, bio, optional education and grouped tech stack (`Frameworks.jsx`) on the left; a sidebar with optional photo, `Timezone`, availability and optional "Currently" list. Optional blocks render only when filled in. `Timezone` shows the local time at `profile.timeZone`, its UTC offset, and the gap to the visitor's own time zone, all computed with `Intl` so DST is handled.
+- **About**: 12-col grid in reading order lead, facts, supporting detail (a single column below `md`). Left: heading, role and bio, then optional education and grouped tech stack (`Frameworks.jsx`). Right: a facts column with availability and `Get in touch`, `Timezone`, optional "Currently" list and optional photo. Optional blocks render only when filled in. `Timezone` shows the local time at `profile.timeZone`, its UTC offset, and the gap to the visitor's own time zone, all computed with `Intl` so DST is handled.
 - **Contact**: `mailto:` link, `CopyEmailButton` (handles clipboard failure), optional résumé link.
 - **Experiences**: `Timeline.jsx` draws a scroll-driven progress line (motion `useScroll`/`useTransform` + `ResizeObserver`).
 - **Projects**: row list with hover image preview (motion springs) and a `ProjectDetails` modal.

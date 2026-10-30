@@ -173,7 +173,7 @@ Composition (editorial masthead + corner-tick frame), content preserved from cur
   and ships — web platforms, e-commerce sites, mobile apps — from scratch."` (preserves the current
   "A Developer Who Builds and Ships / … From Scratch" and the three domain words.)
 - **Facts column** (mono, small, label–value pairs): `Role Full-stack developer · Base Manila, PH ·
-  Stack React · Node · C# · Tailwind · Status Open to work` (olive dot on Status).
+  Stack React · Node · C# · Tailwind · Status Open to work` (status ring marker on Status, see section 9).
 - **Corner-tick device**: 2px `#3B3732` ticks at the hero field corners (one accent tick top-right).
   Pure CSS/SVG; present only ≥md.
 - **Scroll cue**: right-aligned vertical hairline with mono `scroll ↓`; static.
@@ -197,8 +197,9 @@ No cards, no blob gradients, no orbiting logos, no `animate-drift`.
 - **Facts register** (two-column asymmetric, mono metadata), in this order; blocks without content render
   nothing, including their rule:
   - Availability — `AvailabilityStatus` from Site Settings. Available: olive ring with a solid centre,
-    ink medium-weight label. Unavailable: stone ring with a dash, stone label. A blank label drops the
-    label and marker. No looping motion (section 15). Below it, always, the `Get in touch →` link to
+    ink medium-weight label. Unavailable: stone ring with a dash, stone label. A blank label while
+    unavailable hides this block and the Hero Status row; a blank label while available falls back to
+    the default label. No looping motion (section 15). Below it, always, the `Get in touch →` link to
     `#contact` as an editorial action: bordered 1px `line`, mono label, ink → accent border on hover,
     **not** a rounded-full glass pill. The copy-email action lives in Contact.
   - Location / Time zone — `Timezone` logic restyled as a ruled mono mini-table (cities + offsets, no
