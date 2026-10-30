@@ -14,6 +14,8 @@ History derived from the git log (newest first). Future entries should be append
 
 - `/admin` uses `SDKProvider` instead of `SanityApp`, which redirects to sanity.io/welcome on any non-local host unless framed by the Sanity dashboard.
 
+- `/admin` has its own sign-in page that logs in through the project API, because `sanity.io/login` rejects origins outside Sanity's domains. The session token is passed to the SDK as `auth.token`.
+
 - Frontend live on Vercel at https://fr3dsz-portfolio.vercel.app; origin added to Sanity CORS; dashboard `SITE_URL`, canonical and `og:url` point at it.
 
 - Add `vercel.json` (Vite preset; `/admin` → hosted Studio redirect) and deploy notes in `docs/workflows/dev-build.md`.
