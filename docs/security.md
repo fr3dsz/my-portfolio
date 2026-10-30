@@ -10,7 +10,7 @@
 
 | Step | Detail |
 |---|---|
-| Entry | The user picks a provider on `/admin` and goes to `https://<projectId>.api.sanity.io/.../auth/login/<provider>` with `origin` set to the current admin URL |
+| Entry | The user picks a provider on `/admin` and goes to `https://api.sanity.io/v1/auth/login/<provider>` with `projectId`, and `origin` set to the current admin URL |
 | Validation | Sanity returns 403 for an `origin` outside the project's CORS list |
 | Return | Sanity redirects back with a single-use `sid`, which `auth.js` removes from the URL straight away |
 | Exchange | `GET /auth/fetch?sid=` returns the session token |
@@ -19,7 +19,7 @@
 | Exposure | Sent only as a bearer token to Sanity. User name, email and picture are shown in the admin sidebar |
 | Retention | Gone on reload. Sign-out also calls `POST /auth/logout`. A reload without sign-out leaves the server session open until Sanity expires it |
 
-`sanity.io/login` only accepts `localhost` and Sanity's own domains, and `api.sanity.io` rejects other origins, so both are avoided on purpose. The SDK receives the token through its documented `auth.token` option.
+`sanity.io/login` only accepts `localhost` and Sanity's own domains, so it's avoided on purpose. API calls use the project host because `api.sanity.io` rejects this origin, but the login redirect has to start on `api.sanity.io`: providers return there, and its state cookie isn't shared with the project host. The SDK receives the token through its documented `auth.token` option.
 
 ## Controls
 
