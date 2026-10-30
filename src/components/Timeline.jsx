@@ -5,7 +5,7 @@ const TimelineItem = ({ item }) => {
   const isCurrent = item.date?.toLowerCase().includes("present");
 
   return (
-    <li className="relative border-b border-line py-8 last:border-b-0 pl-7">
+    <div className="relative border-b border-line py-8 last:border-b-0 pl-7">
       {isCurrent && (
         <span aria-hidden="true" className="absolute -left-[7px] top-10 size-3.5 rounded-full border-2 border-aubergine bg-status" />
       )}
@@ -33,7 +33,7 @@ const TimelineItem = ({ item }) => {
           ))}
         </ul>
       )}
-    </li>
+    </div>
   );
 };
 
