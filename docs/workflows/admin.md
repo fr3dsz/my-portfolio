@@ -5,7 +5,7 @@ The custom admin for editing the portfolio. Built on the Sanity App SDK; the Stu
 ## Access
 
 - Open `/admin` (locally `http://localhost:5173/admin`, live `https://fr3dsz-portfolio.vercel.app/admin`) and sign in with the Sanity account. Only members of project `cnu9hemn` get in; their project role decides what they can change.
-- One-time setup per origin: Sanity → project → API → CORS origins → add the origin with **Allow credentials** on. Without it the SDK can't sign in from that origin. CLI equivalent (from `backend/my-portfolio/`):
+- One-time setup per origin: Sanity → project → API → CORS origins → add the origin with **Allow credentials** on. Without it sign-in fails from that origin. CLI equivalent (from `backend/my-portfolio/`):
 
   ```
   npx sanity cors delete http://localhost:5173 && npx sanity cors add http://localhost:5173 --credentials

@@ -1,6 +1,6 @@
 import { Suspense, useState } from "react";
-import { useCurrentUser, useLogOut } from "@sanity/sdk-react";
 import { Briefcase, Code2, ExternalLink, FileUser, LayoutDashboard, LayoutList, LogOut, Menu, Settings, UserRound, X } from "lucide-react";
+import { useAdminAuth } from "../auth";
 import { STUDIO_URL } from "../lib";
 import { Button, Link } from "./ui";
 
@@ -17,9 +17,7 @@ const NAV = [
 const isActive = (item, path) => (item.exact ? path === item.to : path === item.to || path.startsWith(`${item.to}/`));
 
 function CurrentUser() {
-  const user = useCurrentUser();
-  const logOut = useLogOut();
-  if (!user) return null;
+  const { user, signOut } = useAdminAuth();
   return (
     <div className="flex items-center gap-3 px-3 py-2">
       {user.profileImage ? (
@@ -30,7 +28,7 @@ function CurrentUser() {
       <span className="min-w-0 flex-1 truncate text-sm text-ink" title={user.email}>
         {user.name}
       </span>
-      <Button variant="ghost" size="icon" icon={LogOut} aria-label="Sign out" title="Sign out" onClick={() => logOut()} />
+      <Button variant="ghost" size="icon" icon={LogOut} aria-label="Sign out" title="Sign out" onClick={signOut} />
     </div>
   );
 }
