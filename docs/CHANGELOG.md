@@ -6,6 +6,8 @@ History derived from the git log (newest first). Future entries should be append
 
 - Custom admin panel at `/admin` (Sanity App SDK): dashboard, page layout builder, projects/experience/tech stack lists and editors with drag-and-drop order, About and Site settings editors, drafts with publish/discard/delete, image and résumé uploads. `vercel.json` now rewrites `/admin*` to the app instead of redirecting to the Studio.
 
+- Availability marker redrawn (olive ring with centre when available, stone ring with dash when not). A blank label while unavailable hides the Hero status row and About availability block; a blank label while available falls back to the default label. About reads lead, then facts (availability and `Get in touch` first), then education and tech stack; the role now shows under the heading and the photo moves to the end of the facts column.
+
 - Frontend live on Vercel at https://fr3dsz-portfolio.vercel.app; origin added to Sanity CORS; dashboard `SITE_URL`, canonical and `og:url` point at it.
 
 - Add `vercel.json` (Vite preset; `/admin` → hosted Studio redirect) and deploy notes in `docs/workflows/dev-build.md`.

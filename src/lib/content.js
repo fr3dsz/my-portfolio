@@ -16,10 +16,13 @@ const withDefaults = (data, defaults) =>
 
 export const fetchSiteSettings = async () => {
   const data = await client.fetch(SITE_SETTINGS_QUERY);
-  return withDefaults(
+  const settings = withDefaults(
     { ...data, socials: data?.socials?.filter((social) => social?.name && social?.url) },
     defaultSettings
   );
+  // The default label claims availability, so it must not stand in when the owner is unavailable.
+  if (data?.availableForWork === false && !isFilled(data?.availabilityLabel)) return { ...settings, availabilityLabel: "" };
+  return settings;
 };
 
 export const fetchAbout = async () => {
