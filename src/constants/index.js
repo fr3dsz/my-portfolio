@@ -69,7 +69,7 @@ export const defaultSections = [
     stackLine: "React · Node · C# · Tailwind",
   },
   { _key: "about", _type: "aboutSection", title: "About Me", navLabel: "About", anchor: "about" },
-  { _key: "projects", _type: "projectsSection", title: "Selected Work", navLabel: "Work", anchor: "work" },
+  { _key: "projects", _type: "projectsSection", title: "Personal Projects", navLabel: "Work", anchor: "work" },
   { _key: "experience", _type: "experienceSection", title: "Experience", navLabel: "Experience", anchor: "experience" },
   {
     _key: "contact",

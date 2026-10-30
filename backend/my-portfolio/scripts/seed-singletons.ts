@@ -57,7 +57,7 @@ const homePage = {
       stackLine: 'React · Node · C# · Tailwind',
     }),
     section('aboutSection', {title: 'About Me', navLabel: 'About', anchor: 'about'}),
-    section('projectsSection', {title: 'Selected Work', navLabel: 'Work', anchor: 'work'}),
+    section('projectsSection', {title: 'Personal Projects', navLabel: 'Work', anchor: 'work'}),
     section('experienceSection', {title: 'Experience', navLabel: 'Experience', anchor: 'experience'}),
     section('contactSection', {
       title: 'Contact',

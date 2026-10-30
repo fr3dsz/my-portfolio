@@ -84,7 +84,7 @@ Three roles, replacement for the current single `Funnel Display` face.
 
 | Role | Face | Why this face | Weights | Used for |
 |---|---|---|---|---|
-| Display / serif | **Fraunces** (opsz) | Editorial workhorse with warm, technical-friendly character; optical sizing keeps large names authoritative and small text legible | 300–560 (Light–Medium), use of `SOFT` axis at 60–100 for warmth | Nameplate, standfirst, section headings ("Selected Work"), project titles, experience roles, modal title |
+| Display / serif | **Fraunces** (opsz) | Editorial workhorse with warm, technical-friendly character; optical sizing keeps large names authoritative and small text legible | 300–560 (Light–Medium), use of `SOFT` axis at 60–100 for warmth | Nameplate, standfirst, section headings ("Personal Projects"), project titles, experience roles, modal title |
 | Body / sans | **Instrument Sans** | Warm humanist grotesk; calm at body sizes, signs cleanly alongside a serif | 400 / 500 / 600, italic 400 | Long-form copy (about, descriptions, subDescription, experience bullets), buttons/links |
 | Mono | **JetBrains Mono** | Dense, legible metadata face with neutral editor character | 400 / 500 | ALL metadata: section codes, numbers, dates, locations, stack lists, status labels, nav, facts, footer, progress |
 
@@ -108,7 +108,7 @@ Notes:
 | body | 16px / 1.65 | sans | about copy, modal body, experience bullets |
 | lead | 18px / 1.55 | serif | project descriptions (one line), modal lede |
 | heading-sm | 20px / 1.25 | serif | experience role; modal subheads |
-| heading | 30px / 1.15 | serif | project titles (record), "Selected Work" |
+| heading | 30px / 1.15 | serif | project titles (record), "Personal Projects" |
 | section | 36px / 1.1 | serif | numbered section headings |
 | nameplate | `clamp(2.5rem, 8vw, 4.5rem)` / 1.05 | serif | hero name |
 | standfirst | `clamp(1.25rem, 2.2vw, 1.75rem)` / 1.4 | serif (may italicize one clause) | hero statement |
