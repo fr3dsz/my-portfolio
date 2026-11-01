@@ -61,4 +61,4 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/CURRENT_STATE.md](doc
 
 ## License
 
-MIT — feel free to use as inspiration, but please don't copy directly.
+All rights reserved. Feel free to use this as inspiration, but please don't copy it directly.
