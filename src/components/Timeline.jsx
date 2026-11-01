@@ -25,7 +25,7 @@ const TimelineItem = ({ item }) => {
       </div>
 
       <h3 className="mt-3 font-display text-2xl font-normal text-ink">{item.title}</h3>
-      <p className="mt-1 text-sm text-stone">{employmentType ? `${item.job} · ${employmentType}` : item.job}</p>
+      <p className="mt-1 text-sm text-stone">{[item.job, employmentType].filter(Boolean).join(" · ")}</p>
 
       {item.contents?.length > 0 && (
         <ul className="mt-5 space-y-2.5">

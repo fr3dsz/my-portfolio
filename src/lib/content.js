@@ -86,7 +86,7 @@ export const fetchHomeSections = async (knownTypes) => {
   return normalizeSections(data?.sections, knownTypes);
 };
 
-// ── experience dates ─────────────────────────────────────────────────────
+// Experience dates
 // Keep the type and month lists in sync with backend/my-portfolio/schemaTypes/experience.ts.
 
 export const EMPLOYMENT_TYPES = [
@@ -106,7 +106,7 @@ export const employmentTypeLabel = (value) => EMPLOYMENT_TYPES.find((type) => ty
 
 const hasYear = (date) => Number.isInteger(date?.year);
 const hasMonth = (date) => Number.isInteger(date?.month) && date.month >= 1 && date.month <= 12;
-const isComplete = (date) => hasYear(date) && hasMonth(date);
+export const isComplete = (date) => hasYear(date) && hasMonth(date);
 
 // "Jan 2023", or just "2023" when only the year is stored.
 const formatDate = (date) => {

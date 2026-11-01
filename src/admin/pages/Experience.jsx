@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { FileUser } from "lucide-react";
 import { useDocument } from "@sanity/sdk-react";
-import { EMPLOYMENT_TYPES, MONTHS, formatExperienceDates } from "../../lib/content";
+import { EMPLOYMENT_TYPES, MONTHS, formatExperienceDates, isComplete } from "../../lib/content";
 import { CollectionList } from "../components/CollectionList";
 import { DocumentEditor } from "../components/DocumentEditor";
 import { MonthYearField, SelectField, StringListField, TextField, ToggleField } from "../components/fields";
@@ -26,8 +26,8 @@ export function ExperienceList() {
       emptyTitle="No experience yet"
       emptyText="Add roles, internships or major projects with dates and a few highlights."
       renderRow={(entry) => (
-        <div className="flex min-w-0 items-baseline gap-4">
-          <span className="w-40 shrink-0 truncate whitespace-nowrap font-mono text-xs text-stone">{formatExperienceDates(entry) || "No dates"}</span>
+        <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-4">
+          <span className="sm:w-40 sm:shrink-0 truncate whitespace-nowrap font-mono text-xs text-stone">{formatExperienceDates(entry) || "No dates"}</span>
           <span className="min-w-0">
             <span className="block truncate text-sm text-ink">{entry.title || "Untitled role"}</span>
             {entry.job && <span className="block truncate text-xs text-stone">{entry.job}</span>}
@@ -41,7 +41,6 @@ export function ExperienceList() {
 // Same range as the Studio: 1970 to five years ahead, newest first.
 const YEARS = Array.from({ length: new Date().getFullYear() + 5 - 1970 + 1 }, (_, index) => new Date().getFullYear() + 5 - index);
 
-const isComplete = (date) => Number.isInteger(date?.month) && Number.isInteger(date?.year);
 const isEmpty = (date) => !date || (date.month == null && date.year == null);
 const monthIndex = (date) => date.year * 12 + date.month;
 
