@@ -53,7 +53,7 @@ Two sources of truth:
 
 Sanity schema types (`backend/my-portfolio/schemaTypes/`):
 - `project` — title (required), description, subDescription[], href (url), image (hotspot), tags[] (refs to techStack), orderRank (drag-and-drop), order (hidden, legacy).
-- `experience` — title, job, date (free-form string), contents[], orderRank (drag-and-drop), order (hidden, legacy).
+- `experience` — title, job, employmentType (optional list), isCurrent, startDate and endDate ({month, year}), date (hidden, legacy fallback), contents[], orderRank (drag-and-drop), order (hidden, legacy).
 - `techStack` — name (required), icon (image, svg/png).
 - `homePage` (singleton) — `sections[]` of the section object types in `schemaTypes/sections.ts`. Every section shares `enabled`, `title`, `navLabel`, `anchor` (regex-validated); hero adds `standfirst` (`*word*` → emphasis) and `stackLine`, contact adds `intro`, text adds `body[]`.
 - `siteSettings` (singleton) — name, role, location, IANA timeZone (validated), availableForWork, availabilityLabel, email, resume (PDF file), socials[] {name, url}.
