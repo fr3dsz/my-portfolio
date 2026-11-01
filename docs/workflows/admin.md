@@ -19,7 +19,7 @@ The custom admin for editing the portfolio. Built on the Sanity App SDK; the Stu
 | Dashboard | Overview: counts, "still to do" checklist with links, recently edited |
 | Page layout | `homePage.sections`: order, show/hide, title, nav label, anchor, hero intro/stack line, contact intro, text sections |
 | Projects | List (drag to reorder) → editor: title, description, link, image, detail points, tech tags |
-| Experience | List (drag to reorder) → editor: title, organisation, dates, highlights |
+| Experience | List (drag to reorder) → editor: title, organisation, employment type, "I currently work here", start and end date (month and year; the end date is hidden while current), highlights |
 | Tech stack | List → editor: name, logo |
 | About | Heading, bio, photo + alt, Currently, Education, tech stack groups |
 | Site settings | Name, role, location, time zone, availability, email, résumé, social links |

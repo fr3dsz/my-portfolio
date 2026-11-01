@@ -86,6 +86,100 @@ export function TextField(props) {
   );
 }
 
+// ── dropdowns ────────────────────────────────────────────────────────────
+
+// Clearing a value removes the path instead of storing an empty one.
+function useUnset(handle, path) {
+  const apply = useApplyDocumentActions();
+  return () => apply(editDocument(handle, { unset: [path] }));
+}
+
+// A stored value outside `options` stays selectable so it is not silently changed.
+function SelectControl({ id, value, options, onChange, placeholder, label, error, describedBy }) {
+  const known = options.some((option) => option.value === value);
+  return (
+    <select
+      id={id}
+      aria-label={label}
+      aria-invalid={Boolean(error)}
+      aria-describedby={describedBy}
+      value={value ?? ""}
+      onChange={(event) => onChange(event.target.value)}
+      className={inputClass}
+    >
+      <option value="">{placeholder}</option>
+      {value != null && value !== "" && !known && <option value={value}>{String(value)}</option>}
+      {options.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+  );
+}
+
+function SelectFieldInner({ handle, path, label, hint, options, placeholder = "Not set" }) {
+  const id = useId();
+  const { data } = useDocument({ ...handle, path });
+  const edit = useEditDocument({ ...handle, path });
+  const unset = useUnset(handle, path);
+  const value = typeof data === "string" ? data : "";
+
+  return (
+    <FieldShell id={id} label={label} hint={hint}>
+      <div className="max-w-xs">
+        <SelectControl id={id} value={value} options={options} placeholder={placeholder} onChange={(next) => (next ? edit(next) : unset())} describedBy={hint ? `${id}-hint` : undefined} />
+      </div>
+    </FieldShell>
+  );
+}
+export function SelectField(props) {
+  return (
+    <FieldSuspense label={props.label}>
+      <SelectFieldInner {...props} />
+    </FieldSuspense>
+  );
+}
+
+// Month and year dropdowns writing one { month, year } object; both cleared unsets it.
+// `validate(value)` returns an error message or null.
+function MonthYearFieldInner({ handle, path, label, hint, months, years, validate }) {
+  const id = useId();
+  const { data } = useDocument({ ...handle, path });
+  const edit = useEditDocument({ ...handle, path });
+  const unset = useUnset(handle, path);
+  const value = data && typeof data === "object" ? data : {};
+  const error = validate?.(data && typeof data === "object" ? data : null);
+
+  const change = (part, raw) => {
+    const next = { ...value };
+    if (raw === "") delete next[part];
+    else next[part] = Number(raw);
+    if (next.month == null && next.year == null) unset();
+    else edit(next);
+  };
+
+  // Years come as numbers; a stored year outside the range is passed through as an extra option.
+  const yearOptions = years.map((year) => ({ value: year, label: String(year) }));
+  const describedBy = error ? `${id}-error` : hint ? `${id}-hint` : undefined;
+
+  return (
+    <FieldShell id={id} label={label} hint={hint} error={error}>
+      <div className="grid max-w-xs grid-cols-2 gap-2">
+        <SelectControl id={id} label={`${label} month`} value={value.month} options={months} placeholder="Month" error={error} describedBy={describedBy} onChange={(raw) => change("month", raw)} />
+        <SelectControl label={`${label} year`} value={value.year} options={yearOptions} placeholder="Year" error={error} describedBy={describedBy} onChange={(raw) => change("year", raw)} />
+      </div>
+    </FieldShell>
+  );
+}
+export function MonthYearField(props) {
+  return (
+    <FieldSuspense label={props.label}>
+      <MonthYearFieldInner {...props} />
+    </FieldSuspense>
+  );
+}
+
 // ── boolean switch ───────────────────────────────────────────────────────
 
 export function Switch({ id, checked, onChange, label, describedBy }) {

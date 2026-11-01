@@ -1,8 +1,12 @@
 import { motion } from "motion/react";
 import { useRef } from "react";
+import { employmentTypeLabel, formatExperienceDates, formatExperienceDuration, isCurrentRole } from "../lib/content";
 
 const TimelineItem = ({ item }) => {
-  const isCurrent = item.date?.toLowerCase().includes("present");
+  const isCurrent = isCurrentRole(item);
+  const dates = formatExperienceDates(item);
+  const duration = formatExperienceDuration(item);
+  const employmentType = employmentTypeLabel(item.employmentType);
 
   return (
     <div className="relative border-b border-line py-8 last:border-b-0 pl-7">
@@ -11,7 +15,7 @@ const TimelineItem = ({ item }) => {
       )}
 
       <div className="flex flex-wrap items-center gap-3">
-        <span className="font-mono text-xs uppercase tracking-[0.18em] text-stone">{item.date}</span>
+        {dates && <span className="font-mono text-xs uppercase tracking-[0.18em] text-stone">{duration ? `${dates} · ${duration}` : dates}</span>}
         {isCurrent && (
           <span className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-stone">
             <span aria-hidden="true" className="size-1.5 rounded-full bg-status" />
@@ -21,7 +25,7 @@ const TimelineItem = ({ item }) => {
       </div>
 
       <h3 className="mt-3 font-display text-2xl font-normal text-ink">{item.title}</h3>
-      <p className="mt-1 text-sm text-stone">{item.job}</p>
+      <p className="mt-1 text-sm text-stone">{employmentType ? `${item.job} · ${employmentType}` : item.job}</p>
 
       {item.contents?.length > 0 && (
         <ul className="mt-5 space-y-2.5">

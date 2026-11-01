@@ -4,6 +4,8 @@ History derived from the git log (newest first). Future entries should be append
 
 ## Unreleased / next steps
 
+- Experience entries now have an employment type, an "I currently work here" toggle, and start and end dates picked by month and year, in both the Studio and `/admin`. The timeline shows "Jan 2023 – Dec 2024 · 2 yrs" and "Acme · Full-time". Old `date` strings still display until each entry is re-entered.
+
 - Projects section defaults are now nav label "Projects" and anchor `#projects`, replacing "Work" and `#work`. Project detail paragraphs saved as plain text now display.
 
 - Added "Done Means Proven", a standalone case study page at `/done-means-proven/`, served from `public/` outside the React app.
