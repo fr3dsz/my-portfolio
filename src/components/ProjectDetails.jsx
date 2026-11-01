@@ -83,9 +83,10 @@ const ProjectDetails = ({ project, closeModal }) => {
           {project.subDescription?.length > 0 && (
             <div className="mt-10 space-y-5">
               {project.subDescription.map((block, blockIndex) => {
-                const text = Array.isArray(block?.children) ? block.children.map((child) => child?.text || "").join("") : "";
+                // Schema and admin store plain strings; older content may hold blocks
+                const text = typeof block === "string" ? block : Array.isArray(block?.children) ? block.children.map((child) => child?.text || "").join("") : "";
                 return text.trim() ? (
-                  <p key={block._key || blockIndex} className="max-w-[65ch] text-base leading-relaxed text-stone">
+                  <p key={block?._key || blockIndex} className="max-w-[65ch] text-base leading-relaxed text-stone">
                     {text}
                   </p>
                 ) : null;
