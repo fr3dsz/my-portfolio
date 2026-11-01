@@ -28,3 +28,6 @@ dist-ssr
 
 # flow v2 job state
 .flow/
+
+# local tool config
+.claude/flow.json
