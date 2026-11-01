@@ -4,6 +4,8 @@ History derived from the git log (newest first). Future entries should be append
 
 ## Unreleased / next steps
 
+- Projects section defaults are now nav label "Projects" and anchor `#projects`, replacing "Work" and `#work`. Project detail paragraphs saved as plain text now display.
+
 - Added "Done Means Proven", a standalone case study page at `/done-means-proven/`, served from `public/` outside the React app.
 
 - Custom admin panel at `/admin` (Sanity App SDK): dashboard, page layout builder, projects/experience/tech stack lists and editors with drag-and-drop order, About and Site settings editors, drafts with publish/discard/delete, image and résumé uploads. `vercel.json` now rewrites `/admin*` to the app instead of redirecting to the Studio.

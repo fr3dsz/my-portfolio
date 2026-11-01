@@ -29,7 +29,7 @@ const sectionFields = ({title, navLabel, anchor}: SectionDefaults) => [
     name: 'anchor',
     type: 'string',
     initialValue: anchor,
-    description: 'URL fragment, e.g. "work" → /#work. Lowercase letters, numbers and dashes.',
+    description: 'URL fragment, e.g. "projects" → /#projects. Lowercase letters, numbers and dashes.',
     validation: (r) => r.regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, {name: 'lowercase-and-dashes'}),
   }),
 ]
@@ -80,7 +80,7 @@ export const projectsSection = defineType({
   title: 'Projects',
   type: 'object',
   description: 'Lists every Project document.',
-  fields: sectionFields({title: 'Personal Projects', navLabel: 'Work', anchor: 'work'}),
+  fields: sectionFields({title: 'Personal Projects', navLabel: 'Projects', anchor: 'projects'}),
   preview: sectionPreview('Projects'),
 })
 
