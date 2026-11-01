@@ -85,3 +85,56 @@ export const fetchHomeSections = async (knownTypes) => {
   const data = await client.fetch(HOME_PAGE_QUERY);
   return normalizeSections(data?.sections, knownTypes);
 };
+
+// Experience dates
+// Keep the type and month lists in sync with backend/my-portfolio/schemaTypes/experience.ts.
+
+export const EMPLOYMENT_TYPES = [
+  { value: "full-time", label: "Full-time" },
+  { value: "part-time", label: "Part-time" },
+  { value: "self-employed", label: "Self-employed" },
+  { value: "freelance", label: "Freelance" },
+  { value: "contract", label: "Contract" },
+  { value: "internship", label: "Internship" },
+  { value: "apprenticeship", label: "Apprenticeship" },
+  { value: "seasonal", label: "Seasonal" },
+];
+
+export const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((label, index) => ({ value: index + 1, label }));
+
+export const employmentTypeLabel = (value) => EMPLOYMENT_TYPES.find((type) => type.value === value)?.label ?? "";
+
+const hasYear = (date) => Number.isInteger(date?.year);
+const hasMonth = (date) => Number.isInteger(date?.month) && date.month >= 1 && date.month <= 12;
+export const isComplete = (date) => hasYear(date) && hasMonth(date);
+
+// "Jan 2023", or just "2023" when only the year is stored.
+const formatDate = (date) => {
+  if (!hasYear(date)) return "";
+  return hasMonth(date) ? `${MONTHS[date.month - 1].label} ${date.year}` : String(date.year);
+};
+
+// New fields win once the start date has a year; before that the legacy check on `date` applies.
+export const isCurrentRole = (item) => (hasYear(item?.startDate) ? item.isCurrent === true : Boolean(item?.date?.toLowerCase().includes("present")));
+
+export const formatExperienceDates = (item) => {
+  if (!hasYear(item?.startDate)) return item?.date?.trim() || "";
+  const start = formatDate(item.startDate);
+  const end = item.isCurrent === true ? "Present" : formatDate(item.endDate);
+  return end ? `${start} – ${end}` : start;
+};
+
+// Inclusive month count, e.g. "2 yrs 3 mos"; empty when either end lacks a month and year.
+export const formatExperienceDuration = (item, now = new Date()) => {
+  if (!isComplete(item?.startDate)) return "";
+  const current = item.isCurrent === true;
+  const end = current ? { month: now.getMonth() + 1, year: now.getFullYear() } : item.endDate;
+  if (!isComplete(end)) return "";
+
+  const total = (end.year - item.startDate.year) * 12 + (end.month - item.startDate.month) + 1;
+  if (total < 1) return "";
+
+  const years = Math.floor(total / 12);
+  const months = total % 12;
+  return [years && `${years} ${years === 1 ? "yr" : "yrs"}`, months && `${months} ${months === 1 ? "mo" : "mos"}`].filter(Boolean).join(" ");
+};

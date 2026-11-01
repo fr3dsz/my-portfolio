@@ -12,6 +12,10 @@ export const EXPERIENCES_QUERY = `*[_type == "experience"] | order(orderRank asc
   _id,
   title,
   job,
+  employmentType,
+  isCurrent,
+  startDate,
+  endDate,
   date,
   contents
 }`;
