@@ -4,6 +4,8 @@ History derived from the git log (newest first). Future entries should be append
 
 ## Unreleased / next steps
 
+- Added "Done Means Proven", a standalone case study page at `/done-means-proven/`, served from `public/` outside the React app.
+
 - Custom admin panel at `/admin` (Sanity App SDK): dashboard, page layout builder, projects/experience/tech stack lists and editors with drag-and-drop order, About and Site settings editors, drafts with publish/discard/delete, image and résumé uploads. `vercel.json` now rewrites `/admin*` to the app instead of redirecting to the Studio.
 
 - Availability marker redrawn (olive ring with centre when available, stone ring with dash when not). A blank label while unavailable hides the Hero status row and About availability block; a blank label while available falls back to the default label. About reads lead, then facts (availability and `Get in touch` first), then education and tech stack; the role now shows under the heading and the photo moves to the end of the facts column.
