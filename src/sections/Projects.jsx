@@ -52,7 +52,7 @@ const Projects = ({ section }) => {
   const openProject = projects.find((project) => project.id === openId) || null;
 
   return (
-    <section id={section.anchor} className="c-space pb-16 pt-24 md:pb-24 md:pt-32">
+    <section id={section.anchor} className="section-space">
       <SectionHeading code={section.code}>{section.title}</SectionHeading>
 
       {isLoading && <p className="mt-12 font-mono text-sm text-stone">Loading projects…</p>}
