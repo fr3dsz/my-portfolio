@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
 
 // Lists mirror EMPLOYMENT_TYPES and MONTHS in src/lib/content.js (the Studio cannot import from src/)
@@ -104,6 +104,27 @@ export default defineType({
     // legacy: superseded by startDate/endDate; read only as a fallback for entries not yet updated
     defineField({name: 'date', type: 'string', hidden: true}),
     defineField({name: 'contents', type: 'array', of: [{type: 'string'}]}),
+    defineField({
+      name: 'photos',
+      type: 'array',
+      description: 'Up to 8 photos shown under the highlights. Only add photos you have the right to publish.',
+      validation: (r) => r.max(8),
+      of: [
+        defineArrayMember({
+          type: 'image',
+          options: {hotspot: true},
+          fields: [
+            defineField({
+              name: 'alt',
+              type: 'string',
+              title: 'Alt text',
+              validation: (r) => r.required(),
+            }),
+            defineField({name: 'caption', type: 'string'}),
+          ],
+        }),
+      ],
+    }),
     orderRankField({type: 'experience'}),
     // superseded by orderRank (drag-and-drop); kept so the backfill script can read it
     defineField({name: 'order', type: 'number', hidden: true}),

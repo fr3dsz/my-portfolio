@@ -54,7 +54,7 @@ const homePage = {
       anchor: 'home',
       standfirst:
         "I'm a full-stack developer growing into an *AI engineer* — using AI to build faster and ship better, and turning every hurdle into the next thing I learn.",
-      stackLine: 'React · Node · C# · Tailwind',
+      goal: 'AI Engineer',
     }),
     section('aboutSection', {title: 'About Me', navLabel: 'About', anchor: 'about'}),
     section('projectsSection', {title: 'Personal Projects', navLabel: 'Work', anchor: 'work'}),
