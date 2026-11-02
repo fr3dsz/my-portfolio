@@ -229,6 +229,9 @@ Section header `03 / Work — Selected Projects` (mono code + serif heading + ha
   - cols 9–12: **image plate** — `aspect-[4/3]`, `object-cover`, `bg-surface`, `1px border-line`,
     `rounded` ≤ 4px. Hover: border → accent, corner ticks draw across the plate corners. When the
     project has no `image`, render a `surface` plate with centered mono `image pending`.
+- **Coming-soon badge**: a project with `status` "coming-soon" shows a mono, uppercase, `text-xs` text
+  badge with a 1px `accent` border beside the title (row) and under the title (modal). Text, not a
+  control: no focus stop. The image plate is unchanged and the live link is hidden.
 - Rows separated by full-width hairline `border-line`; records `py-12 md:py-16`. No card shells, no
   shared borders, no background fills on the record itself.
 - **Cursor-follow image preview is removed** (the spring-driven floating `motion.img` + `setPreview`

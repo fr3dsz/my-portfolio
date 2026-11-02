@@ -92,6 +92,14 @@ export const fetchHomeSections = async (knownTypes) => {
   return normalizeSections(data?.sections, knownTypes);
 };
 
+// Project status
+// Keep this list in sync with backend/my-portfolio/schemaTypes/project.ts. Missing or unknown = live.
+
+export const PROJECT_STATUSES = [
+  { value: "live", label: "Live" },
+  { value: "coming-soon", label: "Coming soon" },
+];
+
 // Experience dates
 // Keep the type and month lists in sync with backend/my-portfolio/schemaTypes/experience.ts.
 

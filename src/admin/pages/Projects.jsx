@@ -1,12 +1,13 @@
 import { Briefcase, ImageOff } from "lucide-react";
 import { imageUrl } from "../lib";
+import { PROJECT_STATUSES } from "../../lib/content";
 import { CollectionList } from "../components/CollectionList";
 import { DocumentEditor } from "../components/DocumentEditor";
-import { ImageField, StringListField, TechRefsField, TextField } from "../components/fields";
+import { ImageField, SelectField, StringListField, TechRefsField, TextField } from "../components/fields";
 import { Section } from "../components/ui";
 
 const PROJECTS_QUERY = `*[_type == "project"] | order(orderRank asc, order asc) {
-  _id, _originalId, title, description, orderRank, "imageRef": image.asset._ref, "tags": tags[]->name
+  _id, _originalId, title, description, status, orderRank, "imageRef": image.asset._ref, "tags": tags[]->name
 }`;
 
 const isUrl = (value) => (/^https?:\/\/\S+\.\S+/.test(value) ? null : "Use a full link starting with https://");
@@ -33,7 +34,10 @@ export function ProjectList() {
               {thumb ? <img src={thumb} alt="" className="size-full object-cover" /> : <ImageOff aria-hidden="true" className="size-3.5 text-stone" />}
             </div>
             <div className="min-w-0">
-              <p className="truncate text-sm text-ink">{project.title || "Untitled project"}</p>
+              <p className="truncate text-sm text-ink">
+                {project.title || "Untitled project"}
+                {project.status === "coming-soon" && <span className="ml-2 border border-accent px-1.5 py-px font-mono text-[10px] uppercase tracking-[0.12em] text-accent">Coming soon</span>}
+              </p>
               <p className="truncate text-xs text-stone">{project.tags?.filter(Boolean).join(" · ") || project.description || "No description yet"}</p>
             </div>
           </div>
@@ -50,7 +54,8 @@ export function ProjectEditor({ id }) {
       <Section title="Basics" description="The row title and summary on the site.">
         <TextField handle={handle} path="title" label="Title" placeholder="e.g. E-learning platform" />
         <TextField handle={handle} path="description" label="Description" hint="One or two sentences. Shown on the row and at the top of the project modal." multiline rows={3} />
-        <TextField handle={handle} path="href" label="Live link" hint="Optional. Leave blank if it isn't deployed." placeholder="https://" type="url" validate={isUrl} />
+        <TextField handle={handle} path="href" label="Live link" hint="Optional. Leave blank if it isn't deployed. Hidden on the site while the status is Coming soon." placeholder="https://" type="url" validate={isUrl} />
+        <SelectField handle={handle} path="status" label="Status" hint="Coming soon shows a badge and hides the live link. Leave unset for Live." options={PROJECT_STATUSES} placeholder="Live" />
       </Section>
       <Section title="Image" description="Shown on hover and in the modal. Landscape works best.">
         <ImageField handle={handle} path="image" previewClass="aspect-[4/3] w-64 max-w-full" />

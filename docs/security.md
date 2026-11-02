@@ -39,6 +39,8 @@ Consent: photos can show people other than the owner. Only publish photos of peo
 - Project CORS list with credentials allowed: `http://localhost:5173` and `https://fr3dsz-portfolio.vercel.app`. Keep it to exact origins, never a wildcard.
 - `/admin` sends `X-Frame-Options: DENY`. All paths send `X-Content-Type-Options: nosniff` and a strict referrer policy.
 - Links from Sanity render only as `http(s):` or `mailto:` (`isSafeUrl` in `src/lib/content.js`).
+- A project with `status` "coming-soon" renders no link, even if `href` is set (`src/sections/Projects.jsx`). Unknown status values count as live.
+- Project screenshots are public once published. Check them for personal data, secrets, and internal paths first (`docs/workflows/projects-sanity.md`). The Done Means Proven page and card image stay high-level on purpose: no counts, role or tool names, or step order.
 - Admin code loads in its own chunk, only on `/admin`.
 
 ## Known gaps
