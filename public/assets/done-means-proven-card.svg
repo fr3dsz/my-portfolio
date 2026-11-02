@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" width="1600" height="1200" role="img" aria-labelledby="t d">
+  <title id="t">Done Means Proven</title>
+  <desc id="d">A simple pipeline from idea to ship, ending in proof rather than a claim.</desc>
+  <style>
+    .disp { font-family: "Fraunces", Georgia, "Times New Roman", serif; font-weight: 500; }
+    .sans { font-family: "Instrument Sans", system-ui, -apple-system, sans-serif; }
+    .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 500; }
+  </style>
+  <rect width="1600" height="1200" fill="#171614"/>
+  <text x="120" y="170" class="mono" fill="#aaa298" font-size="26" letter-spacing="4">PERSONAL PROJECT · AI ENGINEERING</text>
+  <text x="120" y="330" class="disp" fill="#e8e2d8" font-size="132" letter-spacing="-2.5">Done Means Proven</text>
+  <text x="120" y="420" class="sans" fill="#aaa298" font-size="40">Making an AI coding agent prove its work.</text>
+  <rect x="120" y="470" width="120" height="4" fill="#a998c4"/>
+  <rect x="120" y="620" width="240" height="200" fill="#24211e" stroke="#3b3732" stroke-width="2"/>
+  <text x="240.0" y="690" text-anchor="middle" class="mono" fill="#aaa298" font-size="24" letter-spacing="3">01</text>
+  <text x="240.0" y="761" text-anchor="middle" class="disp" fill="#e8e2d8" font-size="52">Idea</text>
+  <path d="M368 720.0 H392 m-10 -10 l10 10 -10 10" fill="none" stroke="#a998c4" stroke-width="2"/>
+  <rect x="400" y="620" width="240" height="200" fill="#24211e" stroke="#3b3732" stroke-width="2"/>
+  <text x="520.0" y="690" text-anchor="middle" class="mono" fill="#aaa298" font-size="24" letter-spacing="3">02</text>
+  <text x="520.0" y="761" text-anchor="middle" class="disp" fill="#e8e2d8" font-size="52">Plan</text>
+  <path d="M648 720.0 H672 m-10 -10 l10 10 -10 10" fill="none" stroke="#a998c4" stroke-width="2"/>
+  <rect x="680" y="620" width="240" height="200" fill="#24211e" stroke="#3b3732" stroke-width="2"/>
+  <text x="800.0" y="690" text-anchor="middle" class="mono" fill="#aaa298" font-size="24" letter-spacing="3">03</text>
+  <text x="800.0" y="761" text-anchor="middle" class="disp" fill="#e8e2d8" font-size="52">Build</text>
+  <path d="M928 720.0 H952 m-10 -10 l10 10 -10 10" fill="none" stroke="#a998c4" stroke-width="2"/>
+  <rect x="960" y="620" width="240" height="200" fill="#24211e" stroke="#3b3732" stroke-width="2"/>
+  <text x="1080.0" y="690" text-anchor="middle" class="mono" fill="#aaa298" font-size="24" letter-spacing="3">04</text>
+  <text x="1080.0" y="761" text-anchor="middle" class="disp" fill="#e8e2d8" font-size="52">Verify</text>
+  <path d="M1208 720.0 H1232 m-10 -10 l10 10 -10 10" fill="none" stroke="#a998c4" stroke-width="2"/>
+  <rect x="1240" y="620" width="240" height="200" fill="#24211e" stroke="#a998c4" stroke-width="2"/>
+  <text x="1360.0" y="690" text-anchor="middle" class="mono" fill="#aaa298" font-size="24" letter-spacing="3">05</text>
+  <text x="1360.0" y="761" text-anchor="middle" class="disp" fill="#a998c4" font-size="52">Ship</text>
+  <text x="120" y="1010" class="sans" fill="#aaa298" font-size="34">Not “done.” Proven.</text>
+  <text x="120" y="1110" class="mono" fill="#aaa298" font-size="26" letter-spacing="2">fr3dsz</text>
+</svg>

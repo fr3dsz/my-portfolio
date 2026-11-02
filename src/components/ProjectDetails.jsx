@@ -62,6 +62,7 @@ const ProjectDetails = ({ project, closeModal }) => {
           </header>
 
           <h2 className="mt-8 font-display text-3xl font-normal text-ink md:text-5xl">{project.title}</h2>
+          {project.comingSoon && <p className="mt-4 inline-block border border-accent px-2 py-0.5 font-mono text-xs uppercase tracking-[0.12em] text-accent">Coming soon</p>}
 
           {project.image && (
             <div className="mt-8 overflow-hidden border border-line">

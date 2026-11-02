@@ -16,12 +16,14 @@ const Projects = ({ section }) => {
     client
       .fetch(PROJECTS_QUERY)
       .then((data) => {
+        // Coming-soon projects never link out, even if href is set
         const transformed = data.map((project) => ({
           id: project._id,
           title: project.title,
           description: project.description,
           subDescription: project.subDescription || [],
-          href: isSafeUrl(project.href) ? project.href : "",
+          comingSoon: project.status === "coming-soon",
+          href: project.status !== "coming-soon" && isSafeUrl(project.href) ? project.href : "",
           image: project.image?.asset?.url || "",
           tags: (project.tags || []).map((tag) => ({
             id: tag._id,
