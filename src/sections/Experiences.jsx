@@ -22,7 +22,7 @@ const Experiences = ({ section }) => {
   }, []);
 
   return (
-    <section id={section.anchor} className="section-space">
+    <section id={section.anchor} className="c-space section-space">
       <SectionHeading code={section.code}>{section.title}</SectionHeading>
 
       {isLoading && <p className="mt-10 font-mono text-sm text-stone">Loading experience...</p>}

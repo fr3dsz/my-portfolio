@@ -4,7 +4,7 @@ const TextSection = ({ section }) => {
   const body = section.body || [];
 
   return (
-    <section id={section.anchor} className="section-space">
+    <section id={section.anchor} className="c-space section-space">
       <SectionHeading code={section.code}>{section.title}</SectionHeading>
 
       {body.length > 0 && (

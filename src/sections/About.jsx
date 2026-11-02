@@ -23,7 +23,7 @@ const About = ({ section }) => {
   const { heading, bio, photo, currently, education, techGroups } = about;
 
   return (
-    <section id={section.anchor} className="section-space">
+    <section id={section.anchor} className="c-space section-space">
       <SectionHeading code={section.code}>{section.title}</SectionHeading>
 
       {/* DOM order is the mobile reading order: lead, facts, then supporting detail. From md the facts span both rows; 1fr keeps a tall facts column from opening a gap under the lead. */}
