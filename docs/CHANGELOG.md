@@ -2,7 +2,11 @@
 
 History derived from the git log (newest first). Future entries should be appended here following the same format: `[hash] <description>`.
 
-## Unreleased / next steps
+## Unreleased
+
+## v1.0.0 — 2026-11-02
+
+First tagged release: the live portfolio with the Sanity-backed content, custom `/admin`, and everything below.
 
 - Projects have a Status (Live or Coming soon) in the Studio and `/admin`. Coming-soon projects show a badge and no live link; existing projects stay live. The Done Means Proven page lost its specific numbers and internals, gained two generic diagrams, and has a card image at `public/assets/done-means-proven-card.png`.
 
