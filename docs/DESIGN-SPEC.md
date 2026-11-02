@@ -228,7 +228,7 @@ Section header `03 / Work — Selected Projects` (mono code + serif heading + ha
   - cols 5–8: serif title (`heading` step) + one-line description in body stone (lead for hover).
   - cols 9–12: **image plate** — `aspect-[4/3]`, `object-cover`, `bg-surface`, `1px border-line`,
     `rounded` ≤ 4px. Hover: border → accent, corner ticks draw across the plate corners. When the
-    project has no `image`, render a `surface` plate with centered mono `image pending`.
+    project has no photo (and no legacy `image`), render a `surface` plate with centered mono `image pending`.
 - **Coming-soon badge**: a project with `status` "coming-soon" shows a mono, uppercase, `text-xs` text
   badge with a 1px `accent` border beside the title (row) and under the title (modal). Text, not a
   control: no focus stop. The image plate is unchanged and the live link is hidden.
@@ -255,6 +255,7 @@ Repurpose `ProjectDetails` as an **editorial article sheet** over a full solid o
 - Header: mono kicker `Selected Project — 01`, serif title, hairline rule.
 - Plate: image at top of the column (`aspect-[16/10] object-cover bg-surface border-line`); fallback
   `surface` block + mono `image pending` when absent.
+- Carousel (2+ photos, replaces the plate): same framed `aspect-[4/3]` plate with square, hairline `border-line` Previous/Next buttons, square dots (`aria-current` on the active one), a mono `N / M` counter and the caption below. Restrained motion: a short fade and slight slide, instant with reduced motion; `touch-action: pan-y` keeps vertical modal scrolling. One photo shows the plate with no controls.
 - Body: lede (description, serif lead step), then `subDescription` paragraphs (body measure ≤65ch).
 - Meta aside (mono, small): `Stack` tag names; `Link` → `View Live ↗` (accent underline, `target=_blank
   rel="noopener noreferrer"`) shown only when `href` is set (existing condition preserved).
