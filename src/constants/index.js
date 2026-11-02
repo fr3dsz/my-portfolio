@@ -2,7 +2,7 @@
 // singletons are filled in. Shapes match the normalized output of src/lib/content.js.
 export const defaultSettings = {
   name: "Luis Conda",
-  role: "Full-stack developer",
+  role: "Junior R&D Engineer",
   location: "Manila, PH",
   timeZone: "Asia/Manila",
   availableForWork: true,
@@ -66,7 +66,7 @@ export const defaultSections = [
     anchor: "home",
     standfirst:
       "I'm a full-stack developer growing into an *AI engineer* — using AI to build faster and ship better, and turning every hurdle into the next thing I learn.",
-    stackLine: "React · Node · C# · Tailwind",
+    goal: "AI Engineer",
   },
   { _key: "about", _type: "aboutSection", title: "About Me", navLabel: "About", anchor: "about" },
   { _key: "projects", _type: "projectsSection", title: "Personal Projects", navLabel: "Projects", anchor: "projects" },

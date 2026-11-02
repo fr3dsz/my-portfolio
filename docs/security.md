@@ -21,6 +21,19 @@
 
 `sanity.io/login` only accepts `localhost` and Sanity's own domains, so it's avoided on purpose. API calls use the project host because `api.sanity.io` rejects this origin, but the login redirect has to start on `api.sanity.io`: providers return there, and its state cookie isn't shared with the project host. The SDK receives the token through its documented `auth.token` option.
 
+## Experience photos data flow
+
+| Step | Detail |
+|---|---|
+| Entry | A signed-in editor uploads images in `/admin` (Experience > Photos) or the Studio, with alt text and an optional caption |
+| Validation | Max 8 photos and required alt in the Studio. `/admin` hides "Add photo" at 8 and shows alt errors inline but never blocks publishing. File type and size are checked only by the picker |
+| Authorization | Sanity project roles on every write |
+| Storage | Image assets in the Sanity dataset, referenced from `experience.photos` |
+| Exposure | Published photos, alt and captions are public through the CDN, with resize parameters on `cdn.sanity.io` URLs. Original files are reachable at the asset URL |
+| Retention | Until the photo is removed from the entry and the asset is deleted under Studio Media. Removing it from the entry alone does not delete the asset |
+
+Consent: photos can show people other than the owner. Only publish photos of people who have agreed to appear on a public site. Image metadata such as location can remain in the original file.
+
 ## Controls
 
 - Project CORS list with credentials allowed: `http://localhost:5173` and `https://fr3dsz-portfolio.vercel.app`. Keep it to exact origins, never a wildcard.

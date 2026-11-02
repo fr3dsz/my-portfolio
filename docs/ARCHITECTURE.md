@@ -32,7 +32,7 @@ The page is a page builder driven by the Sanity `homePage` singleton (`sections[
 
 1. `App.jsx` calls `fetchHomeSections(knownSectionTypes)` and renders nothing (an empty `min-h-screen` placeholder) until the layout is known, so a customized order never flashes the default one first. On fetch failure it uses `defaultSections`.
 2. `normalizeSections` (`src/lib/content.js`) drops disabled and unknown types, fills blank fields from the type's entry in `defaultSections`, slugifies and de-duplicates anchors (`work`, `work-2`, …), and assigns `code` = position (`01`, `02`, …). If nothing visible remains, `defaultSections` is used.
-3. Each section is looked up in `src/sections/registry.js` (`_type` → component) and rendered as `<Section section={…} />`. Components read `section.anchor` (element id), `section.code` and `section.title` (for `SectionHeading`), plus type-specific fields (`standfirst`, `stackLine`, `intro`, `body`).
+3. Each section is looked up in `src/sections/registry.js` (`_type` → component) and rendered as `<Section section={…} />`. Components read `section.anchor` (element id), `section.code` and `section.title` (for `SectionHeading`), plus type-specific fields (`standfirst`, `goal`, `intro`, `body`).
 4. Nav links are derived from sections with a non-blank `navLabel`; `Navbar` receives them as `links`. A blank `navLabel` deliberately keeps a section out of the nav.
 
 `Navbar` is fixed; desktop links show from `md` up, a full-screen menu below. `Footer` is always last and not part of the builder.
@@ -54,8 +54,9 @@ Two sources of truth:
 Sanity schema types (`backend/my-portfolio/schemaTypes/`):
 - `project` — title (required), description, subDescription[], href (url), image (hotspot), tags[] (refs to techStack), orderRank (drag-and-drop), order (hidden, legacy).
 - `experience` — title, job, employmentType (optional list), isCurrent, startDate and endDate ({month, year}), date (hidden, legacy fallback), contents[], orderRank (drag-and-drop), order (hidden, legacy).
+- `experience` — also `photos[]` (image with hotspot, required `alt`, optional `caption`; max 8).
 - `techStack` — name (required), icon (image, svg/png).
-- `homePage` (singleton) — `sections[]` of the section object types in `schemaTypes/sections.ts`. Every section shares `enabled`, `title`, `navLabel`, `anchor` (regex-validated); hero adds `standfirst` (`*word*` → emphasis) and `stackLine`, contact adds `intro`, text adds `body[]`.
+- `homePage` (singleton) — `sections[]` of the section object types in `schemaTypes/sections.ts`. Every section shares `enabled`, `title`, `navLabel`, `anchor` (regex-validated); hero adds `standfirst` (`*word*` → emphasis) and `goal` (the old `stackLine` is kept as a hidden legacy field and not read), contact adds `intro`, text adds `body[]`.
 - `siteSettings` (singleton) — name, role, location, IANA timeZone (validated), availableForWork, availabilityLabel, email, resume (PDF file), socials[] {name, url}.
 - `about` (singleton) — heading, bio[] (paragraphs), photo (+alt), currently[] {label, value}, education[] {school, credential, period}, techGroups[] {label, items[] → techStack}.
 
@@ -69,11 +70,11 @@ Studio admin (phase 4):
 
 ## Rendering / visual systems
 
-- **Hero**: typographic nameplate (`HeroText.jsx`) plus a mono facts list; name, role, base and status come from site settings, standfirst and stack line come from the `heroSection`.
+- **Hero**: typographic nameplate (`HeroText.jsx`) plus a mono facts list; facts read Role (site settings `role`), Goal (`heroSection.goal`, default "AI Engineer"), Status (`availableForWork` + `availabilityLabel`) and Base (`location`); the standfirst also comes from the `heroSection`.
 - **About**: 12-col grid in reading order lead, facts, supporting detail (a single column below `md`). Left: heading, role and bio, then optional education and grouped tech stack (`Frameworks.jsx`). Right: a facts column with availability and `Get in touch`, `Timezone`, optional "Currently" list and optional photo. Optional blocks render only when filled in. `Timezone` shows the local time at `profile.timeZone`, its UTC offset, and the gap to the visitor's own time zone, all computed with `Intl` so DST is handled.
 - **Contact**: `mailto:` link, `CopyEmailButton` (handles clipboard failure), optional résumé link.
-- **Experiences**: `Timeline.jsx` draws a scroll-driven progress line (motion `useScroll`/`useTransform` + `ResizeObserver`).
-- **Projects**: row list with hover image preview (motion springs) and a `ProjectDetails` modal.
+- **Experiences**: `Timeline.jsx` draws a scroll-linked fill on the rail (motion `useScroll`/`useTransform`, `scaleY` only), in-view rail dots (`useInView`), and an optional photo strip per entry (`experience.photos[]`, max 8, normalised by `normalizeExperiencePhotos`). All of it is static under `prefers-reduced-motion`.
+- **Projects**: row list (`Project` is memoised; images resized via CDN params and lazy-loaded) and a `ProjectDetails` modal with no backdrop blur.
 
 ## Styling
 

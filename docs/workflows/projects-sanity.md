@@ -21,7 +21,7 @@ From editing content in the CMS to rendering a project row and its detail modal 
 
 3. **Transformation** — The fetch result is mapped into the component's shape (`Projects.jsx:25-37`): `_id → id`, `image?.asset?.url → image` (falls back to `""`), `subDescription` defaults to `[]`, `href` defaults to `""`, and each tag becomes `{ id, name, path }` where `path` is the icon asset URL. Loading and error states are tracked (`isLoading`, `error`).
 
-4. **Rendering** — One `Project` row per item (`Projects.jsx:55`). Each row shows the title and tag names; hovering sets a floating image preview (`motion.img` following the cursor via spring motion values, `Projects.jsx:57`). Clicking **Read More** sets `isHidden` in `Project.jsx`, which mounts `ProjectDetails` — a fixed overlay modal showing the hero image, description, `subDescription[]` paragraphs, tag icons, and a "View Project" link when `href` is present.
+4. **Rendering** — One `Project` row per item (`Projects.jsx:55`). Each row shows the image, title and tag names. `Project` is memoised and `Projects.jsx` passes stable handlers, so opening one project does not re-render the others. List images use `?w=640&h=480&fit=crop&auto=format`, width/height and `loading="lazy"`. Clicking **Read More** sets `openId` in `Projects.jsx`, which mounts `ProjectDetails` — a fixed overlay (no backdrop blur) showing the image (`?w=1200`), description, `subDescription[]` paragraphs, tags, and a "View Live Project" link when `href` is present.
 
 ## Gotchas
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Timeline } from "../components/Timeline";
 import SectionHeading from "../components/SectionHeading";
+import { normalizeExperiencePhotos } from "../lib/content";
 import { client } from "../lib/sanity";
 import { EXPERIENCES_QUERY } from "../lib/queries";
 
@@ -12,7 +13,7 @@ const Experiences = ({ section }) => {
   useEffect(() => {
     client
       .fetch(EXPERIENCES_QUERY)
-      .then((data) => setExperiences(data))
+      .then((data) => setExperiences(data.map((item) => ({ ...item, photos: normalizeExperiencePhotos(item.photos) }))))
       .catch((err) => {
         console.error("Failed to fetch experiences:", err);
         setError(err);

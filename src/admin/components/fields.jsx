@@ -290,7 +290,7 @@ export function StringListField(props) {
 
 // `headerExtra` adds controls to an item's header row; `addOptions` ([{ label, newItem }])
 // replaces the single add button with one per item kind.
-export function ObjectListEditor({ items, onChange, newItem, renderItem, itemTitle, itemLabel = "item", addLabel = "Add item", emptyText, headerExtra, addOptions }) {
+export function ObjectListEditor({ items, onChange, newItem, renderItem, itemTitle, itemLabel = "item", addLabel = "Add item", emptyText, headerExtra, addOptions, maxItems }) {
   const itemProps = useDragReorder((from, to) => onChange(moveItem(items, from, to)));
   const update = (key, fields) => onChange(items.map((item) => (item._key === key ? { ...item, ...fields } : item)));
 
@@ -316,7 +316,9 @@ export function ObjectListEditor({ items, onChange, newItem, renderItem, itemTit
           })}
         </ol>
       )}
-      {addOptions ? (
+      {maxItems && items.length >= maxItems ? (
+        <p className="text-xs text-stone">Limit of {maxItems} {itemLabel}s reached.</p>
+      ) : addOptions ? (
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs text-stone">{addLabel}:</span>
           {addOptions.map((option) => (
@@ -438,6 +440,56 @@ function ImageFieldInner({ handle, path, label, hint, withAlt, accept = "image/*
     </FieldShell>
   );
 }
+
+// One photo of an ImageListField: upload/replace, alt text, caption.
+function PhotoItem({ photo, update }) {
+  const id = useId();
+  const inputRef = useRef(null);
+  const [upload, { busy, error }] = useUpload("image");
+  const src = imageUrl(photo.asset?._ref, { w: 480 });
+
+  const onFile = async (event) => {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+    const asset = await upload(file);
+    if (asset) update({ _type: "image", asset: { _type: "reference", _ref: asset._id } });
+  };
+
+  return (
+    <div className="flex flex-wrap items-start gap-4">
+      <div className="flex aspect-[4/3] w-40 items-center justify-center overflow-hidden border border-line bg-canvas">
+        {src ? <img src={src} alt={photo.alt || ""} className="size-full object-cover" /> : <ImagePlus aria-hidden="true" className="size-5 text-stone" />}
+      </div>
+      <div className="min-w-0 flex-1 basis-60 space-y-3">
+        <input ref={inputRef} id={id} type="file" accept="image/*" onChange={onFile} className="sr-only" />
+        <Button size="sm" icon={Upload} loading={busy} onClick={() => inputRef.current?.click()}>
+          {src ? "Replace" : "Upload"}
+        </Button>
+        {error && <p className="text-xs text-danger">{error}</p>}
+        <InlineInput label="Alt text" value={photo.alt} onChange={(alt) => update({ alt })} error={src && !photo.alt?.trim() ? "Alt text is required" : null} hint="Describe the photo for screen readers." />
+        <InlineInput label="Caption" value={photo.caption} onChange={(caption) => update({ caption })} hint="Optional. Shown under the photo." />
+      </div>
+    </div>
+  );
+}
+
+// Uploadable, reorderable image list that reads and writes the whole array at one path.
+export function ImageListField({ maxItems, ...props }) {
+  return (
+    <ObjectListField
+      itemLabel="photo"
+      addLabel="Add photo"
+      emptyText="No photos yet."
+      newItem={() => ({ _type: "image" })}
+      itemTitle={(photo) => photo.caption || photo.alt}
+      renderItem={(photo, update) => <PhotoItem photo={photo} update={update} />}
+      maxItems={maxItems}
+      {...props}
+    />
+  );
+}
+
 export function ImageField(props) {
   return (
     <FieldSuspense label={props.label} tall>
