@@ -57,11 +57,12 @@ export const heroSection = defineType({
       description: 'Intro under your name. Wrap words in *asterisks* to emphasize them.',
     }),
     defineField({
-      name: 'stackLine',
-      title: 'Stack line',
+      name: 'goal',
       type: 'string',
-      description: 'e.g. "React · Node · C# · Tailwind"',
+      description: 'What you are working toward, e.g. "AI Engineer"',
     }),
+    // legacy: replaced by goal
+    defineField({name: 'stackLine', title: 'Stack line', type: 'string', hidden: true}),
   ],
   preview: sectionPreview('Hero'),
 })
