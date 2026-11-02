@@ -32,10 +32,11 @@ const Project = ({ index, project, onOpen }) => {
       </button>
 
       <div className="flex flex-col md:col-span-5">
-        <h3 className="font-display text-2xl font-normal text-ink md:text-3xl">
+        <h3 className="flex flex-wrap items-center gap-x-4 gap-y-2 font-display text-2xl font-normal text-ink md:text-3xl">
           <button onClick={open} className="text-left transition-colors hover:text-accent focus-visible:outline-none">
             {project.title}
           </button>
+          {project.comingSoon && <span className="border border-accent px-2 py-0.5 font-mono text-xs uppercase tracking-[0.12em] text-accent">Coming soon</span>}
         </h3>
         <p className="mt-3 max-w-[55ch] text-sm leading-relaxed text-stone">{project.description}</p>
         <div className="mt-5 flex flex-wrap gap-x-4 gap-y-1.5">

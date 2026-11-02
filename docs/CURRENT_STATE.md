@@ -31,6 +31,7 @@ Backend studio (`backend/my-portfolio/`, Sanity 6.20, opens on the Dashboard; ho
 - **Sanity client**: project `cnu9hemn`, dataset `production`, `apiVersion 2024-01-01`, `useCdn: true` (`src/lib/sanity.js`).
 - **Live (Sanity-driven)**: page layout (Home Page Layout), Projects, Experiences, Site Settings (identity, availability, email, résumé, socials), About (bio, photo, currently, education, tech groups).
 - **Fallbacks** in `src/constants/index.js` (`defaultSettings`, `defaultAbout`, `defaultSections`) render until the singletons are filled in.
+- **Project status**: `project.status` (live or coming-soon; missing = live) drives the badge and hides the live link. The Bedazzled and Avelune documents and screenshots are content work done in `/admin`.
 - **Seeded / backfilled** on 2026-10-25: `homePage`, `siteSettings`, `about` created; existing projects and experiences ranked. Both scripts are safe to re-run.
 
 ## Known issues / notable gaps
