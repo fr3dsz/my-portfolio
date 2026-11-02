@@ -12,7 +12,7 @@ const OVERVIEW_QUERY = `{
   "projects": count(*[_type == "project" && !(_id in path("drafts.**"))]),
   "experiences": count(*[_type == "experience" && !(_id in path("drafts.**"))]),
   "techStack": count(*[_type == "techStack" && !(_id in path("drafts.**"))]),
-  "projectsWithoutImage": count(*[_type == "project" && !(_id in path("drafts.**")) && !defined(image.asset)]),
+  "projectsWithoutImage": count(*[_type == "project" && !(_id in path("drafts.**")) && !defined(image.asset) && count(coalesce(photos[defined(asset)], [])) == 0]),
   "unranked": count(*[_type in ["project", "experience"] && !defined(orderRank)]),
   "drafts": count(*[_id in path("drafts.**")])
 }`
