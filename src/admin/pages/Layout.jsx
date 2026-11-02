@@ -50,7 +50,7 @@ function SectionFields({ section, update }) {
       {section._type === "heroSection" && (
         <>
           <InlineInput label="Intro" hint="Wrap words in *asterisks* to emphasise them." value={section.standfirst} onChange={(standfirst) => update({ standfirst })} multiline />
-          <InlineInput label="Stack line" value={section.stackLine} placeholder="React · Node · C# · Tailwind" onChange={(stackLine) => update({ stackLine })} />
+          <InlineInput label="Goal" hint="What you are working toward. Blank shows AI Engineer." value={section.goal} placeholder="AI Engineer" onChange={(goal) => update({ goal })} />
         </>
       )}
       {section._type === "contactSection" && <InlineInput label="Intro" value={section.intro} onChange={(intro) => update({ intro })} multiline />}

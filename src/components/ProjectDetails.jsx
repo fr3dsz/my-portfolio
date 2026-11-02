@@ -38,7 +38,7 @@ const ProjectDetails = ({ project, closeModal }) => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.25, ease: "easeOut" }}
         onClick={closeModal}
-        className="fixed inset-0 z-50 bg-canvas/90 backdrop-blur-[2px]"
+        className="fixed inset-0 z-50 bg-canvas/90"
         aria-hidden="true"
       />
       <motion.div
@@ -55,8 +55,7 @@ const ProjectDetails = ({ project, closeModal }) => {
         className="fixed inset-0 z-[60] overflow-y-auto bg-canvas"
       >
         <article className="mx-auto min-h-full max-w-[860px] px-5 py-16 sm:px-10 md:py-20">
-          <header className="flex items-start justify-between gap-6">
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-stone/70">Case study</p>
+          <header className="flex items-start justify-end gap-6">
             <button onClick={closeModal} className="border border-line px-4 py-2 font-mono text-xs uppercase tracking-[0.15em] text-stone transition-colors hover:border-accent hover:text-ink">
               Close
             </button>
@@ -66,7 +65,7 @@ const ProjectDetails = ({ project, closeModal }) => {
 
           {project.image && (
             <div className="mt-8 overflow-hidden border border-line">
-              <img src={project.image} alt={`${project.title} interface`} className="w-full object-cover" />
+              <img src={`${project.image}?w=1200&auto=format`} alt={`${project.title} interface`} width={1200} height={900} decoding="async" className="aspect-4/3 w-full object-cover" />
             </div>
           )}
 

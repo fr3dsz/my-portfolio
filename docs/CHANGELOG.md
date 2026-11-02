@@ -4,6 +4,14 @@ History derived from the git log (newest first). Future entries should be append
 
 ## Unreleased / next steps
 
+- Experience entries can carry up to 8 photos (alt text required, caption optional), edited in the Studio and under Photos in `/admin`, and shown as a strip under the highlights.
+
+- Hero facts now read Role, Goal, Status, Base; the Stack row is replaced by an editable Goal (default "AI Engineer"). The default role is "Junior R&D Engineer". Status reuses the availability toggle and label.
+
+- The Experience rail reacts to scrolling again: an accent fill grows down it and each entry's dot activates when it is mid-viewport, both static with reduced motion.
+
+- Project overlay: removed the backdrop blur and the "Case study" label; project images are resized and lazy-loaded and rows no longer re-render when one opens.
+
 - Experience entries now have an employment type, an "I currently work here" toggle, and start and end dates picked by month and year, in both the Studio and `/admin`. The timeline shows "Jan 2023 – Dec 2024 · 2 yrs" and "Acme · Full-time". Old `date` strings still display until each entry is re-entered.
 
 - Projects section defaults are now nav label "Projects" and anchor `#projects`, replacing "Work" and `#work`. Project detail paragraphs saved as plain text now display.
