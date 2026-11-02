@@ -22,14 +22,14 @@ export default function Settings() {
     <DocumentEditor handle={handle} title="Site settings" description="Who you are and how to reach you. Used across the hero, About, Contact and footer.">
       <Section title="Identity">
         <TextField handle={handle} path="name" label="Name" placeholder="Luis Conda" />
-        <TextField handle={handle} path="role" label="Role" placeholder="Full-stack developer" />
+        <TextField handle={handle} path="role" label="Role" hint="Shown as Role in the hero and in About." placeholder="Junior R&D Engineer" />
         <TextField handle={handle} path="location" label="Location" hint="Shown as written." placeholder="Manila, PH" />
         <TextField handle={handle} path="timeZone" label="Time zone" hint="Drives the live local-time line in About." placeholder="Asia/Manila" validate={isTimeZone} mono />
       </Section>
 
       <Section title="Availability" description="The status line in the hero and About.">
-        <ToggleField handle={handle} path="availableForWork" label="Available for work" hint="Off shows a hollow dot and muted text." defaultValue />
-        <TextField handle={handle} path="availabilityLabel" label="Status text" placeholder="Open to work · remote worldwide" />
+        <ToggleField handle={handle} path="availableForWork" label="Available for work" hint="Off shows a hollow dot and muted text, with the status text below (e.g. Career break)." defaultValue />
+        <TextField handle={handle} path="availabilityLabel" label="Status text" hint="Shown as Status in the hero and About." placeholder="Open to work · remote worldwide" />
       </Section>
 
       <Section title="Contact" description="The Contact section's email link, copy button and résumé download.">

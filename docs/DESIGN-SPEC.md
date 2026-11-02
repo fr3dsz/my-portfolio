@@ -276,10 +276,15 @@ Section header `04 / Experience` (mono code + serif heading + hairline rail).
   - `aubergine` left rail (3px) on the current record — the one aubergine weight moment on the page.
   - A lone `olive` dot + mono `current` label beside its date (replaces the mint/glow `<span>` pill and
     the `animate-pulse` ping).
-- Timeline scroll behaviors: drop the lavender gradient fill-line and box-shadow animations.
-  `useInView` may keep a quiet state (record text warms when in view) but no glow, no lift
-  (`whileHover { y: -4 }` removed). Keep `ResizeObserver` only if the spine height genuinely needs it;
-  otherwise simplify to the static spine.
+- Timeline scroll behaviors: the lavender gradient fill-line and box-shadow animations stay dropped.
+  The rail is a muted 3px track with an `aubergine` fill that grows down it with scroll
+  (`useScroll` + `useTransform` driving `scaleY` from the top; no `ResizeObserver`). Each record has
+  a rail dot whose active layer fades in (opacity, slight scale) while the record is in the middle
+  band of the viewport (`useInView`). Only transform and opacity animate, interaction states stay
+  ≤ 200ms, and no glow or lift (`whileHover { y: -4 }` removed). With `prefers-reduced-motion` the
+  fill is static and full, dots switch without scale, and records reveal without a translate.
+- Experience photos: a strip of `border-line` plates (4:3 crop, `?w=480&h=360`) under the highlights,
+  caption in small stone text below each image.
 
 ---
 
@@ -337,7 +342,7 @@ Section header `04 / Experience` (mono code + serif heading + hairline rail).
 | `Projects.jsx` | records + plates; remove cursor-follow preview |
 | `Project.jsx` | prospect record interactivity (title underline, arrow) |
 | `ProjectDetails.jsx` | article sheet modal; text stack (no tag-icon cards); Esc-close |
-| `Experiences.jsx` / `Timeline.jsx` | ruled chronology; aubergine rail + olive current marker; remove glow/lift |
+| `Experiences.jsx` / `Timeline.jsx` | ruled chronology; aubergine rail with scroll fill + in-view dots, olive current marker, photo strip; remove glow/lift |
 | `Footer.jsx` | hairline top; mono text socials; remove filler links |
 | `CopyEmailButton.jsx` | editorial bordered action (not a rounded-full pill) |
 | `Timezone.jsx` | mono table, olive live dot, no emoji, no hard-coded purples |

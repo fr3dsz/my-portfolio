@@ -16,7 +16,7 @@ export default defineType({
       name: 'role',
       type: 'string',
       group: 'identity',
-      description: 'e.g. "Full-stack developer"',
+      description: 'Shown as Role in the hero and About, e.g. "Junior R&D Engineer"',
     }),
     defineField({
       name: 'location',
@@ -46,13 +46,14 @@ export default defineType({
       title: 'Available for work',
       type: 'boolean',
       group: 'availability',
+      description: 'Turn off for a muted status, and set the label below, e.g. "Career break".',
       initialValue: true,
     }),
     defineField({
       name: 'availabilityLabel',
       type: 'string',
       group: 'availability',
-      description: 'e.g. "Open to work · remote worldwide"',
+      description: 'Shown as Status, e.g. "Open to work" or "Career break" (turn off Available for work for a muted status)',
     }),
     defineField({
       name: 'email',
