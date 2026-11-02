@@ -25,10 +25,10 @@
 
 | Step | Detail |
 |---|---|
-| Entry | A signed-in editor uploads images in `/admin` (Experience > Photos) or the Studio, with alt text and an optional caption |
+| Entry | A signed-in editor uploads images in `/admin` (Experience > Photos, Projects > Photos) or the Studio, with alt text and an optional caption |
 | Validation | Max 8 photos and required alt in the Studio. `/admin` hides "Add photo" at 8 and shows alt errors inline but never blocks publishing. File type and size are checked only by the picker |
 | Authorization | Sanity project roles on every write |
-| Storage | Image assets in the Sanity dataset, referenced from `experience.photos` |
+| Storage | Image assets in the Sanity dataset, referenced from `experience.photos` or `project.photos` |
 | Exposure | Published photos, alt and captions are public through the CDN, with resize parameters on `cdn.sanity.io` URLs. Original files are reachable at the asset URL |
 | Retention | Until the photo is removed from the entry and the asset is deleted under Studio Media. Removing it from the entry alone does not delete the asset |
 
