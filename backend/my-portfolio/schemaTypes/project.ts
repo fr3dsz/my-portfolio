@@ -45,7 +45,7 @@ export default defineType({
               name: 'alt',
               type: 'string',
               title: 'Alt text',
-              validation: (r) => r.required(),
+              validation: (r) => r.required().warning(),
             }),
             defineField({name: 'caption', type: 'string'}),
           ],
