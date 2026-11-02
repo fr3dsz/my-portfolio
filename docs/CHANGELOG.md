@@ -4,6 +4,8 @@ History derived from the git log (newest first). Future entries should be append
 
 ## Unreleased / next steps
 
+- Projects have a Status (Live or Coming soon) in the Studio and `/admin`. Coming-soon projects show a badge and no live link; existing projects stay live. The Done Means Proven page lost its specific numbers and internals, gained two generic diagrams, and has a card image at `public/assets/done-means-proven-card.png`.
+
 - Experience entries can carry up to 8 photos (alt text required, caption optional), edited in the Studio and under Photos in `/admin`, and shown as a strip under the highlights.
 
 - Hero facts now read Role, Goal, Status, Base; the Stack row is replaced by an editable Goal (default "AI Engineer"). The default role is "Junior R&D Engineer". Status reuses the availability toggle and label.
