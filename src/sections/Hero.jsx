@@ -5,10 +5,12 @@ import { getAvailabilityLabel, useSiteSettings } from "../lib/siteSettings";
 const Hero = ({ section }) => {
   const settings = useSiteSettings();
   const { role, location } = settings;
+  // Role, Goal, Status, Base; a blank value hides its row
   const facts = [
     { label: "Role", value: role },
+    { label: "Goal", value: section.goal },
+    { label: "Status", value: getAvailabilityLabel(settings) && <AvailabilityStatus /> },
     { label: "Base", value: location },
-    { label: "Stack", value: section.stackLine },
   ].filter((fact) => fact.value);
 
   return (
@@ -26,14 +28,6 @@ const Hero = ({ section }) => {
               <dd className="font-mono text-sm text-ink">{fact.value}</dd>
             </div>
           ))}
-          {getAvailabilityLabel(settings) && (
-            <div className="flex flex-wrap items-baseline gap-x-8 gap-y-1 py-2.5">
-              <dt className="w-24 shrink-0 font-mono text-xs uppercase tracking-[0.2em] text-stone/70">Status</dt>
-              <dd>
-                <AvailabilityStatus />
-              </dd>
-            </div>
-          )}
         </dl>
       </div>
 

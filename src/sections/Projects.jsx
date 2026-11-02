@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Project from "../components/Project";
 import ProjectDetails from "../components/ProjectDetails";
 import SectionHeading from "../components/SectionHeading";
@@ -37,6 +37,10 @@ const Projects = ({ section }) => {
       .finally(() => setIsLoading(false));
   }, []);
 
+  // Stable handlers keep memoised rows from re-rendering when one opens
+  const openById = useCallback((id) => setOpenId(id), []);
+  const closeProject = useCallback(() => setOpenId(null), []);
+
   const openProject = projects.find((project) => project.id === openId) || null;
 
   return (
@@ -49,12 +53,12 @@ const Projects = ({ section }) => {
       {!isLoading && !error && (
         <div className="mt-12 border-b border-line md:mt-16">
           {projects.map((project, index) => (
-            <Project key={project.id} index={index + 1} project={project} onOpen={() => setOpenId(project.id)} />
+            <Project key={project.id} index={index + 1} project={project} onOpen={openById} />
           ))}
         </div>
       )}
 
-      {openProject && <ProjectDetails project={openProject} closeModal={() => setOpenId(null)} />}
+      {openProject && <ProjectDetails project={openProject} closeModal={closeProject} />}
     </section>
   );
 };

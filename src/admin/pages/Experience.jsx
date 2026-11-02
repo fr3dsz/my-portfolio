@@ -4,7 +4,7 @@ import { useDocument } from "@sanity/sdk-react";
 import { EMPLOYMENT_TYPES, MONTHS, formatExperienceDates, isComplete } from "../../lib/content";
 import { CollectionList } from "../components/CollectionList";
 import { DocumentEditor } from "../components/DocumentEditor";
-import { MonthYearField, SelectField, StringListField, TextField, ToggleField } from "../components/fields";
+import { ImageListField, MonthYearField, SelectField, StringListField, TextField, ToggleField } from "../components/fields";
 import { Section, Skeleton } from "../components/ui";
 
 const EXPERIENCE_QUERY = `*[_type == "experience"] | order(orderRank asc, order asc) {
@@ -87,6 +87,9 @@ export function ExperienceEditor({ id }) {
       </Section>
       <Section title="Highlights" description="One line each: what you did and what it achieved.">
         <StringListField handle={handle} path="contents" addLabel="Add highlight" itemLabel="Highlight" placeholder="Built …" />
+      </Section>
+      <Section title="Photos" description="Up to 8 photos shown under this entry's highlights. Only add photos of people who have agreed to appear on a public site.">
+        <ImageListField handle={handle} path="photos" maxItems={8} />
       </Section>
     </DocumentEditor>
   );

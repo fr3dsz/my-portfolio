@@ -23,6 +23,12 @@ export const isSafeUrl = (value) => {
   }
 };
 
+// Drops photos without an uploaded asset; a missing alt becomes "" (decorative).
+export const normalizeExperiencePhotos = (photos) =>
+  (photos || [])
+    .filter((photo) => photo?.asset?.url)
+    .map((photo) => ({ key: photo._key, url: photo.asset.url, alt: photo.alt || "", caption: photo.caption || "" }));
+
 export const fetchSiteSettings = async () => {
   const data = await client.fetch(SITE_SETTINGS_QUERY);
   const settings = withDefaults(

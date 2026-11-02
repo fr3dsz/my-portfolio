@@ -17,7 +17,8 @@ export const EXPERIENCES_QUERY = `*[_type == "experience"] | order(orderRank asc
   startDate,
   endDate,
   date,
-  contents
+  contents,
+  photos[]{ _key, alt, caption, asset->{ url, metadata { dimensions { width, height } } } }
 }`;
 
 
