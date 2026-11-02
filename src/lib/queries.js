@@ -6,6 +6,7 @@ export const PROJECTS_QUERY = `*[_type == "project"] | order(orderRank asc, orde
   href,
   status,
   image { asset->{url} },
+  photos[]{ _key, alt, caption, asset->{ url, metadata { dimensions { width, height } } } },
   tags[]->{ _id, name, icon { asset->{url} } }
 }`;
 

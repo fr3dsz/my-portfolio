@@ -4,6 +4,8 @@ History derived from the git log (newest first). Future entries should be append
 
 ## Unreleased
 
+- Projects can have up to 8 photos (Studio and `/admin`, with alt text and optional captions). The project modal shows them as a carousel with buttons, dots, a counter, arrow keys, and swipe. The old single image still works when Photos is empty.
+
 ## v1.0.0 — 2026-11-02
 
 First tagged release: the live portfolio with the Sanity-backed content, custom `/admin`, and everything below.

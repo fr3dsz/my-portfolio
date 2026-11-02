@@ -52,7 +52,7 @@ Two sources of truth:
 2. **Hardcoded constants** — `src/constants/index.js`: the fallbacks above, plus `reviews` → `Testimonial.jsx` (section disabled).
 
 Sanity schema types (`backend/my-portfolio/schemaTypes/`):
-- `project` — title (required), description, subDescription[], href (url), status (live | coming-soon, missing = live), image (hotspot), tags[] (refs to techStack), orderRank (drag-and-drop), order (hidden, legacy).
+- `project` — title (required), description, subDescription[], href (url), status (live | coming-soon, missing = live), photos[] (image with hotspot, required `alt`, optional `caption`; max 8), image (hotspot, legacy: used only when photos is empty), tags[] (refs to techStack), orderRank (drag-and-drop), order (hidden, legacy).
 - `experience` — title, job, employmentType (optional list), isCurrent, startDate and endDate ({month, year}), date (hidden, legacy fallback), contents[], orderRank (drag-and-drop), order (hidden, legacy).
 - `experience` — also `photos[]` (image with hotspot, required `alt`, optional `caption`; max 8).
 - `techStack` — name (required), icon (image, svg/png).
@@ -74,7 +74,7 @@ Studio admin (phase 4):
 - **About**: 12-col grid in reading order lead, facts, supporting detail (a single column below `md`). Left: heading, role and bio, then optional education and grouped tech stack (`Frameworks.jsx`). Right: a facts column with availability and `Get in touch`, `Timezone`, optional "Currently" list and optional photo. Optional blocks render only when filled in. `Timezone` shows the local time at `profile.timeZone`, its UTC offset, and the gap to the visitor's own time zone, all computed with `Intl` so DST is handled.
 - **Contact**: `mailto:` link, `CopyEmailButton` (handles clipboard failure), optional résumé link.
 - **Experiences**: `Timeline.jsx` draws a scroll-linked fill on the rail (motion `useScroll`/`useTransform`, `scaleY` only), in-view rail dots (`useInView`), and an optional photo strip per entry (`experience.photos[]`, max 8, normalised by `normalizeExperiencePhotos`). All of it is static under `prefers-reduced-motion`.
-- **Projects**: row list (`Project` is memoised; images resized via CDN params and lazy-loaded) and a `ProjectDetails` modal with no backdrop blur. Projects with `status` "coming-soon" show a text badge and never render a live link.
+- **Projects**: row list (`Project` is memoised; images resized via CDN params and lazy-loaded) and a `ProjectDetails` modal with no backdrop blur. The modal shows `ProjectCarousel` (`motion/react`, reduced-motion aware) for photos. Projects with `status` "coming-soon" show a text badge and never render a live link.
 
 ## Styling
 
