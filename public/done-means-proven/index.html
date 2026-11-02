@@ -66,9 +66,34 @@ section { display: grid; gap: 24px; min-width: 0; }
 .honest { display: grid; gap: 14px; max-width: 64ch; }
 .close { background: var(--surface); border-radius: 8px; padding: 26px; display: grid; gap: 12px; }
 
+/* Diagrams */
+.figure { margin: 0; display: grid; gap: 14px; }
+.figure figcaption { font-size: .9rem; color: var(--stone); max-width: 62ch; }
+.loop { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 8px; background: var(--surface); counter-reset: step; }
+.loop li { counter-increment: step; position: relative; padding: 22px 14px 20px; display: grid; gap: 8px; justify-items: center; text-align: center; font: 500 1.1rem/1.2 var(--display); }
+.loop li + li { border-left: 1px solid var(--line); }
+.loop li::before { content: counter(step, decimal-leading-zero); font: 500 .7rem/1 var(--mono); letter-spacing: .08em; color: var(--stone); }
+.loop li:last-child { color: var(--accent); }
+.loop li:not(:last-child)::after { content: ""; position: absolute; top: 50%; right: -5px; width: 9px; height: 9px; background: var(--surface); border-top: 1px solid var(--accent); border-right: 1px solid var(--accent); transform: translateY(-50%) rotate(45deg); }
+.versus { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.panel { display: grid; gap: 10px; align-content: start; padding: 22px; border-radius: 8px; min-width: 0; }
+.panel .tag { font: 500 .72rem/1.3 var(--mono); letter-spacing: .07em; text-transform: uppercase; }
+.panel strong { font: 500 1.5rem/1.15 var(--display); }
+.panel p { font-size: .93rem; color: var(--stone); }
+.panel.claim { border: 1px dashed var(--line); }
+.panel.claim .tag, .panel.claim strong { color: var(--stone); }
+.panel.proof { border: 1px solid var(--accent); background: var(--surface); }
+.panel.proof .tag { color: var(--accent); }
+.panel .rule { height: 1px; background: var(--line); border: 0; margin: 4px 0 0; }
+.panel.proof .rule { background: var(--accent); }
+
 @media (max-width: 680px) {
   .page { padding-block: 28px 56px; gap: 48px; }
-  .issue, .facts, .principles { grid-template-columns: minmax(0, 1fr); }
+  .issue, .facts, .principles, .versus { grid-template-columns: minmax(0, 1fr); }
+  .loop { grid-template-columns: minmax(0, 1fr); }
+  .loop li { grid-template-columns: 2rem 1fr; justify-items: start; text-align: left; padding: 14px 18px; align-items: baseline; }
+  .loop li + li { border-left: 0; border-top: 1px solid var(--line); }
+  .loop li:not(:last-child)::after { top: auto; bottom: -5px; right: auto; left: 22px; transform: rotate(135deg); }
 }
 </style>
 </head>
@@ -90,42 +115,42 @@ section { display: grid; gap: 24px; min-width: 0; }
         <div><span class="label">The problem</span><h3>It made a mess instead of reusing what was there</h3></div>
         <div class="answer">
           <p>I already had a components folder. The agent would still create a new folder for a dashboard and write new components inside it, and the project got harder to navigate each time.</p>
-          <p>Now reusable code is known before anyone writes anything, and unplanned files and duplicates get stopped.</p>
+          <p>Now it checks what already exists before writing anything new, and duplicates get stopped.</p>
         </div>
       </article>
       <article class="issue">
         <div><span class="label">The problem</span><h3>It guessed</h3></div>
         <div class="answer">
           <p>Agents would plan around file structures that didn't exist in my project.</p>
-          <p>Now the real project gets mapped before any planning. On one test feature, that step flagged a cross-site scripting risk before any code was written, and the fix went straight into the plan.</p>
+          <p>Now it looks at the real project before planning. On one test feature, that surfaced a security risk before any code was written, and the fix went straight into the plan.</p>
         </div>
       </article>
       <article class="issue">
         <div><span class="label">The problem</span><h3>Code came before agreement</h3></div>
         <div class="answer">
           <p>By the time I saw what had been built, fixing a misunderstanding was already expensive.</p>
-          <p>Now I approve the plan before any code is written. If that plan changes later, my approval no longer counts.</p>
+          <p>Now I approve the plan before any code is written, and a changed plan needs my approval again.</p>
         </div>
       </article>
       <article class="issue">
         <div><span class="label">The problem</span><h3>"Done" didn't mean it worked</h3></div>
         <div class="answer">
           <p>An agent saying the work was finished told me very little, and a fix could quietly break something an earlier check had passed.</p>
-          <p>Now the final call belongs to something that can't be talked past, and new code voids earlier approvals. In one trial, the checker couldn't start the app, so it reported that it was blocked rather than claiming a pass.</p>
+          <p>Now the final call rests on evidence, not on the agent's say-so, and new changes mean checking again. In one trial, the check couldn't run the app, so it reported that it was blocked rather than claiming a pass.</p>
         </div>
       </article>
       <article class="issue">
         <div><span class="label">The problem</span><h3>Every project is different</h3></div>
         <div class="answer">
           <p>Some of my projects are fullstack, and others only have a frontend. A fixed process would be wrong for most of them.</p>
-          <p>Now every job sets its own scope, so a small UI fix doesn't pay for work it doesn't need.</p>
+          <p>Now the process fits the size and shape of each job, so a small fix doesn't pay for work it doesn't need.</p>
         </div>
       </article>
       <article class="issue">
         <div><span class="label">The problem</span><h3>It burned through tokens</h3></div>
         <div class="answer">
           <p>Heavy process on every small change is wasteful, and so is every tool that loads when nobody needs it.</p>
-          <p>Now small jobs do less, and I measure before I keep something. That's how I learned one of my own optimizations hadn't paid off, and why I removed a tool I'd been maintaining.</p>
+          <p>Now small jobs do less, and I measure before I keep something. Measuring is how I learned one of my own optimizations hadn't paid off, and why I removed a tool I'd been maintaining.</p>
         </div>
       </article>
     </div>
@@ -135,27 +160,54 @@ section { display: grid; gap: 24px; min-width: 0; }
     <h2 id="principles-title">What it comes down to</h2>
     <div class="principles">
       <div class="principle"><strong>Agree before building</strong><span>Misunderstandings are cheapest to fix before code exists.</span></div>
-      <div class="principle"><strong>Prove, don't claim</strong><span>Work counts as done only when there's evidence for the exact code being shipped.</span></div>
+      <div class="principle"><strong>Prove, don't claim</strong><span>Work counts as done only when there's evidence for what is actually being shipped.</span></div>
       <div class="principle"><strong>Measure what you keep</strong><span>Process has a cost, so it has to earn its place.</span></div>
     </div>
+  </section>
+
+  <section aria-labelledby="shape-title">
+    <h2 id="shape-title">The shape of it</h2>
+    <figure class="figure">
+      <ol class="loop" aria-label="The loop every piece of work goes through: idea, plan, build, verify, ship">
+        <li>Idea</li><li>Plan</li><li>Build</li><li>Verify</li><li>Ship</li>
+      </ol>
+      <figcaption>Every change follows the same loop. Nothing reaches the last step until the one before it has held up.</figcaption>
+    </figure>
+    <figure class="figure">
+      <div class="versus" role="group" aria-label="Done as a claim compared with proven as evidence">
+        <div class="panel claim">
+          <span class="tag">Before</span>
+          <strong>Done</strong>
+          <hr class="rule">
+          <p>A statement. It asks to be trusted.</p>
+        </div>
+        <div class="panel proof">
+          <span class="tag">After</span>
+          <strong>Proven</strong>
+          <hr class="rule">
+          <p>Evidence. It can be checked.</p>
+        </div>
+      </div>
+      <figcaption>The difference the whole project is built around.</figcaption>
+    </figure>
   </section>
 
   <section aria-labelledby="numbers-title">
     <h2 id="numbers-title">What measuring changed</h2>
     <div class="facts">
-      <div class="fact"><b>3 of 86</b><span>sessions used the code graph tool I was maintaining, so I removed it.</span></div>
-      <div class="fact"><b>~61%</b><span>smaller list of instructions that every session loads up front, estimated from its size.</span></div>
-      <div class="fact"><b>180+</b><span>automated checks covering the tooling itself.</span></div>
+      <div class="fact"><b>Removed</b><span>a tool I was maintaining, because measuring showed it was barely used.</span></div>
+      <div class="fact"><b>Smaller</b><span>the set of instructions every session loads up front.</span></div>
+      <div class="fact"><b>Disproved</b><span>one optimization I was sure would help, and didn't.</span></div>
     </div>
     <div class="honest">
-      <p>Measuring also proved me wrong. I split a large review guide to save tokens, expecting clear savings, but the review cost more in all of my test runs afterward. The sample was small, but it pointed to how much an agent explores as the bigger cost, so I stopped splitting and changed my focus.</p>
-      <p>Testing found bugs in my own work too. A trial run showed that small UI jobs in some projects would have skipped their end-to-end check, and I fixed that before relying on it.</p>
+      <p>Measuring also proved me wrong. I split a large review guide to save tokens, expecting clear savings, but the review cost more in all of my test runs afterward. The sample was small, but it pointed to a different, bigger cost, so I stopped splitting and changed my focus.</p>
+      <p>Testing found bugs in my own work too. A trial run showed that some small jobs would have skipped a check they needed, and I fixed that before relying on it.</p>
     </div>
   </section>
 
   <section aria-labelledby="status-title" class="close">
     <h2 id="status-title">Where it stands</h2>
-    <p>This is a working personal tool at an early stage, built on Claude Code. An earlier version ran five jobs across three of my projects, each reaching a pull request. I've since rebuilt it, and the current version hasn't yet run a full job on a real feature. That's next, along with better cost data from those runs.</p>
+    <p>This is a working personal tool at an early stage, built around an AI coding assistant. An earlier version has been used on my own projects. I've since rebuilt it, and the current version hasn't yet run a full job on a real feature. That's next, along with better cost data from those runs.</p>
     <p>The details stay in a private repository. I'm happy to walk through the design and the decisions behind it in a conversation.</p>
     <p><a href="https://github.com/fr3dsz">github.com/fr3dsz</a></p>
   </section>
