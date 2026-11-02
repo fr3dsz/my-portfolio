@@ -95,6 +95,11 @@ section[id] {
   @apply px-5 sm:px-10 lg:px-16;
 }
 
+/* shared vertical rhythm for standard sections */
+.section-space {
+  @apply pb-12 pt-16 md:pb-24 md:pt-32;
+}
+
 /* quiet hover lift retained for the dormant Testimonial cards */
 .hover-animation {
   @apply hover:-translate-y-1 duration-200;
