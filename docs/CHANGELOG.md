@@ -4,6 +4,10 @@ History derived from the git log (newest first). Future entries should be append
 
 ## Unreleased
 
+## v1.1.1 — 2026-11-03
+
+- Mobile layout: sections sit closer together on phones (shared `.section-space` class), the hero fits its content instead of filling the screen, Contact's top spacing matches the other sections, and the hero's Status text stays beside its label and wraps in its own column. Desktop is unchanged.
+
 ## v1.1.0 — 2026-11-02
 
 - Projects can have up to 8 photos (Studio and `/admin`, with alt text and optional captions). The project modal shows them as a carousel with buttons, dots, a counter, arrow keys, and swipe. The old single image still works when Photos is empty.
