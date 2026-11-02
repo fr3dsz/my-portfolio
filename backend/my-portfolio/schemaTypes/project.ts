@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
 
 // Mirrors PROJECT_STATUSES in src/lib/content.js (the Studio cannot import from src/)
@@ -30,7 +30,35 @@ export default defineType({
       options: {list: PROJECT_STATUSES},
       initialValue: 'live',
     }),
-    defineField({name: 'image', type: 'image', options: {hotspot: true}}),
+    defineField({
+      name: 'photos',
+      type: 'array',
+      description:
+        'Up to 8 photos shown in the project modal. The first is the row thumbnail. Only add photos you have the right to publish.',
+      validation: (r) => r.max(8),
+      of: [
+        defineArrayMember({
+          type: 'image',
+          options: {hotspot: true},
+          fields: [
+            defineField({
+              name: 'alt',
+              type: 'string',
+              title: 'Alt text',
+              validation: (r) => r.required().warning(),
+            }),
+            defineField({name: 'caption', type: 'string'}),
+          ],
+        }),
+      ],
+    }),
+    defineField({
+      name: 'image',
+      title: 'Image (legacy)',
+      description: 'Used only when Photos is empty',
+      type: 'image',
+      options: {hotspot: true},
+    }),
     defineField({
       name: 'tags',
       type: 'array',
