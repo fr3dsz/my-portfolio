@@ -14,7 +14,7 @@ const OVERVIEW_QUERY = `{
   "projects": count(*[_type == "project" && !(_id in path("drafts.**"))]),
   "experiences": count(*[_type == "experience" && !(_id in path("drafts.**"))]),
   "techStack": count(*[_type == "techStack" && !(_id in path("drafts.**"))]),
-  "projectsWithoutImage": *[_type == "project" && !(_id in path("drafts.**")) && !defined(image.asset)]{ _id, title },
+  "projectsWithoutImage": *[_type == "project" && !(_id in path("drafts.**")) && !defined(image.asset) && count(coalesce(photos[defined(asset)], [])) == 0]{ _id, title },
   "unranked": count(*[_type in ["project", "experience"] && !defined(orderRank)]),
   "drafts": *[_id in path("drafts.**")]{ _id, _type },
   "recent": *[_type in ["project", "experience", "techStack", "about", "siteSettings", "homePage"]] | order(_updatedAt desc)[0...12]{

@@ -9,6 +9,7 @@ const ArrowRight = () => (
 
 const Project = ({ index, project, onOpen }) => {
   const open = () => onOpen(project.id);
+  const thumb = project.photos[0];
   const indexLabel = String(index).padStart(2, "0");
 
   return (
@@ -22,8 +23,8 @@ const Project = ({ index, project, onOpen }) => {
       <span className="font-mono text-xs text-stone/70 md:col-span-1">{indexLabel}</span>
 
       <button onClick={open} className="group/plate relative block overflow-hidden border border-line bg-surface md:col-span-5" aria-label={`Open details for ${project.title}`}>
-        {project.image ? (
-          <img src={`${project.image}?w=640&h=480&fit=crop&auto=format`} alt={`${project.title} interface`} width={640} height={480} loading="lazy" decoding="async" className="aspect-4/3 w-full object-cover opacity-80 transition duration-500 group-hover/plate:scale-[1.02] group-hover/plate:opacity-100" />
+        {thumb ? (
+          <img src={`${thumb.url}?w=640&h=480&fit=crop&auto=format`} alt={thumb.alt} width={640} height={480} loading="lazy" decoding="async" className="aspect-4/3 w-full object-cover opacity-80 transition duration-500 group-hover/plate:scale-[1.02] group-hover/plate:opacity-100" />
         ) : (
           <div className="flex aspect-4/3 w-full items-center justify-center">
             <span className="font-display text-5xl text-stone/40 md:text-6xl">{indexLabel}</span>

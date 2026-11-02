@@ -3,11 +3,11 @@ import { imageUrl } from "../lib";
 import { PROJECT_STATUSES } from "../../lib/content";
 import { CollectionList } from "../components/CollectionList";
 import { DocumentEditor } from "../components/DocumentEditor";
-import { ImageField, SelectField, StringListField, TechRefsField, TextField } from "../components/fields";
+import { ImageField, ImageListField, SelectField, StringListField, TechRefsField, TextField } from "../components/fields";
 import { Section } from "../components/ui";
 
 const PROJECTS_QUERY = `*[_type == "project"] | order(orderRank asc, order asc) {
-  _id, _originalId, title, description, status, orderRank, "imageRef": image.asset._ref, "tags": tags[]->name
+  _id, _originalId, title, description, status, orderRank, "imageRef": coalesce(photos[defined(asset)][0].asset._ref, image.asset._ref), "tags": tags[]->name
 }`;
 
 const isUrl = (value) => (/^https?:\/\/\S+\.\S+/.test(value) ? null : "Use a full link starting with https://");
@@ -25,7 +25,7 @@ export function ProjectList() {
       query={PROJECTS_QUERY}
       emptyIcon={Briefcase}
       emptyTitle="No projects yet"
-      emptyText="Add your first project: a title, a short description, an image and the tech you used."
+      emptyText="Add your first project: a title, a short description, photos and the tech you used."
       renderRow={(project) => {
         const thumb = imageUrl(project.imageRef, { w: 96, h: 72 });
         return (
@@ -57,7 +57,10 @@ export function ProjectEditor({ id }) {
         <TextField handle={handle} path="href" label="Live link" hint="Optional. Leave blank if it isn't deployed. Hidden on the site while the status is Coming soon." placeholder="https://" type="url" validate={isUrl} />
         <SelectField handle={handle} path="status" label="Status" hint="Coming soon shows a badge and hides the live link. Leave unset for Live." options={PROJECT_STATUSES} placeholder="Live" />
       </Section>
-      <Section title="Image" description="Shown on hover and in the modal. Landscape works best.">
+      <Section title="Photos" description="Up to 8 photos shown as a carousel in the project modal. The first is the row thumbnail. Only add photos you have the right to publish.">
+        <ImageListField handle={handle} path="photos" maxItems={8} />
+      </Section>
+      <Section title="Legacy image" description="Used only when Photos is empty. Landscape works best.">
         <ImageField handle={handle} path="image" previewClass="aspect-[4/3] w-64 max-w-full" />
       </Section>
       <Section title="Details" description="Bullet points inside the project modal.">

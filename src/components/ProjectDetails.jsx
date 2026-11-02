@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import ProjectCarousel from "./ProjectCarousel";
 
 const ProjectDetails = ({ project, closeModal }) => {
   const dialogRef = useRef(null);
@@ -64,11 +65,7 @@ const ProjectDetails = ({ project, closeModal }) => {
           <h2 className="mt-8 font-display text-3xl font-normal text-ink md:text-5xl">{project.title}</h2>
           {project.comingSoon && <p className="mt-4 inline-block border border-accent px-2 py-0.5 font-mono text-xs uppercase tracking-[0.12em] text-accent">Coming soon</p>}
 
-          {project.image && (
-            <div className="mt-8 overflow-hidden border border-line">
-              <img src={`${project.image}?w=1200&auto=format`} alt={`${project.title} interface`} width={1200} height={900} decoding="async" className="aspect-4/3 w-full object-cover" />
-            </div>
-          )}
+          {project.photos.length > 0 && <ProjectCarousel photos={project.photos} title={project.title} />}
 
           <p className="mt-8 max-w-[65ch] text-base leading-relaxed text-stone">{project.description}</p>
 
