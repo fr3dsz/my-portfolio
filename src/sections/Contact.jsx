@@ -6,7 +6,7 @@ const Contact = ({ section }) => {
   const { email, resumeUrl } = useSiteSettings();
 
   return (
-    <section id={section.anchor} className="c-space pb-8 pt-24 md:pt-32">
+    <section id={section.anchor} className="c-space pb-8 pt-16 md:pt-32">
       <SectionHeading code={section.code}>{section.title}</SectionHeading>
 
       <div className="mt-12 md:mt-16">
